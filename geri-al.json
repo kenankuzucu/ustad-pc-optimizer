@@ -1,0 +1,36 @@
+{
+ "kayitlar": [
+  {
+   "tur": "gorev",
+   "ad": "USTAD-TEST-GOREV",
+   "yol": "\\",
+   "oncekiDurum": "Ready",
+   "tarih": "27.09.2026 02:14",
+   "aciklama": "Görev kapatıldı"
+  },
+  {
+   "tur": "gorev",
+   "ad": "USTAD-TEST-GOREV",
+   "yol": "\\",
+   "oncekiDurum": "Disabled",
+   "tarih": "27.09.2026 02:14",
+   "aciklama": "Görev açıldı"
+  },
+  {
+   "tur": "gorev",
+   "ad": "USTAD-TEST-GOREV",
+   "yol": "\\",
+   "oncekiDurum": "Ready",
+   "tarih": "27.09.2026 02:26",
+   "aciklama": "Görev kapatıldı"
+  },
+  {
+   "tur": "gorev",
+   "ad": "USTAD-TEST-GOREV",
+   "yol": "\\",
+   "oncekiDurum": "Disabled",
+   "tarih": "27.09.2026 02:26",
+   "aciklama": "Görev açıldı"
+  }
+ ]
+}

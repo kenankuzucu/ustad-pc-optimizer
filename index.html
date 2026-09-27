@@ -1,0 +1,2540 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ÜSTAD PC OPTIMIZER</title>
+<style>
+:root{
+  --arka:#050b16; --panel:#0a1524; --panel2:#0d1c30; --cizgi:#153251;
+  --yesil:#22c55e; --mavi:#2563eb; --sari:#eab308; --kirmizi:#dc2626;
+  --mor:#7c3aed; --turkuaz:#06b6d4; --turuncu:#f97316;
+  --yazi:#e8f1ff; --soluk:#8fb0d4; --cok-soluk:#5b7ea3;
+  --golge:0 10px 30px rgba(0,0,0,.55);
+  --turkuaz-c:#22d3ee; --pembe:#ec4899;
+}
+*{box-sizing:border-box; margin:0; padding:0}
+html,body{height:100%}
+body{
+  background:
+    radial-gradient(1200px 600px at 15% -10%, #0d2338 0%, transparent 60%),
+    radial-gradient(900px 500px at 100% 0%, #2a0b12 0%, transparent 55%),
+    var(--arka);
+  color:var(--yazi);
+  font-family:"Segoe UI",Tahoma,Verdana,sans-serif;
+  font-size:13.5px; overflow:hidden;
+}
+.seffaf{background:rgba(10,21,36,.78); border:1px solid var(--cizgi); border-radius:10px}
+button{font-family:inherit; cursor:pointer; border:0; color:#fff}
+input,select{font-family:inherit}
+::-webkit-scrollbar{width:9px;height:9px}
+::-webkit-scrollbar-thumb{background:#1d3d61;border-radius:6px}
+::-webkit-scrollbar-track{background:#0a1524}
+
+/* ---------------- ÜST ŞERİT ---------------- */
+#ust{
+  height:104px; display:grid; grid-template-columns:378px 1fr 356px;
+  align-items:center; gap:8px; padding:6px 10px;
+  background:
+    linear-gradient(90deg,#04101f 0%,#062033 35%,#0a1526 60%,#2a0a10 100%);
+  border-bottom:2px solid #12416b; position:relative; overflow:hidden;
+}
+#ust:after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--yesil),transparent);opacity:.7}
+.marka{display:flex; align-items:center; gap:10px; overflow:hidden}
+.marka img{height:70px; flex:0 0 auto; filter:drop-shadow(0 4px 12px rgba(0,0,0,.6))}
+.marka .yazi{overflow:hidden}
+.marka .yazi h1{
+  font-size:31px; letter-spacing:2.5px; line-height:1; font-weight:800; white-space:nowrap;
+  background:linear-gradient(180deg,#fff6d6 0%,#f5c542 45%,#b8860b 100%);
+  -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
+  text-shadow:0 2px 10px rgba(245,197,66,.25);
+}
+.marka .yazi .alt{font-size:14px; letter-spacing:3.4px; font-weight:700; color:#e7d9b0;
+  white-space:nowrap; line-height:1.35}
+.marka .yazi .slogan{font-size:8.4px; letter-spacing:.9px; color:var(--soluk);
+  margin-top:3px; line-height:1.35}
+.ust-orta{display:flex; flex-direction:column; align-items:center; gap:7px}
+.ust-orta .rozet{
+  font-size:11px; letter-spacing:2px; color:#bfe3ff; padding:5px 26px;
+  border:1px solid #1d4a74; border-radius:20px;
+  background:linear-gradient(180deg,rgba(12,40,66,.9),rgba(6,20,34,.9));
+  box-shadow:inset 0 0 18px rgba(34,211,238,.12)
+}
+.sekmeler{display:flex; gap:4px}
+.sekmeler button{
+  background:transparent; display:flex; flex-direction:column; align-items:center;
+  gap:4px; padding:4px 16px; border-radius:8px; color:var(--soluk);
+  font-size:10px; letter-spacing:1px; transition:.15s
+}
+.sekmeler button svg{width:26px;height:26px}
+.sekmeler button:hover{background:rgba(34,211,238,.08); color:#fff}
+.sekmeler button.aktif{background:linear-gradient(180deg,rgba(37,99,235,.25),rgba(37,99,235,.05)); color:#fff}
+.ust-sag{position:relative; height:100%; display:flex; align-items:center; justify-content:flex-end}
+.ust-sag img.kurt{height:104px; object-fit:cover; object-position:right center;
+  mask-image:linear-gradient(90deg,transparent,#000 38%); -webkit-mask-image:linear-gradient(90deg,transparent,#000 38%)}
+/* gerçek pencere düğmeleri: küçült / büyüt / kapat (sağ üst köşe) */
+.pencere-dug{position:absolute; right:10px; top:9px; display:flex; gap:6px; z-index:8}
+.pencere-dug button{width:34px; height:28px; display:flex; align-items:center; justify-content:center;
+  background:linear-gradient(180deg,rgba(14,32,52,.95),rgba(6,18,32,.95)); border:1px solid #2c5a8a;
+  border-radius:8px; color:#bfe0ff; cursor:pointer; padding:0; transition:all .14s}
+.pencere-dug button svg{width:16px; height:16px}
+.pencere-dug button:hover{background:linear-gradient(180deg,#1d4a72,#0d2942); border-color:#5aa9e6; color:#ffffff}
+.pencere-dug button:active{transform:translateY(1px)}
+.pencere-dug .kapat-dug:hover{background:linear-gradient(180deg,#a01f1f,#6d1212); border-color:#ff6b6b; color:#fff}
+
+/* komut paleti satırları */
+#palet .pSatir{display:flex;align-items:center;gap:11px;padding:10px 11px;border-radius:9px;cursor:pointer;border:1px solid transparent}
+#palet .pSatir:hover{background:rgba(46,96,148,.22)}
+#palet .pSec{background:rgba(56,212,255,.16);border-color:#2f8fc0}
+
+/* ---------------- GÖVDE ---------------- */
+#govde{display:grid; grid-template-columns:218px 1fr 372px; gap:8px; padding:8px; height:calc(100% - 104px - 26px)}
+.kolon{overflow-y:auto; overflow-x:hidden; padding-right:2px}
+
+/* SOL MENÜ */
+#menu{display:flex; flex-direction:column; gap:2px; background:linear-gradient(180deg,#08131f,#050d17);
+  border:1px solid var(--cizgi); border-radius:10px; padding:6px; position:relative}
+#menu .oge{
+  display:flex; align-items:center; gap:9px; padding:9px 10px; border-radius:7px;
+  color:#c6dcf5; font-size:12.6px; cursor:pointer; border-left:3px solid transparent;
+}
+#menu .oge svg{width:17px;height:17px;flex:0 0 17px; color:#7fb2e0}
+#menu .oge:hover{background:rgba(37,99,235,.14)}
+#menu .oge.aktif{background:linear-gradient(90deg,rgba(37,99,235,.55),rgba(37,99,235,.08));
+  border-left-color:#3b82f6; color:#fff}
+#menu .alt-amblem{margin-top:auto; text-align:center; padding:10px 0 4px}
+#menu .alt-amblem img{width:150px; opacity:.96}
+#menu .alt-amblem .surum{font-size:10px; color:var(--cok-soluk); letter-spacing:1px; margin-top:4px}
+
+/* ORTA */
+#orta{display:flex; flex-direction:column; gap:8px}
+.kutu{background:linear-gradient(180deg,rgba(13,28,48,.9),rgba(8,18,32,.92));
+  border:1px solid var(--cizgi); border-radius:10px; padding:11px 12px; box-shadow:var(--golge)}
+.kutu h2{font-size:13.5px; letter-spacing:1.1px; color:#dcecff; display:flex; align-items:center;
+  gap:8px; margin-bottom:9px; font-weight:650}
+.kutu h2 svg{width:16px;height:16px;color:var(--turkuaz-c)}
+.kutu h2 .sag{margin-left:auto; font-size:11px; color:var(--soluk); letter-spacing:.5px; font-weight:400}
+
+/* SAĞ KOLON */
+#sag{display:flex; flex-direction:column; gap:8px}
+.hizli{display:flex; align-items:center; gap:10px; padding:11px 12px; border-radius:8px;
+  border:1px solid rgba(255,255,255,.08); cursor:pointer; transition:.15s; width:100%; text-align:left}
+.hizli:hover{transform:translateX(-3px); filter:brightness(1.12)}
+.hizli svg{width:24px;height:24px;flex:0 0 24px}
+.hizli b{display:block; font-size:13.5px; letter-spacing:.6px}
+.hizli span{font-size:11px; opacity:.85}
+.hizli.yesil{background:linear-gradient(90deg,#0d3f22,#08281a); border-color:#1c7a45; color:#d6ffe6}
+.hizli.mavi{background:linear-gradient(90deg,#123a6e,#0a2340); border-color:#2b62b0; color:#dbeaff}
+.hizli.kirmizi{background:linear-gradient(90deg,#5c1414,#330b0b); border-color:#a52a2a; color:#ffdede}
+.hizli.sari{background:linear-gradient(90deg,#5c4a10,#33290a); border-color:#a37a1d; color:#fff3d1}
+.hizli.mor{background:linear-gradient(90deg,#3b1d6e,#23103f); border-color:#6c46b8; color:#ecdcff}
+
+/* ölçer halka */
+.olcer{position:relative; width:132px; height:132px; flex:0 0 132px}
+.olcer svg{transform:rotate(-90deg)}
+.olcer .ic{position:absolute; inset:0; display:flex; flex-direction:column;
+  align-items:center; justify-content:center; text-align:center}
+.olcer .ic .sayi{font-size:32px; font-weight:700; line-height:1}
+.olcer .ic .birim{font-size:12px; color:var(--soluk)}
+.olcer .ic .etiket{font-size:11.5px; color:var(--yesil); letter-spacing:1.4px; margin-top:5px; font-weight:600}
+
+/* sayaç kutuları */
+.sayaclar{display:grid; grid-template-columns:repeat(3,1fr); gap:8px; flex:1}
+.sayac{background:rgba(6,17,30,.85); border:1px solid var(--cizgi); border-radius:9px; padding:9px 10px}
+.sayac .basi{display:flex; align-items:center; gap:7px; font-size:12px; color:#cfe3f8; letter-spacing:.8px}
+.sayac .basi svg{width:15px;height:15px}
+.sayac .basi b{margin-left:auto; font-size:15px}
+.sayac .cizgi{height:6px; border-radius:4px; background:#0c2237; margin-top:8px; overflow:hidden}
+.sayac .cizgi i{display:block; height:100%; border-radius:4px; transition:width .5s}
+.bilgi-satir{display:flex; gap:9px; margin-top:9px}
+.bilgi-satir .b{flex:1; background:rgba(6,17,30,.8); border:1px solid var(--cizgi);
+  border-radius:9px; padding:8px 10px; display:flex; align-items:center; gap:9px}
+.bilgi-satir .b svg{width:22px;height:22px;color:#7fb2e0}
+.bilgi-satir .b .et{font-size:10.5px; color:var(--soluk); letter-spacing:.6px}
+.bilgi-satir .b .de{font-size:12.5px}
+.dev-buton{
+  display:flex; align-items:center; justify-content:center; gap:12px; width:100%;
+  padding:15px; border-radius:9px; font-size:20px; font-weight:700; letter-spacing:2px;
+  background:linear-gradient(180deg,#2f7ff0,#1a4fc4); border:1px solid #4b93ff;
+  box-shadow:0 8px 24px rgba(37,99,235,.45); margin-top:11px
+}
+.dev-buton:hover{filter:brightness(1.12)}
+.dev-buton svg{width:26px;height:26px}
+.dev-buton:disabled{opacity:.6; cursor:progress}
+
+/* liste */
+.satir{display:flex; align-items:center; gap:9px; padding:7px 8px; border-radius:7px; font-size:12.6px}
+.satir:nth-child(odd){background:rgba(255,255,255,.022)}
+.satir .ad{flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+.satir .boyut{font-family:Consolas,monospace; color:#a9d5ff; min-width:78px; text-align:right}
+.satir .no{font-family:Consolas,monospace; color:var(--cok-soluk); min-width:26px; font-size:11px}
+.satir .durum{flex:0 0 auto; white-space:nowrap; display:inline-flex; align-items:center}
+.satir .ad{white-space:normal !important; overflow:visible !important}
+.kutucuk{display:inline-block;font-size:10.5px;padding:3px 8px;border-radius:9px;letter-spacing:.4px;
+  background:rgba(59,130,246,.14);color:#9dc6ee;border:1px solid rgba(59,130,246,.3);white-space:nowrap}
+.kutucuk.yesil{background:rgba(34,197,94,.16);color:#86efac;border-color:rgba(34,197,94,.35)}
+.kutucuk.sari{background:rgba(234,179,8,.16);color:#fde68a;border-color:rgba(234,179,8,.35)}
+.kutucuk.kirmizi{background:rgba(220,38,38,.18);color:#fca5a5;border-color:rgba(220,38,38,.4)}
+.kutucuk.mor{background:rgba(168,85,247,.16);color:#d8b4fe;border-color:rgba(168,85,247,.35)}
+.serit{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:9px 11px;
+  border:1px solid var(--cizgi);border-radius:9px;margin-bottom:8px;background:rgba(9,27,44,.6)}
+.serit .sol{flex:1;min-width:0}
+.serit .baslik{font-size:12.8px;font-weight:600;color:#dbeafe}
+.serit .alt{font-size:11.4px;color:#8fb0d4;margin-top:2px;line-height:1.45}
+.ileri{height:9px;border-radius:6px;background:#0d2237;overflow:hidden;margin-top:7px}
+.ileri i{display:block;height:100%;background:linear-gradient(90deg,#22c55e,#a3e635);border-radius:6px;
+  transition:width .5s ease}
+.ileri.mavi i{background:linear-gradient(90deg,#2563eb,#38bdf8)}
+.ileri.kirmizi i{background:linear-gradient(90deg,#b91c1c,#f97316)}
+.ileri.sari i{background:linear-gradient(90deg,#ca8a04,#facc15)}
+.roket-buyuk{font-size:52px;line-height:1;text-align:center;filter:drop-shadow(0 0 26px rgba(56,189,248,.5))}
+.olcum-kutu{background:#04101c;border:1px solid var(--cizgi);border-radius:9px;padding:10px 12px}
+.olcum-kutu .et{font-size:10.5px;color:var(--soluk);letter-spacing:.6px}
+.olcum-kutu .de{font-family:Consolas,monospace;font-size:17px;color:#bfe0ff;margin-top:3px}
+.olcum-kutu .ar{font-size:11px;color:#7fa8cf;margin-top:2px}
+.tbl-kaydir{max-height:340px;overflow:auto;border:1px solid var(--cizgi);border-radius:9px}
+.aki{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:9px}
+.not-bandi{border-left:3px solid var(--sari);background:rgba(234,179,8,.08);padding:9px 12px;
+  border-radius:7px;font-size:11.8px;color:#fde68a;line-height:1.55;margin-top:9px}
+.not-bandi.mavi{border-left-color:#3b82f6;background:rgba(59,130,246,.08);color:#bfdbfe}
+.not-bandi.kirmizi{border-left-color:#dc2626;background:rgba(220,38,38,.09);color:#fecaca}
+.not-bandi.yesil{border-left-color:#22c55e;background:rgba(34,197,94,.08);color:#bbf7d0}
+label.secim{display:flex;align-items:center;gap:8px;font-size:12.2px;color:#c6dcf5;cursor:pointer}
+label.secim input{width:15px;height:15px;accent-color:#22c55e;cursor:pointer}
+.kutu-liste{max-height:330px; overflow-y:auto; margin:-3px -4px 0}
+.onay{width:15px;height:15px;accent-color:#22c55e;cursor:pointer}
+.mini{font-size:11px; padding:5px 11px; border-radius:6px; letter-spacing:.5px;
+  white-space:normal; line-height:1.3; text-align:center}
+.mini.mavi{background:#1d4ed8;border:1px solid #3b82f6}
+.mini.kirmizi{background:#9b1c1c;border:1px solid #dc2626}
+.mini.yesil{background:#15803d;border:1px solid #22c55e}
+.mini.gri{background:#1b3350;border:1px solid #2b4f74}
+.mini:disabled{opacity:.5;cursor:default}
+.arac-input{background:#07131f;border:1px solid var(--cizgi);border-radius:8px;color:var(--yazi);
+  padding:9px 11px;width:100%;outline:none}
+.arac-input:focus{border-color:#2b62b0}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}
+.arac-kart{background:linear-gradient(180deg,rgba(12,32,54,.95),rgba(7,17,30,.95));
+  border:1px solid #1b4269; border-radius:9px; padding:11px 12px; text-align:left; cursor:pointer;
+  display:flex; flex-direction:column; gap:6px; color:#dbeeff}
+.arac-kart:hover{border-color:#3f8ede; background:linear-gradient(180deg,#10365c,#08192c)}
+.arac-kart svg{width:22px;height:22px;color:var(--turkuaz-c)}
+.arac-kart b{font-size:12.4px;letter-spacing:.4px}
+.arac-kart span{font-size:10.8px;color:var(--soluk);line-height:1.35}
+.rozet-kucuk{display:inline-block;font-size:10px;padding:2px 7px;border-radius:9px;
+  background:rgba(234,179,8,.16);color:#fcd34d;border:1px solid rgba(234,179,8,.35);letter-spacing:.4px}
+.rozet-kucuk.tamam{background:rgba(34,197,94,.16);color:#86efac;border-color:rgba(34,197,94,.35)}
+.rozet-kucuk.hata{background:rgba(220,38,38,.18);color:#fca5a5;border-color:rgba(220,38,38,.4)}
+
+/* ALT DURUM ÇUBUĞU */
+#alt{height:26px; display:flex; align-items:center; gap:16px; padding:0 12px; font-size:11.4px;
+  color:#b6d3ef; background:linear-gradient(180deg,#071523,#040c15); border-top:1px solid #12416b;
+  overflow:hidden; white-space:nowrap}
+#alt .sag{margin-left:auto; display:flex; align-items:center; gap:14px; white-space:nowrap}
+.anahtar{width:38px;height:19px;border-radius:12px;background:#123253;position:relative;
+  cursor:pointer;transition:.2s;display:inline-block;vertical-align:middle}
+.anahtar:after{content:"";position:absolute;top:2px;left:2px;width:15px;height:15px;border-radius:50%;
+  background:#8fb0d4;transition:.2s}
+.anahtar.acik{background:#15803d}
+.anahtar.acik:after{left:21px;background:#eafff1}
+
+/* bildirim */
+#bildirim{position:fixed; right:16px; bottom:40px; display:flex; flex-direction:column; gap:8px; z-index:99}
+.bildirim{background:linear-gradient(180deg,#0d2b45,#081827); border:1px solid #2b62b0;
+  border-left:4px solid var(--turkuaz-c); border-radius:9px; padding:10px 14px; min-width:280px;
+  max-width:430px; box-shadow:var(--golge); font-size:12.4px; animation:kay .25s ease}
+.bildirim.basari{border-left-color:var(--yesil)} .bildirim.hata{border-left-color:var(--kirmizi)}
+.bildirim.uyari{border-left-color:var(--sari)}
+.bildirim b{display:block; margin-bottom:3px; letter-spacing:.6px}
+@keyframes kay{from{opacity:0;transform:translateX(30px)}to{opacity:1;transform:none}}
+.yukleniyor{display:inline-block;width:13px;height:13px;border:2px solid #3b82f6;
+  border-top-color:transparent;border-radius:50%;animation:don 0.8s linear infinite}
+@keyframes don{to{transform:rotate(360deg)}}
+.bos{color:var(--cok-soluk);font-size:12px;padding:14px;text-align:center}
+.gizli{display:none !important}
+table{width:100%;border-collapse:collapse;font-size:12.2px}
+th{text-align:left;color:var(--soluk);font-weight:500;font-size:11px;letter-spacing:.7px;
+  padding:6px 8px;border-bottom:1px solid var(--cizgi)}
+td{padding:6px 8px;border-bottom:1px solid rgba(21,50,81,.5)}
+tr:hover td{background:rgba(37,99,235,.07)}
+.mono{font-family:Consolas,monospace}
+.metin-alani{background:#040d16;border:1px solid var(--cizgi);border-radius:8px;padding:11px;
+  font-family:Consolas,monospace;font-size:11.6px;color:#bfe0ff;white-space:pre-wrap;
+  max-height:420px;overflow:auto;line-height:1.5}
+
+/* ---------- v1.2.0 ek stiller ---------- */
+.inp{background:#061524; border:1px solid #24456b; border-radius:7px; color:#dcecff;
+  padding:6px 9px; font:600 12.5px inherit; outline:none}
+.inp:focus{border-color:#4b9fe1; box-shadow:0 0 0 2px rgba(59,130,246,.18)}
+.dev-buton.kucuk{padding:5px 9px; font-size:11.5px; letter-spacing:.3px}
+.serit .dev-buton{width:auto; flex:0 0 auto; padding:9px 13px; font-size:12.5px;
+  letter-spacing:.5px; margin-top:0; box-shadow:0 6px 16px rgba(37,99,235,.35)}
+.serit .dev-buton svg{width:17px;height:17px}
+.serit label{display:flex; align-items:center; gap:6px; font-size:12px; color:#cfe3f8}
+.satir .dev-buton{width:auto; flex:0 0 auto; padding:5px 10px; font-size:11.5px;
+  letter-spacing:.3px; margin-top:0; box-shadow:none}
+.satir .dev-buton svg{width:13px;height:13px}
+.satir .ad{flex:1 1 auto; min-width:120px}
+.bos .satir, .bos .bilgi-satir, .bos .serit{text-align:left}
+.bos .satir .ad{text-align:left}
+.bos .satir .boyut{text-align:right}
+.serit input.inp{width:78px}
+.dev-buton.kucuk svg{width:14px;height:14px}
+#alarmSerit .kutu{margin-bottom:10px; animation:titret .5s ease 2}
+@keyframes titret{0%,100%{transform:translateX(0)}25%{transform:translateX(-3px)}75%{transform:translateX(3px)}}
+
+</style>
+</head>
+<body>
+
+<!-- ============ ÜST ŞERİT ============ -->
+<header id="ust">
+  <div class="marka">
+    <img src="assets/bayrak-tac.png" alt="arma">
+    <div class="yazi">
+      <h1>ÜSTAD</h1>
+      <div class="alt">PC OPTIMIZER</div>
+      <div class="slogan">SİSTEM TEMİZLE • HIZLANDIR • KORU • YÖNET</div>
+    </div>
+  </div>
+  <div class="ust-orta">
+    <div class="rozet">DAHA HIZLI • DAHA TEMİZ • DAHA GÜVENLİ</div>
+    <nav class="sekmeler" id="ustSekmeler">
+      <button data-git="temizlik"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 20h16M7 20V9l3-2 3 2v11M13 20V7l3-2 3 2v13"/></svg>TEMİZLİK</button>
+      <button data-git="performans"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 20a8 8 0 1 1 8-8"/><path d="M12 12l5-4"/></svg>PERFORMANS</button>
+      <button data-git="guvenlik"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/><path d="M9.5 12.5l2 2 3.5-4"/></svg>GÜVENLİK</button>
+      <button data-git="baslangic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg>YÖNETİM</button>
+      <button data-git="araclar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M14 6a4 4 0 0 0 5 5l-8 8-3 1 1-3z"/><path d="M17 3l4 4"/></svg>ARAÇLAR</button>
+    </nav>
+  </div>
+  <div class="ust-sag">
+    <button id="pBtn" title="Komut paleti (Ctrl+K)" style="background:rgba(6,20,36,.85);border:1px solid #2f5680;border-radius:9px;color:#bfe0ff;font:600 11.5px inherit;padding:9px 13px;cursor:pointer;display:flex;align-items:center;gap:8px;white-space:nowrap">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:15px;height:15px;flex:0 0 auto"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.2-4.2"/></svg>ARA <span style="color:#facc15">Ctrl+K</span></button>
+    <img class="kurt" src="assets/sag-kurt.png" alt="kurt">
+    <div class="pencere-dug" id="pencereDug">
+      <button id="pKucult" title="Paneli küçült (görev çubuğuna iner)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 12h12"/></svg></button>
+      <button id="pBuyut" title="Paneli büyüt / eski boyutuna döndür">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" id="pBuyutIkon"><rect x="6" y="6" width="12" height="12" rx="1.5"/></svg></button>
+      <button id="pKapat" title="Paneli kapat" class="kapat-dug">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 7l10 10M17 7L7 17"/></svg></button>
+    </div>
+  </div>
+</header>
+
+<!-- ============ KOMUT PALETİ (Ctrl+K) ============ -->
+<div id="palet" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(2,8,16,.72);backdrop-filter:blur(3px);align-items:flex-start;justify-content:center;padding-top:9vh">
+  <div style="width:min(760px,94vw);background:linear-gradient(180deg,#05121f,#03101c);border:1px solid #2f5680;border-radius:14px;box-shadow:0 28px 70px rgba(0,0,0,.65);overflow:hidden">
+    <div style="display:flex;align-items:center;gap:10px;padding:13px 15px;border-bottom:1px solid #1c3452">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#7fd8ff" stroke-width="1.8" style="width:18px;height:18px"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.2-4.2"/></svg>
+      <input id="pAra" placeholder="Sayfa veya araç ara… (örn: turbo, ram, sfc, ağ)" style="flex:1;background:transparent;border:0;outline:none;color:#e8f2ff;font:600 15px inherit">
+      <span class="kutucuk gri">ESC kapat</span>
+    </div>
+    <div id="pGovde" style="max-height:52vh;overflow:auto;padding:7px"></div>
+    <div style="padding:9px 15px;border-top:1px solid #1c3452;color:#6f95bb;font-size:11.5px">↑ ↓ gez · ENTER seç · Ctrl+K aç/kapat</div>
+  </div>
+</div>
+
+<!-- ============ GÖVDE ============ -->
+<div id="alarmSerit" style="padding:0 16px"></div>
+
+<div id="govde">
+
+  <!-- SOL MENÜ -->
+  <aside class="kolon" id="menu">
+    <div class="oge aktif" data-sayfa="panel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 10l9-6 9 6v10a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>Ana Panel</div>
+    <div class="oge" data-sayfa="temizlik"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 20h16M7 20V9l3-2 3 2v11M13 20V7l3-2 3 2v13"/></svg>Akıllı Temizlik</div>
+    <div class="oge" data-sayfa="performans"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 20a8 8 0 1 1 8-8"/><path d="M12 12l5-4"/></svg>Performans</div>
+    <div class="oge" data-sayfa="programlar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>Program Yönetimi</div>
+    <div class="oge" data-sayfa="zorla"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/><path d="M10 11v6M14 11v6"/></svg>Zorla Kaldırma</div>
+    <div class="oge" data-sayfa="baslangic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 12h14M13 6l6 6-6 6"/></svg>Başlangıç Yönetimi</div>
+    <div class="oge" data-sayfa="tarama"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>Sistem Tarama</div>
+    <div class="oge" data-sayfa="turbo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 15c-1 3 0 5 0 5s2 1 5 0M14 4c3-1 6 2 6 2s1 3 0 5l-5 5-6-6z"/><circle cx="15" cy="9" r="1.4"/></svg>TURBO MOD</div>
+    <div class="oge" data-sayfa="derin"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/><path d="M12 10v7M9 13l3-3 3 3"/></svg>Derin Temizleme</div>
+    <div class="oge" data-sayfa="ag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 9a15 15 0 0 1 18 0M6.5 12.5a10 10 0 0 1 11 0M10 16a5 5 0 0 1 4 0"/><circle cx="12" cy="19.5" r="1.3"/></svg>Ağ &amp; Hız</div>
+    <div class="oge" data-sayfa="donanim"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3"/></svg>Donanım</div>
+    <div class="oge" data-sayfa="disk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="18" height="7" rx="2"/><rect x="3" y="13" width="18" height="7" rx="2"/><path d="M7 7.5h.01M7 16.5h.01"/></svg>Disk Analizi</div>
+    <div class="oge" data-sayfa="araclar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M14 6a4 4 0 0 0 5 5l-8 8-3 1 1-3z"/><path d="M17 3l4 4"/></svg>Windows Araçları</div>
+    <div class="oge" data-sayfa="guvenlik"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/><path d="M9.5 12.5l2 2 3.5-4"/></svg>Güvenlik &amp; Gizlilik</div>
+    <div class="oge" data-sayfa="raporlar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>Raporlar</div>
+    <div class="oge" data-sayfa="canli"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 13h3l2-5 3 10 3-7 2 4h5"/></svg>Canlı İzleme</div>
+    <div class="oge" data-sayfa="hiz"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 20a8 8 0 1 1 8-8"/><path d="M12 12l6-4"/><path d="M4 20h4"/></svg>Hız Testi</div>
+    <div class="oge" data-sayfa="kurtarma"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/><path d="M12 8v4l3 2"/></svg>Kurtarma &amp; Yedek</div>
+    <div class="oge" data-sayfa="yonetim"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></svg>Görev &amp; Hizmet</div>
+    <div class="oge" data-sayfa="guncelleme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M20 12a8 8 0 1 1-2.3-5.6"/><path d="M20 4v4h-4"/></svg>Güncelleme &amp; Gizlilik</div>
+    <div class="oge" data-sayfa="alarm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3a6 6 0 0 0-6 6c0 5-2 6-2 6h16s-2-1-2-6a6 6 0 0 0-6-6z"/><path d="M10 20a2 2 0 0 0 4 0"/></svg>Alarm &amp; Bildirim</div>
+    <div class="oge" data-sayfa="ayarlar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></svg>Ayarlar</div>
+    <div class="alt-amblem">
+      <img src="assets/amblem.png" alt="ÜSTAD amblem">
+      <div class="surum">SYSTEM CLEAN • PERFORMANCE • SECURITY<br>v1.2.1</div>
+    </div>
+  </aside>
+
+  <!-- ORTA ALAN -->
+  <main class="kolon" id="orta"></main>
+
+  <!-- SAĞ KOLON -->
+  <aside class="kolon" id="sag"></aside>
+</div>
+
+<!-- ALT DURUM -->
+<div id="alt">
+  <span id="altSol"><span class="yukleniyor"></span> Sistem ölçülüyor…</span>
+  <div class="sag">
+    <span id="altTemizlik">Son temizlik: —</span>
+    <span>Otomatik Temizlik:
+      <span class="anahtar" id="otoAnahtar"></span>
+      <b id="otoYazi" style="color:#8fb0d4">KAPALI</b>
+    </span>
+    <span id="altAdmin">Yetki: —</span>
+    <span style="color:#f5c542;font-weight:700">👑 ÜSTAD PC OPTIMIZER</span>
+  </div>
+</div>
+
+<div id="bildirim"></div>
+
+<script>
+/* ============================ ALTYAPI ============================ */
+const $ = s => document.querySelector(s);
+const $$ = s => Array.from(document.querySelectorAll(s));
+
+/* Sayfa değiştikten sonra dönen asenkron kod eski DOM'a yazmaya çalışırsa
+   sessizce yutar (null.textContent hatası olmaz). */
+function $saf(sec){
+  const e = document.querySelector(sec);
+  if(e) return e;
+  return {textContent:'', innerHTML:'', value:'', checked:false, disabled:false, dataset:{},
+          style:{}, onclick:null, classList:{add(){}, remove(){}, toggle(){}, contains(){return false;}},
+          appendChild(){}, after(){}, focus(){}, querySelector(){return null;},
+          querySelectorAll(){return [];}};
+}
+
+let AYAR = {otomatikTemizlik:false, sonTemizlik:""};
+let DURUM = {};
+
+function bildir(baslik, mesaj, tur){
+  const d = document.createElement('div');
+  d.className = 'bildirim ' + (tur||'');
+  d.innerHTML = '<b>'+baslik+'</b>'+(mesaj||'');
+  $('#bildirim').appendChild(d);
+  setTimeout(()=>{ d.style.opacity='0'; d.style.transition='.4s'; setTimeout(()=>d.remove(),400); },
+    tur==='hata'?9000:6000);
+}
+async function apiGet(yol){
+  const c = await fetch(yol, {cache:'no-store'});
+  return await c.json();
+}
+
+const ONB = new Map();                       // sayfa içi önbellek
+/* Sunucu agir olcumu arkada yapiyorsa ({hazirlaniyor}) kisa araliklarla
+   yeniden sorar; panel boylece bos/bekleyen ekran gostermez. */
+async function hazirCek(yol, ttl, deneme){
+  deneme = deneme || 24;
+  let son = {};
+  for(let i=0;i<deneme;i++){
+    try{ son = await apiHizli(yol, ttl); }catch(e){ son = {}; }
+    if(!(son && son.hazirlaniyor)) return son;
+    await new Promise(r=>setTimeout(r, 1200));
+  }
+  return son;
+}
+async function apiHizli(yol, ttl){
+  const simdi = Date.now(), k = ONB.get(yol);
+  if(k && (simdi - k.t) < (ttl || 30000)) return k.v;
+  const v = await apiGet(yol);
+  ONB.set(yol, {t: simdi, v});
+  return v;
+}
+async function apiPost(yol, govde){
+  const c = await fetch(yol, {method:'POST', headers:{'Content-Type':'application/json'},
+    body: JSON.stringify(govde||{})});
+  return await c.json();
+}
+function boyut(b){
+  b = Number(b)||0;
+  const u = ['B','KB','MB','GB','TB']; let i=0;
+  while(b >= 1024 && i < 4){ b/=1024; i++; }
+  return (i===0? b.toFixed(0) : b.toFixed(1)) + ' ' + u[i];
+}
+function sure(sn){
+  sn = Number(sn)||0; const g=Math.floor(sn/86400), sa=Math.floor(sn%86400/3600), dk=Math.floor(sn%3600/60);
+  if(g) return g+' gün '+sa+' saat '+dk+' dakika';
+  if(sa) return sa+' saat '+dk+' dakika';
+  return dk+' dakika';
+}
+function halka(yuzde, renk, ikinciRenk){
+  const r=56, cevre=2*Math.PI*r, dolu=cevre*Math.min(100,Math.max(0,yuzde))/100;
+  const gid = 'g'+Math.random().toString(36).slice(2,7);
+  return `<svg width="132" height="132" viewBox="0 0 132 132">
+    <defs><linearGradient id="${gid}" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="${renk}"/><stop offset="100%" stop-color="${ikinciRenk||renk}"/>
+    </linearGradient></defs>
+    <circle cx="66" cy="66" r="${r}" fill="none" stroke="#0d2237" stroke-width="13"/>
+    <circle cx="66" cy="66" r="${r}" fill="none" stroke="url(#${gid})" stroke-width="13"
+      stroke-linecap="round" stroke-dasharray="${dolu} ${cevre-dolu}"/>
+  </svg>`;
+}
+function sayacKutu(ikon, ad, deger, yuzde, renk){
+  return `<div class="sayac">
+    <div class="basi">${ikon}<span>${ad}</span><b>${deger}</b></div>
+    <div class="cizgi"><i style="width:${Math.min(100,yuzde)}%;background:linear-gradient(90deg,${renk},${renk}aa)"></i></div>
+  </div>`;
+}
+const IK = {
+  islemci:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3"/></svg>',
+  ram:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="7" width="18" height="10" rx="2"/><path d="M7 7V4M11 7V4M15 7V4M7 20v-3M11 20v-3M15 20v-3"/></svg>',
+  disk:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="7" rx="2"/><rect x="3" y="13" width="18" height="7" rx="2"/><path d="M7 7.5h.01M7 16.5h.01"/></svg>',
+  tarama:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>',
+  temizlik:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 20h16M7 20V9l3-2 3 2v11M13 20V7l3-2 3 2v13"/></svg>',
+  roket:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 15c-1 3 0 5 0 5s2 1 5 0M14 4c3-1 6 2 6 2s1 3 0 5l-5 5-6-6z"/><circle cx="15" cy="9" r="1.6"/></svg>',
+  cop:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/></svg>',
+  kalkan:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/><path d="M9.5 12.5l2 2 3.5-4"/></svg>',
+  pencere:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 4v16"/></svg>',
+  rapor:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>',
+  saat:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2M9 2h6"/></svg>',
+  bilgisayar:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="4" width="20" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg>'
+};
+
+/* ============================ SAYFALAR ============================ */
+const SAYFALAR = {};
+let AKTIF = 'panel';
+
+/* Sayfa çizimi hata korumalı: bir sayfa patlarsa orta alan boş kalmaz,
+   motor çalışmıyorsa panel kendini toparlar. */
+var MOTOR_BEKLIYOR = null;
+function sayfaHata(ad, e){
+  const o = document.getElementById('orta');
+  if(o && !(o.innerText||'').trim()){
+    o.innerHTML = '<div class="kutu"><h2>\u26a0 SAYFA YÜKLENEMEDİ <span class="sag">' + ad + '</span></h2>'
+      + '<div class="alt" style="margin:4px 0 10px">Sebep: ' + (e && e.message ? e.message : String(e)) + '</div>'
+      + '<div class="serit"><div class="sol"><div class="baslik">Motor çalışıyor mu?</div>'
+      + '<div class="alt">Panel her 3 saniyede bir yeniden dener; motor açılır açılmaz bu sayfa kendiliğinden gelir.</div></div>'
+      + '<button class="dev-buton" id="tekrarDene">Tekrar dene</button></div></div>';
+    const b = document.getElementById('tekrarDene');
+    if(b) b.onclick = ()=> goster(ad);
+  }
+  const s2 = document.getElementById('altSol');
+  if(s2) s2.innerHTML = '<b style="color:#fca5a5">Motor yanıt vermiyor</b> \u2014 yeniden bağlanılıyor\u2026';
+  motorBekle();
+}
+function motorBekle(){
+  if(MOTOR_BEKLIYOR) return;
+  MOTOR_BEKLIYOR = setInterval(async ()=>{
+    try{
+      const n = await hazirCek('/api/nabiz');
+      if(n && n.ok){
+        clearInterval(MOTOR_BEKLIYOR); MOTOR_BEKLIYOR = null;
+        const s3 = document.getElementById('altSol');
+        if(s3) s3.innerHTML = '\u25cf Sistem korunuyor \u2014 tüm ölçümler yerel, veri gönderilmiyor';
+        goster(AKTIF || 'panel');
+      }
+    }catch(e){}
+  }, 3000);
+}
+function goster(ad){
+  AKTIF = ad;
+  if(location.hash !== '#sayfa='+ad) history.replaceState(null,'','#sayfa='+ad);
+  $$('#menu .oge').forEach(o=>o.classList.toggle('aktif', o.dataset.sayfa===ad));
+  const p = SAYFALAR[ad] || SAYFALAR.panel;
+  try{
+    const r = p();
+    if(r && typeof r.catch === 'function') r.catch(function(e){ sayfaHata(ad, e); });
+  }catch(e){ sayfaHata(ad, e); }
+}
+
+/* Panel kalp atisi (20 sn): motor bu vuruslara bakarak kapanip kapanmayacagina
+   karar verir. Pencere kapaninca vuruslar kesilir, motor kendini kapatir. */
+setInterval(()=>{ try{ apiGet('/api/nabiz').catch(()=>{}); }catch(e){} }, 20000);
+
+/* ---------- 1) ANA PANEL ---------- */
+SAYFALAR.panel = async function(){
+  $saf('#orta').innerHTML = `<div class="kutu"><h2>${IK.bilgisayar} SİSTEM DURUMU<span class="sag"><span class="yukleniyor"></span> ölçülüyor</span></h2>
+     <div class="bos">Sistem bilgileri okunuyor…</div></div>`;
+  $saf('#sag').innerHTML = hizliIslemlerHTML();
+  hizliIslemlerBagla();
+  const [d, t] = await Promise.all([apiGet('/api/durum'), apiGet('/api/temizlik/tara')]);
+  DURUM = d;
+  if(d.hata){ bildir('Hata', d.hata, 'hata'); return; }
+  const renk = d.puan>=85?'#22c55e':(d.puan>=70?'#84cc16':(d.puan>=50?'#eab308':'#dc2626'));
+  $saf('#orta').innerHTML = `
+  <div class="kutu">
+    <h2>${IK.bilgisayar} SİSTEM DURUMU<span class="sag">Son ölçüm: ${new Date().toLocaleTimeString('tr-TR')}</span></h2>
+    <div style="display:flex;gap:14px;align-items:center">
+      <div class="olcer">${halka(d.puan, renk, '#a3e635')}
+        <div class="ic"><div class="sayi">${d.puan}</div><div class="birim">/ 100</div>
+        <div class="etiket" style="color:${renk}">${d.puanYazi}</div></div></div>
+      <div style="flex:1">
+        <div class="sayaclar">
+          ${sayacKutu(IK.islemci,'CPU', d.cpuYuk+'%', d.cpuYuk, '#3b82f6')}
+          ${sayacKutu(IK.ram,'RAM', d.ramYuzde+'%', d.ramYuzde, '#a855f7')}
+          ${sayacKutu(IK.disk,'DISK (C:)', d.diskYuzde+'%', d.diskYuzde, '#22c55e')}
+        </div>
+        <div class="bilgi-satir">
+          <div class="b">${IK.bilgisayar}<div><div class="et">İŞLETİM SİSTEMİ</div>
+            <div class="de">${d.osAd} · Sürüm ${d.osYapi}</div></div></div>
+          <div class="b">${IK.saat}<div><div class="et">ÇALIŞMA SÜRESİ</div>
+            <div class="de">${sure(d.calismaSn)}</div></div></div>
+        </div>
+        <div class="bilgi-satir">
+          <div class="b">${IK.islemci}<div><div class="et">İŞLEMCİ</div>
+            <div class="de">${(d.cpuAd||'').substring(0,44)}</div></div></div>
+          <div class="b">${IK.ram}<div><div class="et">BELLEK</div>
+            <div class="de">${boyut(d.ramKullanilan)} / ${boyut(d.ramToplam)} · ${boyut(d.diskBos)} boş disk</div></div></div>
+        </div>
+        <button class="dev-buton" id="btnTarama">${IK.tarama} SİSTEMİ TARA</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="kutu">
+    <h2>${IK.temizlik} TEMİZLENEBİLİR DOSYALAR<span class="sag" style="color:#fcd34d;font-weight:700">${t.toplamYazi} bulundu</span></h2>
+    <div id="temizListe">${t.kategoriler.map(k=>`
+      <div class="satir"><input type="checkbox" class="onay" data-id="${k.id}" ${k.bayt>0?'checked':'disabled'}>
+        <span class="ad">${k.ad} <span style="color:#5b7ea3;font-size:11px">(${k.dosya} dosya${k.erisim?'':', yönetici gerekli'})</span></span>
+        <span class="boyut">${k.boyut}</span></div>`).join('')}
+    </div>
+    <div class="grid2" style="margin-top:9px">
+      <button class="dev-buton" id="btnTemizle" style="background:linear-gradient(180deg,#2f9e5a,#1a7a44);border-color:#4ade80;font-size:16px;padding:11px;box-shadow:0 8px 20px rgba(34,197,94,.35)">
+        ${IK.temizlik} ŞİMDİ TEMİZLE</button>
+      <button class="dev-buton" id="btnTemizYenile" style="background:linear-gradient(180deg,#22436b,#132943);border-color:#3b6ea5;font-size:16px;padding:11px;box-shadow:none">
+        ${IK.tarama} YENİDEN TARA</button>
+    </div>
+  </div>
+
+  <div class="kutu">
+    <h2>${IK.roket} PERFORMANS ARAÇLARI<span class="sag">canlı</span></h2>
+    <div class="grid3">
+      <div class="arac-kart" id="kartRam"><b>RAM TEMİZLE</b>
+        <span>Kullanılan belleği serbest bırak · şu an ${boyut(d.ramKullanilan)}</span></div>
+      <div class="arac-kart" id="kartServis"><b>SERVİSLERİ OPTİMİZE ET</b>
+        <span>En çok bellek yiyen servisleri gör ve durdur</span></div>
+      <div class="arac-kart" id="kartHizlandir"><b>SİSTEMİ HIZLANDIR</b>
+        <span>DNS önbelleği + geçici dosya boşaltma</span></div>
+    </div>
+  </div>
+
+  <div class="kutu">
+    <h2>${IK.pencere} PROGRAM YÖNETİMİ<span class="sag" id="progSayaci">yükleniyor…</span></h2>
+    <div class="kutu-liste" id="miniProg"><div class="bos">Kurulu programlar okunuyor…</div></div>
+  </div>
+
+  <div class="kutu">
+    <h2>${IK.tarama} SAĞLIK PUANI GEÇMİŞİ<span class="sag" id="gecSayac">okunuyor…</span></h2>
+    <div id="gecGrafik"><div class="bos">Geçmiş okunuyor…</div></div>
+    <div id="gecAcilis" style="margin-top:10px"></div>
+  </div>`;
+
+  $saf('#btnTarama').onclick = ()=>goster('tarama');
+  $saf('#btnTemizYenile').onclick = ()=>goster('panel');
+  $saf('#btnTemizle').onclick = temizleCalistir;
+  $saf('#kartRam').onclick = ramTemizle;
+  $saf('#kartServis').onclick = ()=>goster('performans');
+  $saf('#kartHizlandir').onclick = hizlandir;
+
+  const p = await hazirCek('/api/programlar');
+  $saf('#progSayaci').textContent = p.toplam + ' program kurulu';
+  const ilk = p.programlar.slice(0,7);
+  $saf('#miniProg').innerHTML = ilk.map((x,i)=>programSatir(x,i)).join('') +
+    `<button class="mini mavi" style="margin:9px" id="tumProg">TÜM PROGRAMLARI GÖR (${p.toplam})</button>`;
+  baglantilarKur($('#miniProg'));
+  const tp = $('#tumProg'); if(tp) tp.onclick = ()=>goster('programlar');
+  gecmisCiz();
+};
+
+/* ---------- SAĞLIK PUANI GEÇMİŞİ + AÇILIŞ SÜRELERİ (madde 9 & 29) ---------- */
+async function gecmisCiz(){
+  const k = $('#gecGrafik'); if(!k) return;
+  const g = await hazirCek('/api/gecmis');
+  if(g.hata){ k.innerHTML = `<div class="bos">Geçmiş okunamadı: ${g.hata}</div>`; return; }
+  const an = g.anlik || [];
+  const sy = $('#gecSayac');
+  if(sy) sy.textContent = an.length + ' kayıt · 10 dakikada bir puanlanır' + (g.yeniKayit ? ' · şimdi kaydedildi' : '');
+  if(an.length < 1){ k.innerHTML = '<div class="bos">Henüz kayıt yok — panel her açılışta bir kayıt düşer.</div>'; }
+  else {
+    const son = an.slice(-40);
+    const pu = son.map(x=>Number(x.puan)||0);
+    const mn = Math.max(0, Math.min(...pu) - 5), mx = 100;
+    const W = 900, H = 150, ic = 26;
+    const nok = (v,i)=>[ic + (W-2*ic)*(son.length===1?0.5:i/(son.length-1)), H-ic - (H-2*ic)*((v-mn)/(mx-mn||1))];
+    const ciz = pu.map((v,i)=>nok(v,i));
+    const yol = ciz.map(p=>p[0].toFixed(1)+','+p[1].toFixed(1)).join(' ');
+    const alan = `${ic},${H-ic} ` + yol + ` ${(W-ic)},${H-ic}`;
+    k.innerHTML = `<svg viewBox="0 0 ${W} ${H}" style="width:100%;height:150px;display:block">
+      <defs><linearGradient id="gGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#22c7ff" stop-opacity=".55"/><stop offset="100%" stop-color="#22c7ff" stop-opacity="0"/></linearGradient></defs>
+      <line x1="${ic}" y1="${H-ic}" x2="${W-ic}" y2="${H-ic}" stroke="#2b4a6b"/>
+      <line x1="${ic}" y1="${ic}" x2="${W-ic}" y2="${ic}" stroke="#1d3550" stroke-dasharray="4 5"/>
+      <polygon points="${alan}" fill="url(#gGrad)"/>
+      <polyline points="${yol}" fill="none" stroke="#38d4ff" stroke-width="2.4" stroke-linejoin="round"/>
+      ${ciz.map((p,i)=>`<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="${i===ciz.length-1?4.2:2.2}" fill="${i===ciz.length-1?'#facc15':'#7fd8ff'}"/>`).join('')}
+      <text x="${ic}" y="${H-6}" fill="#6f95bb" font-size="12">ilk kayıt: ${son[0].tarih||''} · puan ${son[0].puan}</text>
+      <text x="${W-ic}" y="${H-6}" fill="#a9c9e8" font-size="12" text-anchor="end">son: ${son[son.length-1].tarih||''} · puan ${son[son.length-1].puan}</text>
+      <text x="${ic}" y="18" fill="#6f95bb" font-size="12">${mn}</text>
+      <text x="${ic}" y="${ic+4}" fill="#6f95bb" font-size="12">${mx}</text>
+    </svg>`;
+  }
+  const ac = $('#gecAcilis'); if(!ac) return;
+  const a = g.acilis || [];
+  ac.innerHTML = `<div style="color:#9dc3e6;font-size:11.5px;margin-bottom:6px">AÇILIŞ SÜRELERİ (Windows Kullanım Günlüğü) — ${a.length} kayıt</div>` +
+    (a.length ? `<div class="kutu-liste" style="max-height:170px">${a.slice(0,12).map(o=>{
+      const sn = o.ms ? (o.ms/1000).toFixed(1)+' sn' : '—';
+      const ren = !o.ms ? '' : (o.ms < 20000 ? '#4ade80' : o.ms < 40000 ? '#facc15' : '#f87171');
+      return `<div class="satir"><span class="no">${o.id}</span><span class="ad">${o.olay||''} <span style="color:#5b7ea3;font-size:11px">${o.tarih||''}</span></span><span class="boyut" style="color:${ren}">${sn}</span></div>`;
+    }).join('')}</div>`
+    : '<div class="bos">Henüz açılış kaydı yok. Windows bu kayıtları bir sonraki yeniden başlatmadan itibaren tutar — Grafik o zaman dolar.</div>');
+}
+
+function programSatir(x, i){
+  return `<div class="satir"><span class="no">${i+1}</span>
+    <span class="ad" title="${x.ad}">${x.ad} <span style="color:#5b7ea3;font-size:11px">${x.surum}</span></span>
+    <span class="boyut">${x.boyutYazi}</span>
+    <button class="mini mavi kaldir" data-ad="${x.ad.replace(/"/g,'&quot;')}" data-k="${(x.kaldirma||'').replace(/"/g,'&quot;')}">Kaldır</button>
+    <button class="mini kirmizi zorla" data-ad="${x.ad.replace(/"/g,'&quot;')}">Zorla Kaldır</button></div>`;
+}
+function baglantilarKur(kok){
+  kok.querySelectorAll('.kaldir').forEach(b=>b.onclick=()=>{
+    if(confirm(b.dataset.ad + ' kaldırılsın mı? Kaldırma sihirbazı açılacak.')) programKaldir(b.dataset.ad, b.dataset.k);
+  });
+  kok.querySelectorAll('.zorla').forEach(b=>b.onclick=()=>{
+    ZORLA_AD = b.dataset.ad; goster('zorla');
+  });
+}
+
+/* ---------- 2) AKILLI TEMİZLİK ---------- */
+SAYFALAR.temizlik = async function(){
+  AKTIF='temizlik';
+  $saf('#orta').innerHTML = `<div class="kutu"><h2>${IK.temizlik} AKILLI TEMİZLİK<span class="sag"><span class="yukleniyor"></span> taranıyor</span></h2>
+    <div class="bos">Temizlenebilir alanlar ölçülüyor…</div></div>`;
+  $saf('#sag').innerHTML = hizliIslemlerHTML(); hizliIslemlerBagla();
+  const t = await hazirCek('/api/temizlik/tara');
+  $saf('#orta').innerHTML = `
+  <div class="kutu">
+    <h2>${IK.temizlik} AKILLI TEMİZLİK<span class="sag" style="color:#fcd34d;font-weight:700">Toplam ${t.toplamYazi} kazanılabilir</span></h2>
+    <div class="bos" style="padding:0 0 8px;text-align:left;color:#8fb0d4">
+      Silinecek kategorileri işaretleyin. Kilitli (kullanımdaki) dosyalar otomatik atlanır.</div>
+    <div id="temizListe">${t.kategoriler.map(k=>`
+      <div class="satir"><input type="checkbox" class="onay" data-id="${k.id}" ${k.bayt>0?'checked':'disabled'}>
+        <span class="ad">${k.ad}<br><span style="color:#5b7ea3;font-size:11px">${k.dosya} dosya · ${k.erisim?'':'YÖNETİCİ GEREKLİ'}</span></span>
+        <span class="boyut">${k.boyut}</span></div>`).join('')}</div>
+    <div class="grid3" style="margin-top:11px">
+      <button class="mini yesil" id="bt1" style="padding:12px;font-size:14px">ŞİMDİ TEMİZLE</button>
+      <button class="mini mavi" id="bt2" style="padding:12px;font-size:14px">SAĞLIKLI OLANLARI SEÇ</button>
+      <button class="mini gri" id="bt3" style="padding:12px;font-size:14px">KATEGORİLERİ GİZLE</button>
+    </div>
+    <div class="metin-alani gizli" id="temizSonuc" style="margin-top:10px"></div>
+  </div>
+  <div class="kutu">
+    <h2>${IK.disk} DİSK DOLULUK DURUMU</h2>
+    <div id="diskDurum"><div class="bos">okunuyor…</div></div>
+  </div>`;
+  $saf('#bt1').onclick = temizleCalistir;
+  $saf('#bt2').onclick = ()=>{ $$('#temizListe .onay').forEach(o=>o.checked = !o.disabled); };
+  $saf('#bt3').onclick = ()=>{ $('#temizListe').classList.toggle('gizli'); };
+  const d = await hazirCek('/api/durum'); DURUM = d;
+  $saf('#diskDurum').innerHTML = `
+    <div class="satir"><span class="ad">Kullanılan: <b>${boyut(d.diskKullanilan)}</b></span>
+      <span class="boyut">${d.diskYuzde}%</span></div>
+    <div class="satir"><span class="ad">Boş alan: <b>${boyut(d.diskBos)}</b></span>
+      <span class="boyut">${100-d.diskYuzde}%</span></div>
+    <div class="ok" style="height:10px;background:#0c2237;border-radius:5px;overflow:hidden;margin-top:8px">
+      <i style="display:block;height:100%;width:${d.diskYuzde}%;background:linear-gradient(90deg,#22c55e,#eab308,#dc2626)"></i></div>`;
+};
+
+async function temizleCalistir(){
+  const secili = $$('#temizListe .onay').filter(o=>o.checked && !o.disabled).map(o=>o.dataset.id);
+  if(!secili.length){ bildir('Uyarı','Hiçbir kategori seçilmedi.','uyari'); return; }
+  bildir('Temizlik başladı', 'Seçilen alanlar temizleniyor, birkaç saniye sürebilir…', 'uyari');
+  const r = await apiPost('/api/temizlik/temizle', {secili});
+  bildir('Temizlik tamamlandı',
+    `<b style="color:#86efac;font-size:15px">${r.silinenYazi} alan kazanıldı</b>` +
+    r.detay.filter(x=>x.bayt>0).map(x=>`• ${x.ad}: ${x.boyut} (${x.dosya} dosya)`).join('<br>') +
+    (r.atlanan? '<br><span style="color:#fcd34d">'+r.atlanan+' dosya kilitli olduğu için atlandı.</span>':''),
+    'basari');
+  const a = await hazirCek('/api/ayar');
+  AYAR.sonTemizlik = new Date().toLocaleString('tr-TR');
+  await apiPost('/api/ayar/kaydet', {sonTemizlik: AYAR.sonTemizlik});
+  altCubukGuncelle();
+  if(AKTIF==='panel' || AKTIF==='temizlik') goster(AKTIF);
+}
+
+/* ---------- 3) PERFORMANS ---------- */
+SAYFALAR.performans = async function(){
+  AKTIF='performans';
+  $saf('#sag').innerHTML = hizliIslemlerHTML(); hizliIslemlerBagla();
+  const d = await hazirCek('/api/durum'); DURUM = d;
+  const s = await hazirCek('/api/servisler');
+  $saf('#orta').innerHTML = `
+  <div class="kutu">
+    <h2>${IK.roket} CANLI PERFORMANS<span class="sag">2 saniyede bir yenilenir</span></h2>
+    <div style="display:flex;gap:16px;align-items:center">
+      <div class="olcer">${halka(d.cpuYuk,'#3b82f6','#22d3ee')}
+        <div class="ic"><div class="sayi" id="cCpu">${d.cpuYuk}%</div><div class="birim">CPU</div></div></div>
+      <div class="olcer">${halka(d.ramYuzde,'#a855f7','#ec4899')}
+        <div class="ic"><div class="sayi" id="cRam">${d.ramYuzde}%</div><div class="birim">RAM</div></div></div>
+      <div class="olcer">${halka(d.diskYuzde,'#22c55e','#84cc16')}
+        <div class="ic"><div class="sayi" id="cDisk">${d.diskYuzde}%</div><div class="birim">DİSK</div></div></div>
+      <div style="flex:1">
+        <div class="satir"><span class="ad">Bellek kullanımı</span><span class="boyut">${boyut(d.ramKullanilan)} / ${boyut(d.ramToplam)}</span></div>
+        <div class="satir"><span class="ad">Disk doluluk</span><span class="boyut">${boyut(d.diskKullanilan)} / ${boyut(d.diskToplam)}</span></div>
+        <div class="satir"><span class="ad">Sağlık puanı</span><span class="boyut">${d.puan}/100</span></div>
+        <div class="satir"><span class="ad">Çalışma süresi</span><span class="boyut">${sure(d.calismaSn)}</span></div>
+        <button class="mini mavi" style="margin:8px 0 0;padding:9px 16px;width:100%" id="pYenile">ÖLÇÜMÜ YENİLE</button>
+      </div>
+    </div>
+  </div>
+  <div class="kutu">
+    <h2>${IK.roket} TEK TIKLA HIZLANDIRMA</h2>
+    <div class="grid4">
+      <div class="arac-kart" id="aRam">${IK.ram}<b>RAM TEMİZLE</b><span>Çalışma kümelerini boşalt</span></div>
+      <div class="arac-kart" id="aDns">${IK.tarama}<b>DNS ÖNBELLEĞİ</b><span>ipconfig /flushdns komutunu çalıştır</span></div>
+      <div class="arac-kart" id="aGecici">${IK.temizlik}<b>GEÇİCİ DOSYALAR</b><span>%TEMP% içeriğini boşalt</span></div>
+      <div class="arac-kart" id="aSistem">${IK.roket}<b>SİSTEMİ HIZLANDIR</b><span>Üçünü birlikte uygula</span></div>
+    </div>
+  </div>
+  <div class="kutu">
+    <h2>${IK.bilgisayar} EN ÇOK BELLEK KULLANAN UYGULAMALAR<span class="sag">${(s.servisler||[]).length} uygulama · 20 MB üzeri</span></h2>
+    <div class="kutu-liste">${(s.servisler||[]).map((x,i)=>`
+      <div class="satir"><span class="no">${i+1}</span>
+        <span class="ad">${x.gorunen||x.ad}<br><span style="color:#5b7ea3;font-size:11px" class="mono">PID ${x.pid||'-'}</span></span>
+        <span class="boyut">${x.ramYazi}</span></div>`).join('') || '<div class="bos">Süreç bilgisi okunamadı.</div>'}</div>
+  </div>`;
+  $saf('#aRam').onclick = ramTemizle;
+  $saf('#aDns').onclick = ()=>{ aracCalistir('dns-temizle'); };
+  $saf('#aGecici').onclick = async ()=>{
+    const r = await apiPost('/api/temizlik/temizle',{secili:['gecici','tarayici','diger']});
+    bildir('Geçici dosyalar temizlendi', r.silinenYazi+' kazanıldı ('+r.silinenDosya+' dosya).','basari');
+  };
+  $saf('#aSistem').onclick = hizlandir;
+  $saf('#pYenile').onclick = ()=>goster('performans');
+  clearInterval(window.__perfTimer);
+  window.__perfTimer = setInterval(async ()=>{
+    if(AKTIF!=='performans'){ clearInterval(window.__perfTimer); return; }
+    const x = await hazirCek('/api/durum');
+    if(x.hata) return;
+    DURUM = x;
+    const g = (a,b)=>$(a).parentElement.querySelector('svg circle:nth-child(2)');
+    [['#cCpu',x.cpuYuk],['#cRam',x.ramYuzde],['#cDisk',x.diskYuzde]].forEach(([sel,v])=>{
+      const el=$(sel); if(el) el.textContent = v+'%';
+    });
+  }, 2000);
+};
+
+async function ramTemizle(){
+  bildir('RAM temizleniyor','Çalışma kümeleri boşaltılıyor…','uyari');
+  const r = await hazirCek('/api/ram');
+  bildir('RAM temizlendi', r.mesaj + '<br>Şimdiki bellek: '+r.ramYazi+' ('+r.ramYuzde+'%)',
+    r.kazanc>0?'basari':'uyari');
+}
+async function hizlandir(){
+  bildir('Hızlandırma başladı','DNS önbelleği + geçici dosyalar + bellek…','uyari');
+  await apiPost('/api/arac',{id:'dns-temizle'});
+  const t = await apiPost('/api/temizlik/temizle',{secili:['gecici','tarayici','diger']});
+  const r = await hazirCek('/api/ram');
+  bildir('Sistem hızlandırıldı',
+    '• DNS önbelleği temizlendi<br>• Geçici dosyalardan '+t.silinenYazi+' kazanıldı<br>• Bellek: '+r.kazancYazi+' serbest',
+    'basari');
+  if(AKTIF==='panel'||AKTIF==='performans') goster(AKTIF);
+}
+
+/* ---------- 4) PROGRAM YÖNETİMİ ---------- */
+SAYFALAR.programlar = async function(){
+  AKTIF='programlar';
+  $saf('#sag').innerHTML = `<div class="kutu"><h2>${IK.pencere} PROGRAM BİLGİSİ</h2>
+    <div class="bos" style="text-align:left;color:#8fb0d4;padding:4px 0">
+    Liste Windows kayıt defterindeki (Uninstall) kayıtlardan okunur.<br><br>
+    <b style="color:#dcecff">Kaldır:</b> programın kendi kaldırma sihirbazını açar.<br><br>
+    <b style="color:#dcecff">Zorla Kaldır:</b> programı silip geride kalan klasör ve kayıtları temizler.</div></div>`;
+  $saf('#orta').innerHTML = `<div class="kutu"><h2>${IK.pencere} PROGRAM YÖNETİMİ<span class="sag"><span class="yukleniyor"></span> okunuyor</span></h2>
+     <div class="bos">Kayıt defteri taranıyor…</div></div>`;
+  const p = await hazirCek('/api/programlar');
+  window.__PROG = p.programlar;
+  $saf('#orta').innerHTML = `
+  <div class="kutu">
+    <h2>${IK.pencere} PROGRAM YÖNETİMİ<span class="sag">${p.toplam} program bulundu</span></h2>
+    <div style="display:flex;gap:8px;margin-bottom:9px">
+      <input class="arac-input" id="progAra" placeholder="Program ara… (isim veya yayıncı)">
+      <button class="mini mavi" id="progSirala" style="padding:9px 14px;white-space:nowrap">BÜYÜKTEN KÜÇÜĞE</button>
+      <button class="mini gri" id="progAlfabe" style="padding:9px 14px;white-space:nowrap">A → Z</button>
+    </div>
+    <div class="kutu-liste" style="max-height:470px" id="progListe">${p.programlar.map((x,i)=>programSatir(x,i)).join('')}</div>
+  </div>`;
+  const ciz = (dizi)=>{
+    $saf('#progListe').innerHTML = dizi.map((x,i)=>programSatir(x,i)).join('') || '<div class="bos">Eşleşen program yok.</div>';
+    baglantilarKur($('#progListe'));
+  };
+  baglantilarKur($('#progListe'));
+  $saf('#progAra').oninput = (e)=>{
+    const s = e.target.value.toLowerCase();
+    ciz(p.programlar.filter(x=>(x.ad+' '+x.yayinci).toLowerCase().includes(s)));
+  };
+  $saf('#progSirala').onclick = ()=>ciz([...p.programlar].sort((a,b)=>b.boyut-a.boyut));
+  $saf('#progAlfabe').onclick = ()=>ciz([...p.programlar].sort((a,b)=>a.ad.localeCompare(b.ad,'tr')));
+};
+async function programKaldir(ad, kaldirma){
+  const r = await apiPost('/api/program/kaldir',{ad, kaldirma});
+  bildir(r.ok?'Kaldırma başlatıldı':'Kaldırılamadı', r.mesaj, r.ok?'basari':'hata');
+}
+
+/* ---------- 5) ZORLA KALDIRMA ---------- */
+let ZORLA_AD = "";
+SAYFALAR.zorla = async function(){
+  AKTIF='zorla';
+  $saf('#sag').innerHTML = `<div class="kutu"><h2>${IK.cop} NASIL ÇALIŞIR?</h2>
+    <div style="color:#c6dcf5;line-height:1.6;font-size:12.4px">
+    1) Program adını yazın (en az 3 harf).<br>
+    2) Program Files, ProgramData ve AppData içinde kalan klasörleri bulur.<br>
+    3) Kayıt defterindeki kalıntı kayıtları listeler.<br>
+    4) Seçtiklerinizi kalıcı olarak siler.<br><br>
+    <span style="color:#fcd34d">Uyarı: silme geri alınamaz. Önce normal "Kaldır" düğmesini deneyin.</span></div></div>`;
+  $saf('#orta').innerHTML = `
+  <div class="kutu">
+    <h2>${IK.cop} ZORLA KALDIRMA<span class="sag">kalıntı avcısı</span></h2>
+    <div style="display:flex;gap:8px">
+      <input class="arac-input" id="zorlaAd" placeholder="Program adı yazın… (örn: WinRAR)" value="${ZORLA_AD}">
+      <button class="mini mavi" id="zorlaAra" style="padding:9px 18px;white-space:nowrap">KALINTI ARA</button>
+    </div>
+    <div id="zorlaSonuc" style="margin-top:10px"><div class="bos">Aramak için program adı yazın.</div></div>
+  </div>`;
+  $saf('#zorlaAra').onclick = zorlaAra;
+  if(ZORLA_AD) zorlaAra();
+};
+async function zorlaAra(){
+  const ad = $('#zorlaAd').value.trim();
+  $saf('#zorlaSonuc').innerHTML = '<div class="bos"><span class="yukleniyor"></span> Kalıntılar aranıyor…</div>';
+  const r = await apiPost('/api/zorla/ara',{ad});
+  if(r.uyari){ $saf('#zorlaSonuc').innerHTML = '<div class="bos">'+r.uyari+'</div>'; return; }
+  $saf('#zorlaSonuc').innerHTML = `
+    <div style="color:#8fb0d4;margin-bottom:8px">${r.klasorler.length} klasör ve ${r.kayitlar.length} kayıt defteri kalıntısı bulundu.</div>
+    <div class="kutu-liste" style="max-height:300px">${r.klasorler.map((k,i)=>`
+      <div class="satir"><input type="checkbox" class="onay zk" data-yol="${k.yol.replace(/"/g,'&quot;')}" checked>
+        <span class="no">${i+1}</span><span class="ad" title="${k.yol}">${k.yol}
+          <br><span style="color:#5b7ea3;font-size:11px">${k.dosya} dosya</span></span>
+        <span class="boyut">${k.boyut}</span></div>`).join('')}</div>
+    ${r.kayitlar.length?`<div style="margin-top:10px;color:#fcd34d;font-size:12px">Kayıt defteri kalıntıları (silinecek):</div>
+      ${r.kayitlar.map(k=>`<div class="satir"><input type="checkbox" class="onay zr" data-a="${(k.anahtar||'').replace(/"/g,'&quot;')}" checked>
+        <span class="ad">${k.ad}</span></div>`).join('')}`:''}
+    <button class="mini kirmizi" id="zorlaSil" style="margin-top:11px;padding:11px 20px;font-size:13.5px">SEÇİLENLERİ KALICI SİL</button>`;
+  $saf('#zorlaSil').onclick = async ()=>{
+    const yollar = $$('.zk').filter(o=>o.checked).map(o=>o.dataset.yol);
+    const anahtarlar = $$('.zr').filter(o=>o.checked).map(o=>o.dataset.a);
+    if(!yollar.length && !anahtarlar.length){ bildir('Uyarı','Hiçbir şey seçilmedi.','uyari'); return; }
+    if(!confirm('Seçilen '+yollar.length+' klasör ve '+anahtarlar.length+' kayıt kalıcı olarak silinecek. Emin misiniz?')) return;
+    const s = await apiPost('/api/zorla/sil',{yollar, anahtarlar});
+    bildir('Zorla kaldırma tamamlandı', s.mesaj +
+      (s.hatalar.length? '<br><span style="color:#fcd34d">'+s.hatalar.length+' öge silinemedi (kilitli/yetki).</span>':''),
+      'basari');
+    zorlaAra();
+  };
+}
+
+/* ---------- 6) BAŞLANGIÇ YÖNETİMİ ---------- */
+SAYFALAR.baslangic = async function(){
+  AKTIF='baslangic';
+  $saf('#sag').innerHTML = `<div class="kutu"><h2>${IK.roket} NEDEN ÖNEMLİ?</h2>
+    <div style="color:#c6dcf5;line-height:1.6;font-size:12.4px">
+    Başlangıçta açılan gereksiz programlar açılış süresini uzatır ve belleği yer.<br><br>
+    <b style="color:#dcecff">Kayıt Defteri</b> ögeleri Windows'un "Başlangıç onaylı" anahtarıyla
+    kapatılır — böylece program silinmez, sadece açılışta başlamaz; istediğiniz an geri açabilirsiniz.</div></div>`;
+  $saf('#orta').innerHTML = `<div class="kutu"><h2>${IK.roket} BAŞLANGIÇ YÖNETİMİ<span class="sag"><span class="yukleniyor"></span></span></h2>
+    <div class="bos">Okunuyor…</div></div>`;
+  const b = await hazirCek('/api/baslangic');
+  window.__BAS = b.ogeler;
+  cizBaslangic(b.ogeler);
+};
+function cizBaslangic(dizi){
+  $saf('#orta').innerHTML = `
+  <div class="kutu">
+    <h2>${IK.roket} BAŞLANGIÇ YÖNETİMİ<span class="sag">${dizi.length} öge · ${dizi.filter(x=>x.kapali).length} kapalı</span></h2>
+    <div class="kutu-liste" style="max-height:520px">
+      ${dizi.map((x,i)=>`
+      <div class="satir">
+        <span class="no">${i+1}</span>
+        <span class="ad">${x.ad}
+          <br><span style="color:#5b7ea3;font-size:11px">${x.tur} · ${x.kullanici} · <span class="mono">${(x.komut||'').substring(0,80)}</span></span></span>
+        ${x.kapali?'<span class="rozet-kucuk">KAPALI</span>':'<span class="rozet-kucuk tamam">AÇIK</span>'}
+        <button class="mini ${x.kapali?'yesil':'kirmizi'}" data-i="${i}" data-t="${x.kapali?'ac':'kapat'}">
+          ${x.kapali?'AÇ':'KAPAT'}</button>
+      </div>`).join('')}
+    </div>
+    <button class="mini gri" style="margin-top:10px;padding:10px 16px" id="basYenile">LİSTEYİ YENİLE</button>
+  </div>`;
+  $saf('#basYenile').onclick = ()=>goster('baslangic');
+  $$('#orta [data-i]').forEach(b=>b.onclick = async ()=>{
+    const o = window.__BAS[Number(b.dataset.i)];
+    const kapali = b.dataset.t === 'kapat';
+    b.disabled = true;
+    const r = await apiPost('/api/baslangic/degistir',
+      {ad:o.ad, kapsam:o.kapsam, tur:o.tur, kapat:kapali});
+    bildir(r.ok?'Başlangıç değişti':'Değiştirilemedi', r.mesaj, r.ok?'basari':'hata');
+    if(r.ok) goster('baslangic'); else b.disabled = false;
+  });
+}
+
+/* ---------- 7) SİSTEM TARAMA ---------- */
+SAYFALAR.tarama = async function(){
+  AKTIF='tarama';
+  $saf('#sag').innerHTML = `<div class="kutu"><h2>${IK.tarama} TARAMA KAPSAMI</h2>
+    <div style="color:#c6dcf5;line-height:1.7;font-size:12.3px">
+    • Disk sağlığı (SMART)<br>• Bellek ve disk doluluğu<br>• Windows bileşen deposu (DISM CheckHealth)<br>
+    • Bekleyen yeniden başlatma<br>• Sistem olay günlüğü hataları<br>• Temizlenebilir dosya yükü<br>
+    • Başlangıç öge sayısı<br>• Yönetici yetkisi durumu</div></div>`;
+  $saf('#orta').innerHTML = `<div class="kutu"><h2>${IK.tarama} SİSTEM TARAMASI<span class="sag"><span class="yukleniyor"></span> sürüyor</span></h2>
+    <div class="bos">Gerçek ölçümler yapılıyor, DISM kontrolü 30-60 saniye sürebilir…</div></div>`;
+  const r = await hazirCek('/api/tarama');
+  const renk = r.puan>=85?'#22c55e':(r.puan>=70?'#84cc16':(r.puan>=50?'#eab308':'#dc2626'));
+  $saf('#orta').innerHTML = `
+  <div class="kutu">
+    <h2>${IK.tarama} TARAMA SONUCU<span class="sag">${r.iyi}/${r.toplam} kontrol iyi</span></h2>
+    <div style="display:flex;gap:16px;align-items:center;margin-bottom:10px">
+      <div class="olcer">${halka(r.puan, renk, '#a3e635')}
+        <div class="ic"><div class="sayi">${r.puan}</div><div class="birim">/ 100</div>
+        <div class="etiket" style="color:${renk}">${r.puanYazi}</div></div></div>
+      <div style="flex:1">
+      ${r.kontroller.map(k=>`
+        <div class="satir"><span class="durum">${k.durum==='iyi'
+          ? '<span class="rozet-kucuk tamam">TAM</span>' : '<span class="rozet-kucuk">DİKKAT</span>'}</span>
+          <span class="ad"><b style="font-weight:600">${k.baslik}</b><br><span style="color:#9dc6ee;font-size:11.5px">${k.deger}</span></span></div>`).join('')}
+      </div>
+    </div>
+    <div class="grid3">
+      <button class="mini mavi" id="tYenile" style="padding:11px;font-size:13px">YENİDEN TARA</button>
+      <button class="mini yesil" id="tTemizle" style="padding:11px;font-size:13px">SORUNLARI TEMİZLE</button>
+      <button class="mini gri" id="tRapor" style="padding:11px;font-size:13px">RAPORU MASAÜSTÜNE KAYDET</button>
+    </div>
+  </div>
+  <div class="kutu">
+    <h2>${IK.bilgisayar} BULUNAN SORUNLAR</h2>
+    ${r.kontroller.filter(k=>k.durum!=='iyi').map(k=>`
+      <div class="satir"><span class="ad" style="color:#fcd34d">! ${k.baslik}</span>
+        <span class="boyut" style="color:#fcd34d">${k.deger}</span></div>`).join('')
+      || '<div class="bos" style="color:#86efac">Hiçbir sorun bulunmadı — sistem sağlıklı görünüyor.</div>'}
+  </div>`;
+  $saf('#tYenile').onclick = ()=>goster('tarama');
+  $saf('#tTemizle').onclick = async ()=>{
+    bildir('Sorunlar temizleniyor','Geçici dosyalar + DNS önbelleği…','uyari');
+    await apiPost('/api/arac',{id:'dns-temizle'});
+    const t = await apiPost('/api/temizlik/temizle',{secili:['gecici','tarayici','diger','update']});
+    bildir('Temizlik yapıldı', t.silinenYazi+' kazanıldı.','basari');
+    goster('tarama');
+  };
+  $saf('#tRapor').onclick = ()=>goster('raporlar');
+};
+
+/* ---------- 8) DİSK ANALİZİ ---------- */
+SAYFALAR.disk = async function(){
+  AKTIF='disk';
+  $saf('#sag').innerHTML = `<div class="kutu"><h2>${IK.disk} NE YAPAR?</h2>
+    <div style="color:#c6dcf5;line-height:1.6;font-size:12.4px">
+    C: sürücüsündeki en büyük klasörleri ve 80 MB üzeri tek tek dosyaları listeler.<br><br>
+    Böylece yeri neyin doldurduğunu görürsünüz. Silme işlemi bu panelden yapılmaz —
+    dosyayı Gezgin'de açıp kendiniz karar verirsiniz (yanlışlıkla silme olmasın).</div></div>`;
+  $saf('#orta').innerHTML = `<div class="kutu"><h2>${IK.disk} DİSK ANALİZİ<span class="sag"><span class="yukleniyor"></span> taranıyor</span></h2>
+    <div class="bos">Disk taranıyor — büyük diskin varsa 20-40 saniye sürebilir…</div></div>`;
+  const r = await hazirCek('/api/disk');
+  $saf('#orta').innerHTML = `
+  <div class="kutu">
+    <h2>${IK.disk} DİSK (C:) DOLULUK<span class="sag">${r.taranan} nesne tarandı</span></h2>
+    <div class="grid3">
+      ${sayacKutu(IK.disk,'TOPLAM', r.diskToplam, 100, '#3b82f6')}
+      ${sayacKutu(IK.disk,'KULLANILAN', r.diskKullanilan, r.diskYuzde, '#f97316')}
+      ${sayacKutu(IK.disk,'BOŞ', r.diskBos, 100-r.diskYuzde, '#22c55e')}
+    </div>
+  </div>
+  <div class="kutu">
+    <h2>${IK.disk} DİSK ISI HARİTASI (C:\\ — klasör büyüklüğüne göre)</h2>
+    <div style="display:flex;flex-wrap:wrap;gap:5px">
+      ${(()=>{ const kk = r.klasorler.slice(0,24); const enb = Math.max(...kk.map(x=>x.bayt||1),1);
+        return kk.map(x=>{ const o = (x.bayt||0)/enb;
+          const hue = Math.round(210 - 210*o);
+          return `<div title="${x.ad} · ${boyut(x.bayt)}" style="flex:${Math.max(1,Math.round(o*12))} 1 74px;height:60px;border-radius:7px;
+            background:linear-gradient(160deg,hsla(${hue},85%,52%,.85),hsla(${hue},85%,30%,.55));border:1px solid hsla(${hue},85%,65%,.45);
+            display:flex;flex-direction:column;justify-content:center;align-items:center;padding:3px;overflow:hidden">
+            <span style="font-size:10.5px;color:#f2f8ff;font-weight:700;text-align:center;line-height:1.15">${x.ad.length>14?x.ad.substring(0,13)+'…':x.ad}</span>
+            ${o>0.14 ? `<span class="mono" style="font-size:10px;color:#dbeafe">${boyut(x.bayt)}</span>` : ''}</div>`; }).join(''); })()}
+    </div>
+    <div style="color:#7f9fbf;font-size:11px;margin-top:7px">Sıcak renk (kırmızı) = en çok yer kaplayan klasör. Kutu genişliği de büyüklükle orantılıdır.</div>
+  </div>
+  <div class="kutu">
+    <h2>${IK.disk} EN BÜYÜK KLASÖRLER (C:\\ kökü)</h2>
+    <div class="kutu-liste" style="max-height:320px">
+      ${r.klasorler.map((k,i)=>`<div class="satir"><span class="no">${i+1}</span>
+        <span class="ad" title="${k.yol}">${k.ad} <span style="color:#5b7ea3;font-size:11px">${k.dosya} dosya</span></span>
+        <span class="boyut">${boyut(k.bayt)}</span></div>`).join('')}
+    </div>
+  </div>
+  <div class="kutu">
+    <h2>${IK.dosya||IK.disk} 80 MB ÜZERİ BÜYÜK DOSYALAR<span class="sag">${r.dosyalar.length} dosya</span></h2>
+    <div class="kutu-liste" style="max-height:340px">
+      ${r.dosyalar.map((k,i)=>`<div class="satir"><span class="no">${i+1}</span>
+        <span class="ad" title="${k.yol}">${k.ad}<br>
+          <span style="color:#5b7ea3;font-size:11px">${k.yol.substring(0,90)}</span></span>
+        <span class="boyut">${k.boyut}</span></div>`).join('') || '<div class="bos">80 MB üzeri dosya bulunamadı.</div>'}
+    </div>
+  </div>`;
+};
+
+/* ---------- 9) WINDOWS ARAÇLARI ---------- */
+const ARAC_LISTE = [
+  ['dism-check','Windows Bileşen Deposu Kontrolü','DISM /CheckHealth · hasar var mı diye bakar','yönetici'],
+  ['dism-restore','Windows Bileşen Deposu Onarımı','DISM /RestoreHealth · bozuk bileşeni onarır','yönetici'],
+  ['sfc','Sistem Dosyası Taraması ve Onarımı','sfc /scannow · bozuk sistem dosyalarını onarır','yönetici'],
+  ['sfc-verify','Sistem Dosyası Doğrulaması','sfc /verifyonly · sadece kontrol, onarım yapmaz','yönetici'],
+  ['chkdsk','Disk Hatası Taraması','chkdsk C: · sadece okur, değişiklik yapmaz','yönetici'],
+  ['disk-temizle','Disk Temizleme Aracı','Windows cleanmgr aracını açar',''],
+  ['birlestir','Disk Birleştirme / TRIM','defrag C: /O · SSD için TRIM','yönetici'],
+  ['temizlik-rapor','Bileşen Deposu Temizliği','DISM /StartComponentCleanup · güncelleme artıklarını siler','yönetici'],
+  ['disk-yonetimi','Disk Yönetimi','diskmgmt.msc · bölüm ve disk işlemleri','yönetici'],
+  ['aygit-yoneticisi','Aygıt Yöneticisi','devmgmt.msc · sürücü ve donanım',''],
+  ['hizmetler','Hizmetler','services.msc · arka plan hizmetleri',''],
+  ['olay-goruntuleyici','Olay Görüntüleyicisi','eventvwr.msc · sistem günlükleri',''],
+  ['gorev-yoneticisi','Görev Yöneticisi','taskmgr · süreç ve başlangıç yönetimi',''],
+  ['kaynak-izleyici','Kaynak İzleyicisi','resmon · CPU/RAM/disk ayrıntısı',''],
+  ['sistem-bilgisi','Sistem Bilgisi Raporu','msinfo32 · donanım ve yazılım envanteri',''],
+  ['guvenlik-duvari','Güvenlik Duvarı Ayarları','wf.msc · gelen/giden kuralları','yönetici'],
+  ['guncelleme','Windows Update','Güncelleme ayarlarını açar',''],
+  ['dns-temizle','DNS Önbelleğini Temizle','ipconfig /flushdns','yönetici'],
+  ['ag-sifirla','Ağ Yığınını Sıfırla','winsock + TCP/IP sıfırlama (yeniden başlatma ister)','yönetici'],
+  ['geri-yukleme','Geri Yükleme Noktası Oluştur','Şu anki sağlam hâli kaydeder','yönetici'],
+  ['enerji','Enerji Verimliliği Raporu','Masaüstüne HTML rapor üretir','yönetici'],
+  ['batarya','Batarya Sağlık Raporu','Masaüstüne batarya raporu üretir',''],
+  ['acik-portlar','Açık Portları Göster','Dinleyen portları ve süreçleri listeler',''],
+  ['wifi-sifre','Kayıtlı Wi-Fi Ağları','Kayıtlı ağ profillerini listeler',''],
+  ['sistem-dosyalari','Sürücü Dosyalarını Göster','Windows içindeki .sys dosyaları',''],
+];
+SAYFALAR.araclar = async function(){
+  AKTIF='araclar';
+  $saf('#sag').innerHTML = `<div class="kutu"><h2>${IK.tarama} ARAÇ KUTUSU</h2>
+    <div style="color:#c6dcf5;line-height:1.6;font-size:12.4px">
+    Her araç gerçek Windows komutunu çalıştırır ve ayrı bir pencerede açılır.<br><br>
+    <span class="rozet-kucuk">yönetici</span> işaretli araçlar için Windows izin penceresi çıkar — "Evet" deyin.</div></div>
+    <div class="kutu"><h2>${IK.kalkan} GÜVENLİ ARAÇLAR</h2>
+    <div style="color:#c6dcf5;line-height:1.6;font-size:12.4px">
+    Disk Hatası Taraması ve SFC Doğrulaması <b>hiçbir şeyi değiştirmez</b>, sadece rapor eder.
+    Önce onları deneyin.</div></div>`;
+  $saf('#orta').innerHTML = `
+  <div class="kutu">
+    <h2>${IK.tarama} WINDOWS ARAÇLARI<span class="sag">${ARAC_LISTE.length} araç</span></h2>
+    <input class="arac-input" id="aracAra" placeholder="Araç ara… (örn: DISM, SFC, disk)" style="margin-bottom:10px">
+    <div class="grid3" id="aracGrid">
+      ${ARAC_LISTE.map(a=>`<div class="arac-kart arac" data-id="${a[0]}">
+        ${IK.tarama}<b>${a[1]}</b><span>${a[2]}</span>
+        ${a[3]?'<span class="rozet-kucuk">yönetici</span>':'<span class="rozet-kucuk tamam">yetki gerekmez</span>'}</div>`).join('')}
+    </div>
+  </div>
+  <div class="kutu" id="aracCiktiKutu" style="display:none">
+    <h2>${IK.rapor} ARAÇ ÇIKTISI<span class="sag" id="aracCiktiAd"></span></h2>
+    <div class="metin-alani" id="aracCikti"></div>
+  </div>`;
+  const bagla = ()=>{
+    $$('#aracGrid .arac').forEach(k=>k.onclick = ()=>aracCalistir(k.dataset.id, k.querySelector('b').textContent));
+  };
+  bagla();
+  $saf('#aracAra').oninput = (e)=>{
+    const s = e.target.value.toLowerCase();
+    $$('#aracGrid .arac').forEach(k=>{
+      k.style.display = (k.textContent.toLowerCase().includes(s)||!s)?'':'none';
+    });
+  };
+};
+async function aracCalistir(id, ad){
+  const a = ARAC_LISTE.find(x=>x[0]===id);
+  bildir('Araç çalıştırılıyor', (a?a[1]:id) + ' başlatıldı…', 'uyari');
+  const r = await apiPost('/api/arac',{id});
+  bildir(r.ok?'Araç başlatıldı':'Çalıştırılamadı', r.mesaj, r.ok?(r.yonetici?'uyari':'basari'):'hata');
+}
+
+/* ---------- 10) GÜVENLİK & GİZLİLİK ---------- */
+SAYFALAR.guvenlik = async function(){
+  AKTIF='guvenlik';
+  $saf('#sag').innerHTML = `<div class="kutu"><h2>${IK.kalkan} GİZLİLİK TEMİZLİĞİ</h2>
+    <div style="color:#c6dcf5;line-height:1.6;font-size:12.4px">
+    Windows'un tuttuğu izleri siler: son açılan dosyalar, atlanan kısayollar, küçük resim önbelleği,
+    çalıştırma geçmişi (RunMRU), yazılan yollar ve geri dönüşüm kutusu.</div>
+    <button class="mini kirmizi" id="gizle" style="margin-top:11px;padding:11px;font-size:13px;width:100%">İZLERİ ŞİMDİ TEMİZLE</button></div>`;
+  $saf('#orta').innerHTML = `<div class="kutu"><h2>${IK.kalkan} GÜVENLİK DURUMU<span class="sag"><span class="yukleniyor"></span></span></h2>
+    <div class="bos">Defender ve güvenlik duvarı sorgulanıyor…</div></div>`;
+  const g = await hazirCek('/api/guvenlik');
+  const kutu = (ad,deger,iyi)=>`<div class="satir"><span class="ad">${ad}</span>
+    <span class="boyut"><span class="rozet-kucuk ${iyi?'tamam':'hata'}">${deger}</span></span></div>`;
+  $saf('#orta').innerHTML = `
+  <div class="kutu">
+    <h2>${IK.kalkan} WINDOWS GÜVENLİK DURUMU<span class="sag">Defender + kurulu antivirüs</span></h2>
+    <div class="satir"><span class="ad">Kurulu antivirüs yazılımı</span>
+      <span class="boyut">${(g.urunler&&g.urunler.length)? g.urunler.map(u=>u.ad).join(' · ') : 'Algılanamadı'}</span></div>
+    ${kutu('Microsoft Defender durumu', g.antivirus?'AÇIK':'KAPALI (başka antivirüs etkin)', g.antivirus || (g.urunler&&g.urunler.length>0))}
+    ${kutu('Gerçek zamanlı koruma', g.gercekZamanli?'AÇIK':'KAPALI', g.gercekZamanli)}
+    ${kutu('Kurcalama koruması', g.kurcalama?'AÇIK':'KAPALI', g.kurcalama)}
+    <div class="satir"><span class="ad">Defender imza sürümü</span><span class="boyut">${g.imzaSurum||'—'}</span></div>
+    <div class="satir"><span class="ad">İmza güncelleme tarihi</span><span class="boyut">${g.imzaTarih||'—'}</span></div>
+    <div class="satir"><span class="ad">Tespit edilen tehdit sayısı</span><span class="boyut">${g.tehditSayisi||0}</span></div>
+    <div class="satir"><span class="ad">Güvenlik duvarı profilleri</span><span class="boyut">${
+      (g.guvenlikDuvari||[]).map(p=>p.ad+': '+p.durum).join(' · ')||'okunamadı'}</span></div>
+    ${(g.tehditler&&g.tehditler.length)?`<div style="margin-top:9px;color:#fca5a5;font-size:12px">Son tehdit kayıtları:</div>
+      ${g.tehditler.map(t=>`<div class="satir"><span class="ad">${t.ad}</span><span class="boyut">${t.tarih}</span></div>`).join('')}`:''}
+  </div>
+  <div class="kutu">
+    <h2>${IK.kalkan} GİZLİLİK İZLERİ<span class="sag">${boyut((g.izler||[]).reduce((a,b)=>a+(b.bayt||0),0))}</span></h2>
+    ${(g.izler||[]).map(i=>`<div class="satir"><span class="ad">${i.ad}</span>
+      <span class="boyut">${i.boyut}</span></div>`).join('')}
+    <button class="mini kirmizi" id="gizle2" style="margin-top:11px;padding:11px;font-size:13px;width:100%">İZLERİ ŞİMDİ TEMİZLE</button>
+  </div>
+  <div class="kutu">
+    <h2>${IK.kalkan} DİĞER GÜVENLİK ARAÇLARI</h2>
+    <div class="grid3">
+      <div class="arac-kart" id="gTarama">${IK.tarama}<b>HIZLI TARAMA BAŞLAT</b><span>Defender hızlı tarama</span></div>
+      <div class="arac-kart" id="gDuvar">${IK.kalkan}<b>GÜVENLİK DUVARI</b><span>wf.msc ayarları</span></div>
+      <div class="arac-kart" id="gIzle">${IK.kalkan}<b>İZLEYİCİLERİ GÖR</b><span>Kamera/mikrofon erişim izinleri</span></div>
+    </div>
+  </div>`;
+  const gizle = async ()=>{
+    const r = await apiPost('/api/gizlilik/temizle',{});
+    bildir('Gizlilik temizlendi', r.mesaj, 'basari');
+    goster('guvenlik');
+  };
+  $saf('#gizle').onclick = gizle; $saf('#gizle2').onclick = gizle;
+  $saf('#gTarama').onclick = ()=>aracCalistir('defender-tara');
+  $saf('#gDuvar').onclick = ()=>aracCalistir('guvenlik-duvari');
+  $saf('#gIzle').onclick = ()=>aracCalistir('guncelleme');
+};
+
+/* ---------- 11) RAPORLAR ---------- */
+SAYFALAR.raporlar = async function(){
+  AKTIF='raporlar';
+  $saf('#sag').innerHTML = `<div class="kutu"><h2>${IK.rapor} RAPOR HAKKINDA</h2>
+    <div style="color:#c6dcf5;line-height:1.6;font-size:12.4px">
+    Rapor bilgisayarınızda üretilir ve masaüstüne <span class="mono">.txt</span> olarak kaydedilir.<br><br>
+    İçinde: sistem bilgisi, sağlık puanı, temizlenebilir dosyalar, başlangıç ögeleri, kurulu program sayısı,
+    güvenlik durumu.<br><br>
+    <b style="color:#86efac">Hiçbir veri internet'e gönderilmez.</b></div></div>`;
+  $saf('#orta').innerHTML = `<div class="kutu"><h2>${IK.rapor} SİSTEM RAPORU<span class="sag"><span class="yukleniyor"></span></span></h2>
+    <div class="bos">Rapor hazırlanıyor…</div></div>`;
+  const r = await hazirCek('/api/rapor');
+  $saf('#orta').innerHTML = `
+  <div class="kutu">
+    <h2>${IK.rapor} SİSTEM RAPORU<span class="sag">${r.tarih}</span></h2>
+    <div class="grid3" style="margin-bottom:10px">
+      ${sayacKutu(IK.bilgisayar,'SAĞLIK PUANI', r.durum.puan+'/100', r.durum.puan, '#22c55e')}
+      ${sayacKutu(IK.temizlik,'TEMİZLENEBİLİR', r.temizlik.toplamYazi, 60, '#f97316')}
+      ${sayacKutu(IK.pencere,'KURULU PROGRAM', r.programSayisi, 60, '#3b82f6')}
+    </div>
+    <div class="satir"><span class="ad">İşletim sistemi</span><span class="boyut">${r.durum.osAd} ${r.durum.osYapi}</span></div>
+    <div class="satir"><span class="ad">İşlemci</span><span class="boyut">${(r.durum.cpuAd||'').substring(0,40)}</span></div>
+    <div class="satir"><span class="ad">Bellek</span><span class="boyut">${boyut(r.durum.ramKullanilan)} / ${boyut(r.durum.ramToplam)}</span></div>
+    <div class="satir"><span class="ad">Disk C: boş alan</span><span class="boyut">${boyut(r.durum.diskBos)}</span></div>
+    <div class="satir"><span class="ad">Başlangıç ögesi</span><span class="boyut">${r.baslangic.toplam}</span></div>
+    <div class="grid3" style="margin-top:11px">
+      <button class="mini yesil" id="rKaydet" style="padding:12px;font-size:13px">RAPORU MASAÜSTÜNE KAYDET</button>
+      <button class="mini mavi" id="rYenile" style="padding:12px;font-size:13px">RAPORU YENİLE</button>
+      <button class="mini gri" id="rKopya" style="padding:12px;font-size:13px">EKRANDAKİNİ KOPYALA</button>
+    </div>
+  </div>
+  <div class="kutu">
+    <h2>${IK.rapor} RAPOR ÖNİZLEMESİ</h2>
+    <div class="metin-alani" id="rMetin">Raporu kaydetmek için yukarıdaki düğmeye basın.</div>
+  </div>`;
+  $saf('#rYenile').onclick = ()=>goster('raporlar');
+  $saf('#rKaydet').onclick = async ()=>{
+    const s = await apiPost('/api/rapor/kaydet',{});
+    if(s.ok){
+      $saf('#rMetin').textContent = s.metin;
+      bildir('Rapor kaydedildi', s.mesaj, 'basari');
+    } else bildir('Kaydedilemedi', s.mesaj, 'hata');
+  };
+  $saf('#rKopya').onclick = ()=>{
+    const t = $('#rMetin').textContent;
+    navigator.clipboard.writeText(t).then(()=>bildir('Kopyalandı','Rapor metni panoya alındı.','basari'),
+      ()=>bildir('Kopyalanamadı','Önce raporu kaydedin.','hata'));
+  };
+};
+
+/* ---------- 12) AYARLAR ---------- */
+SAYFALAR.ayarlar = async function(){
+  AKTIF='ayarlar';
+  const [a, z] = await Promise.all([apiGet('/api/ayar'), apiGet('/api/zamanlayici')]);
+  AYAR = Object.assign(AYAR, a);
+  $saf('#sag').innerHTML = `<div class="kutu"><h2>${IK.bilgisayar} PROGRAM BİLGİSİ</h2>
+    <div style="color:#c6dcf5;line-height:1.7;font-size:12.4px">
+    <b>ÜSTAD PC OPTIMIZER v1.1.0</b><br>Kenan Kuzucu için özel sürüm.<br><br>
+    Tüm işlemler <b>kendi bilgisayarınızda</b> yapılır.<br>İnternet bağlantısı kullanılmaz.<br>
+    Hiçbir veri toplanmaz veya gönderilmez.<br><br>
+    <span style="color:#8fb0d4">Arayüz ve araçlar, masaüstündeki
+    28706762 tasarım maketi örnek alınarak gerçek çalışan motora bağlandı.</span></div></div>`;
+  $saf('#orta').innerHTML = `
+  <div class="kutu">
+    <h2>${IK.bilgisayar} AYARLAR</h2>
+    <div class="satir"><span class="ad">Otomatik Temizlik<br>
+      <span style="color:#5b7ea3;font-size:11px">Program her açıldığında geçici dosyaları sessizce temizler</span></span>
+      <span class="anahtar ${a.otomatikTemizlik?'acik':''}" id="aOto"></span></div>
+    <div class="satir"><span class="ad">Tema Rengi<br>
+      <span style="color:#5b7ea3;font-size:11px">Panelin renk şeması</span></span>
+      <select class="mini gri" id="aTema" style="padding:8px">
+        <option value="lacivert" ${a.tema==='lacivert'?'selected':''}>Lacivert (varsayılan)</option>
+        <option value="siyah" ${a.tema==='siyah'?'selected':''}>Gece Siyahı</option>
+        <option value="yesil" ${a.tema==='yesil'?'selected':''}>Hacker Yeşili</option>
+      </select></div>
+    <div class="satir"><span class="ad">Yönetici Yetkisi<br>
+      <span style="color:#5b7ea3;font-size:11px">Kısıtlı işlemler (Windows Update artıkları, CHKDSK, SFC, DISM) için gerekir</span></span>
+      <span class="boyut">${DURUM.yukseltilebilir?'YOK':'VAR'}</span></div>
+    <div class="grid3" style="margin-top:11px">
+      <button class="mini mavi" id="ayKaydet" style="padding:12px">AYARLARI KAYDET</button>
+      <button class="mini sari" id="ayYonetici" style="padding:12px;background:#a16207;border-color:#eab308">YÖNETİCİ OLARAK BAŞLAT</button>
+      <button class="mini gri" id="aySifirla" style="padding:12px">VARSAYILAN AYARLAR</button>
+    </div>
+  </div>
+  <div class="kutu">
+    <h2>${IK.saat} BAKIM ZAMANLAYICI${z.var?'<span class="sag">KURULU</span>':'<span class="sag">KURULU DEĞİL</span>'}</h2>
+    <div class="satir"><span class="ad">Görev durumu<br>
+      <span style="color:#5b7ea3;font-size:11px">${z.var?('Her gün '+String(z.saat||'').slice(11,16)+' · son çalışma: '+(z.sonCalisma||'hiç')):'Günlük otomatik bakım kurulmadı'}</span></span>
+      <span class="kutucuk ${z.var?'yesil':'sari'}">${z.var?'AKTİF':'PASİF'}</span></div>
+    <div class="satir"><span class="ad">Bakım saati<br>
+      <span style="color:#5b7ea3;font-size:11px">Her gün bu saatte: geçici dosya temizliği + gizlilik temizliği + masaüstüne rapor</span></span>
+      <input type="time" id="aZaman" value="${String(z.saat||'').slice(11,16)||'09:00'}"
+        style="background:#04101c;border:1px solid var(--cizgi);border-radius:7px;color:#bfe0ff;padding:7px 9px;font-family:Consolas,monospace"></div>
+    <div class="grid3" style="margin-top:11px">
+      <button class="mini yesil" id="aZamanKur" style="padding:12px">GÜNLÜK BAKIMI KUR</button>
+      <button class="mini gri" id="aZamanSimdi" style="padding:12px">ŞİMDİ ÇALIŞTIR</button>
+      <button class="mini kirmizi" id="aZamanKaldir" style="padding:12px" ${z.var?'':'disabled'}>GÖREVİ KALDIR</button>
+    </div>
+    ${z.sonGunluk?`<div class="not-bandi mavi">Son bakım kaydı: ${z.sonGunluk}</div>`:''}
+    <div class="not-bandi">Görev <b>Zamanlanmış Görevler</b>'e "USTAD-PC-OPTIMIZER-BAKIM" adıyla yazılır; Denetim Masası'ndan da görebilirsin.</div>
+  </div>
+  <div class="kutu">
+    <h2>${IK.rapor} RAPOR ÇIKTILARI</h2>
+    <div class="satir"><span class="ad">Renkli Word raporu (.doc)<br>
+      <span style="color:#5b7ea3;font-size:11px">7 bölümlü, renkli başlık şeritli belge masaüstüne kaydedilir — Word ile açılır</span></span>
+      <span class="kutucuk">WORD</span></div>
+    <div class="satir"><span class="ad">Düz metin raporu (.txt)<br>
+      <span style="color:#5b7ea3;font-size:11px">Hızlı okunacak sade rapor</span></span>
+      <span class="kutucuk">TXT</span></div>
+    <div class="grid3" style="margin-top:11px">
+      <button class="mini mavi" id="aWord" style="padding:12px">WORD RAPORU OLUŞTUR</button>
+      <button class="mini gri" id="aTxt" style="padding:12px">METİN RAPORU OLUŞTUR</button>
+      <button class="mini gri" id="aRaporGit" style="padding:12px">RAPORLAR SAYFASI</button>
+    </div>
+  </div>
+  <div class="kutu">
+    <h2>${IK.kalkan} GÜVENLİ ÇALIŞMA NOTLARI</h2>
+    <div style="color:#c6dcf5;line-height:1.75;font-size:12.4px">
+    • Bu program hiçbir dosyayı <b>çöp kutusuna atmadan</b> silmez; geçici dosyalar doğrudan temizlenir.<br>
+    • <b>Disk Hatası Taraması (chkdsk)</b> ve <b>SFC Doğrulaması</b> sadece okur — sistemi değiştirmez.<br>
+    • <b>Zorla Kaldırma</b> ve <b>Gizlilik temizliği</b> geri alınamaz; onay penceresi çıkar.<br>
+    • Kilitli dosyalar otomatik atlanır, hangi dosyanın atlandığı bildirimde yazar.<br>
+    • Hiçbir veri internet'e gönderilmez — tüm ölçüm yereldir.</div>
+  </div>`;
+  $saf('#aOto').onclick = ()=>{
+    AYAR.otomatikTemizlik = !AYAR.otomatikTemizlik;
+    $('#aOto').classList.toggle('acik', AYAR.otomatikTemizlik);
+    altCubukGuncelle();
+  };
+  $saf('#ayKaydet').onclick = async ()=>{
+    await apiPost('/api/ayar/kaydet', {otomatikTemizlik: AYAR.otomatikTemizlik,
+      tema: $('#aTema').value, sonTemizlik: AYAR.sonTemizlik});
+    temaUygula($('#aTema').value);
+    bildir('Ayarlar kaydedildi','Tercihleriniz saklandı.','basari');
+  };
+  $saf('#aTema').onchange = (e)=>temaUygula(e.target.value);
+  $saf('#aySifirla').onclick = async ()=>{
+    await apiPost('/api/ayar/kaydet', {otomatikTemizlik:false, tema:'lacivert'});
+    temaUygula('lacivert'); goster('ayarlar');
+  };
+  $saf('#ayYonetici').onclick = async ()=>{
+    bildir('Yönetici izni istendi','Windows izin penceresi açılıyor — "Evet" deyin. Uygulama tam yetkiyle yeniden başlayacak.','uyari');
+    await apiPost('/api/yonetici',{});
+  };
+  $saf('#aZamanKur').onclick = async ()=>{
+    const saat = ($('#aZaman').value || '09:00');
+    const x = await apiPost('/api/zamanlayici/kur',{saat:saat});
+    bildir(x.ok?'Bakım görevi kuruldu':'Kurulamadı', x.mesaj||'', x.ok?'basari':'hata');
+    goster('ayarlar');
+  };
+  $saf('#aZamanKaldir').onclick = async ()=>{
+    if(!confirm('Günlük otomatik bakım görevi kaldırılacak. Onaylıyor musun?')) return;
+    const x = await apiPost('/api/zamanlayici/kaldir',{});
+    bildir(x.ok?'Görev kaldırıldı':'Hata', x.mesaj||'', x.ok?'basari':'hata');
+    goster('ayarlar');
+  };
+  $saf('#aZamanSimdi').onclick = ()=>{
+    bildir('Bakım çalışıyor','Geçici dosyalar temizleniyor, gizlilik temizliği yapılıyor…','uyari');
+    apiPost('/api/temizlik/temizle',{secili:['gecici','tarayici','diger']}).then(async t=>{
+      const g = await apiPost('/api/gizlilik/temizle',{});
+      const r = await apiPost('/api/rapor/kaydet',{});
+      bildir('Bakım tamamlandı', t.silinenYazi+' temizlendi · rapor: '+(r.mesaj||''),'basari');
+    });
+  };
+  $saf('#aWord').onclick = async ()=>{
+    bildir('Word raporu hazırlanıyor','7 bölümlü renkli belge oluşturuluyor…','uyari');
+    const x = await apiPost('/api/rapor/word',{});
+    bildir(x.ok?'Word raporu hazır':'Oluşturulamadı', x.mesaj||'', x.ok?'basari':'hata');
+  };
+  $saf('#aTxt').onclick = async ()=>{
+    const x = await apiPost('/api/rapor/kaydet',{});
+    bildir(x.ok?'Metin raporu hazır':'Oluşturulamadı', x.mesaj||'', x.ok?'basari':'hata');
+  };
+  $saf('#aRaporGit').onclick = ()=>goster('raporlar');
+};
+function temaUygula(t){
+  const k = document.documentElement.style;
+  if(t==='siyah'){ k.setProperty('--arka','#000000'); k.setProperty('--panel','#08090b'); }
+  else if(t==='yesil'){ k.setProperty('--arka','#010d06'); k.setProperty('--panel','#04140b'); }
+  else { k.setProperty('--arka','#050b16'); k.setProperty('--panel','#0a1524'); }
+}
+
+/* ---------- TURBO MOD ---------- */
+SAYFALAR.turbo = async function(){
+  AKTIF='turbo';
+  $saf('#sag').innerHTML = `<div class="kutu"><h2>${IK.roket} TURBO NEDİR?</h2>
+    <div style="color:#c6dcf5;line-height:1.75;font-size:12.3px">
+    Turbo mod, Windows'un <b>hızı kısan gizli ayarlarını</b> açar:<br>
+    • Güç planı · görsel efektler · menü gecikmesi<br>
+    • Oyun çubuğu kaydı · arka plan uygulamaları<br>
+    • Telemetri hizmetleri · gereksiz zamanlanmış görevler<br>
+    • En hızlı DNS sunucusu (gerçek ölçümle seçilir)</div>
+    <div class="not-bandi mavi">Her ayarın <b>eski değeri yedeklenir</b>. Tek tuşla geri alabilirsin.</div>
+    <div class="not-bandi">SysMain kapatmak SSD'de tartışmalıdır (açılış yavaşlayabilir). İstersen bu maddeyi işaretleme.</div></div>`;
+  $saf('#orta').innerHTML = `<div class="kutu"><h2>${IK.roket} TURBO MOD<span class="sag"><span class="yukleniyor"></span> ölçülüyor</span></h2>
+    <div class="bos">Sistem ayarları gerçekten okunuyor…</div></div>`;
+  const v = await hazirCek('/api/turbo');
+  if(v.hata){ bildir('Hata', v.hata, 'hata'); return; }
+  const o = v.olcum;
+  const renk = v.puan>=85?'#22c55e':(v.puan>=65?'#eab308':'#dc2626');
+  const ol = (et, de, ar) => `<div class="olcum-kutu"><div class="et">${et}</div><div class="de">${de}</div><div class="ar">${ar||''}</div></div>`;
+  $saf('#orta').innerHTML = `
+  <div class="kutu">
+    <h2>${IK.roket} TURBO MOD<span class="sag">${v.uygulanabilir} madde uygulanabilir</span></h2>
+    <div style="display:flex;gap:16px;align-items:center">
+      <div class="olcer">${halka(v.puan, renk, '#fde047')}
+        <div class="ic"><div class="sayi">${v.puan}</div><div class="birim">/ 100</div>
+        <div class="etiket" style="color:${renk}">TURBO PUANI</div></div></div>
+      <div style="flex:1">
+        <div class="aki">
+          ${ol('GÜÇ PLANI', (o.gucPlani||'').replace('Power Plan','').slice(0,18), o.nihaiAktif?'Nihai Performans aktif':'varsayılan plan')}
+          ${ol('GÖRSEL EFEKT', o.gorsel===2?'PERFORMANS':(o.gorsel===null?'ayar yok':String(o.gorsel)), o.gorsel===2?'zaten kısık':'kısılabilir')}
+          ${ol('MENÜ GECİKME', o.menuGecikme===null?'ayar yok':String(o.menuGecikme), str(o.menuGecikme)==='0'?'zaten 0':'gecikme var')}
+          ${ol('OYUN KAYDI', o.gameDvr===0?'KAPALI':'AÇIK', o.gameDvr===0?'zaten kapalı':'kapatılabilir')}
+          ${ol('ARKA PLAN İZİN', String(o.arkaPlanUygulama)+' uygulama', 'izinli')}
+          ${ol('TELEMETRİ', String(o.telemetriAktif)+' hizmet', o.telemetriAktif?'çalışıyor':'kapalı')}
+          ${ol('SYSMAIN', o.sysmain||'-', 'tartışmalı madde')}
+          ${ol('GECİKME', o.pingMs+' ms', o.pingMs<30?'çok iyi':(o.pingMs<60?'iyi':'yüksek'))}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="kutu">
+    <h2>${IK.roket} UYGULANACAK MADDELER</h2>
+    <div class="kutu-liste">
+    ${v.maddeler.map((m,i)=>`
+      <div class="satir">
+        <span class="no">${i+1}</span>
+        <span class="durum"><label class="secim"><input type="checkbox" class="mOnay" data-id="${m.id}" ${m.gerekli?'checked':''}></label></span>
+        <span class="ad"><b>${m.ad}</b> ${m.gerekli?'<span class="kutucuk sari">ÖNERİLİR</span>':'<span class="kutucuk yesil">ZATEN TAMAM</span>'}
+          ${m.yonetici?'<span class="kutucuk mor">YÖNETİCİ</span>':''}<br>
+          <span style="color:#9dc6ee;font-size:11.5px">${m.aciklama}</span></span>
+      </div>`).join('')}
+    </div>
+    <div class="grid3" style="margin-top:11px">
+      <button class="mini yesil" id="tUygula" style="padding:12px;font-size:13px">TURBO'YU UYGULA</button>
+      <button class="mini mavi" id="tSec" style="padding:12px">HEPSİNİ SEÇ</button>
+      <button class="mini kirmizi" id="tGeri" style="padding:12px" ${v.yedekVar?'':'disabled'}>TURBO'YU GERİ AL</button>
+    </div>
+    <div class="not-bandi kirmizi" id="tSonuc" style="display:none"></div>
+  </div>`;
+  $saf('#tSec').onclick = ()=>$$('.mOnay').forEach(c=>c.checked=true);
+  $saf('#tGeri').onclick = async ()=>{
+    if(!confirm('TURBO ile değiştirilen tüm ayarlar eski hâline döndürülecek. Onaylıyor musun?')) return;
+    bildir('Geri alınıyor','Yedekten eski ayarlar yazılıyor…','uyari');
+    const r = await apiPost('/api/turbo/geri',{});
+    bildir(r.ok?'TURBO geri alındı':'Geri alınamadı', r.mesaj||'', r.ok?'basari':'hata');
+    if(r.yapilan) console.log(r.yapilan);
+    goster('turbo');
+  };
+  $saf('#tUygula').onclick = async ()=>{
+    const sec = $$('.mOnay').filter(c=>c.checked).map(c=>c.dataset.id);
+    if(!sec.length){ bildir('Madde seçilmedi','En az bir madde işaretle.','uyari'); return; }
+    if(!confirm(sec.length+' madde uygulanacak. Devam edelim mi?')) return;
+    $('#tUygula').disabled = true; $saf('#tUygula').textContent = 'UYGULANIYOR…';
+    const r = await apiPost('/api/turbo/uygula',{secili:sec});
+    if(!r.ok){ bildir('Hata', r.mesaj||'', 'hata'); $('#tUygula').disabled=false; return; }
+    const k = r.once||{}, s = r.sonra||{};
+    const ev = x => x===null||x===undefined ? 'ayar yok' : String(x);
+    const kars = [
+      ['Sistem sağlık puanı', k.sistemPuan, s.sistemPuan],
+      ['Görsel efekt', ev(k.gorsel), ev(s.gorsel)],
+      ['Menü gecikmesi', ev(k.menuGecikme), ev(s.menuGecikme)],
+      ['Oyun kaydı (GameDVR)', ev(k.gameDvr), ev(s.gameDvr)],
+      ['Arka plan izinli uygulama', k.arkaPlanUygulama, s.arkaPlanUygulama],
+      ['Açık telemetri hizmeti', k.telemetriAktif, s.telemetriAktif],
+      ['Güç planı', (k.gucPlani||'').slice(0,24), (s.gucPlani||'').slice(0,24)],
+      ['Gecikme', k.pingMs+' ms', s.pingMs+' ms'],
+      ['RAM', k.ramYuzde+'%', s.ramYuzde+'%']
+    ];
+    bildir('TURBO uygulandı', r.rapor.length+' madde işlendi.','basari');
+    $('#tSonuc').style.display='block';
+    $saf('#tSonuc').innerHTML = '<b>UYGULAMA SONUCU</b><br>' + r.rapor.map(x=>
+      '• '+x.ad+' — <b>'+x.durum+'</b><br><span style="color:#9dc6ee">'+x.detay+'</span>').join('<br>') +
+      '<br><b>ÖNCE → SONRA</b><br>' + kars.map(([a,b,c])=>
+      a+': '+b+' → <b>'+c+'</b>').join('<br>') +
+      (r.yoneticiGerekli?'<br>Bu maddelerin bir kısmı yönetici ister — normal kısayolda kısmen uygulanır.':'');
+    $('#tUygula').disabled = false; $saf('#tUygula').textContent = "TURBO'YU UYGULA";
+    $('#tGeri').disabled = false;
+  };
+};
+function str(x){ return x===null||x===undefined ? '' : String(x); }
+
+/* ---------- DERİN TEMİZLEME ---------- */
+SAYFALAR.derin = async function(){
+  AKTIF='derin';
+  $saf('#sag').innerHTML = `<div class="kutu"><h2>${IK.temizlik} DERİN TEMİZLEME</h2>
+    <div style="color:#c6dcf5;line-height:1.75;font-size:12.3px">
+    • <b>WinSxS</b> bileşen deposu (yönetici)<br>
+    • <b>Artık sürücü paketleri</b> (yönetici)<br>
+    • Windows <b>log ve hata dosyaları</b><br>
+    • <b>Yinelenen</b> büyük dosyalar (SHA-256)<br>
+    • <b>Boş klasörler</b> (180+ gün)<br>
+    • Ölü kısayollar</div>
+    <div class="not-bandi yesil"><b>USTAD KASASI:</b> silinenler önce kasaya taşınır, istediğin an geri alabilirsin.</div>
+    <div class="not-bandi">Geri dönüşü olmayan işlem (kasa boşaltma) ayrı düğmedir ve onay ister.</div></div>`;
+  $saf('#orta').innerHTML = `<div class="kutu"><h2>${IK.temizlik} DERİN TEMİZLEME<span class="sag"><span class="yukleniyor"></span> taranıyor</span></h2>
+    <div class="bos">Yinelenen dosyalar SHA-256 ile karşılaştırılıyor, sürücü paketleri listeleniyor… (1-3 dakika)</div></div>`;
+  const [r, k] = await Promise.all([apiGet('/api/derin'), apiGet('/api/kasa')]);
+  if(r.hata){ bildir('Hata', r.hata, 'hata'); return; }
+  const ikon = {winsxs:'🧱', surucu:'🔌', loglar:'📄', golge:'🕰', yinelenen:'👯', bosklasor:'📁', kisayol:'🔗'};
+  const boyEt = kk => kk.bayt ? boyut(kk.bayt) : kk.boyut;
+  const kat = {};
+  r.kategoriler.forEach(x=>kat[x.id]=x);
+  $saf('#orta').innerHTML = `
+  <div class="kutu">
+    <h2>${IK.temizlik} DERİN TARAMA SONUCU<span class="sag">${r.kategoriler.length} kategori · boş alan ${boyut(r.bosAlan)}</span></h2>
+    ${!r.yonetici ? '<div class="not-bandi">Yönetici yetkisi yok: WinSxS, sürücü paketleri ve gölge kopya işlemleri için <b>ÜSTAD PC OPTIMIZER (Yönetici)</b> kısayolunu kullan.</div>' : ''}
+    ${r.kategoriler.map(kk=>`
+      <div class="serit">
+        <div class="sol">
+          <div class="baslik">${ikon[kk.id]||'•'} ${kk.ad}
+            ${kk.yonetici?'<span class="kutucuk mor">YÖNETİCİ</span>':''}
+            ${kk.erisim?'':'<span class="kutucuk kirmizi">ERİŞİM YOK</span>'}
+            <span class="kutucuk sari">${boyEt(kk)}</span>
+            ${kk.adet?`<span class="kutucuk">${kk.adet} adet</span>`:''}
+          </div>
+          <div class="alt">${kk.aciklama}</div>
+          ${(kk.detay||[]).slice(0,4).map(d=>`<div class="alt" style="color:#7fa8cf;font-family:Consolas,monospace;font-size:10.8px">${d}</div>`).join('')}
+        </div>
+        <div style="display:flex;flex-direction:column;gap:6px;min-width:132px">
+          ${['yinelenen','bosklasor','kisayol','loglar','winsxs','golge'].includes(kk.id)
+            ? `<button class="mini yesil dTemizle" data-tip="${kk.id}" ${kk.adet||kk.id==='loglar'||kk.id==='winsxs'||kk.id==='golge'?'':'disabled'} style="padding:9px">TEMİZLE</button>` : ''}
+          ${kk.id==='surucu' ? `<button class="mini mavi" id="sSurucuAc" style="padding:9px">PAKETLERİ SEÇ</button>` : ''}
+        </div>
+      </div>`).join('')}
+    ${(kat.surucu && (kat.surucu.liste||[]).length) ? `
+    <div id="sSurucuKutu" class="gizli" style="margin-top:10px;border:1px solid var(--cizgi);border-radius:9px;padding:11px">
+      <div style="display:flex;gap:9px;align-items:center;margin-bottom:8px">
+        <b style="color:#fde68a">ARTIK SÜRÜCÜ PAKETLERİ — silinecekleri işaretle</b>
+        <input id="sAra" placeholder="ara: oem / sınıf / sağlayıcı" style="flex:1;background:#04101c;border:1px solid var(--cizgi);border-radius:7px;color:#bfe0ff;padding:6px 9px;font-size:11.5px">
+        <button class="mini gri" id="sTumu" style="padding:6px 9px">HEPSİ</button>
+        <button class="mini gri" id="sHic" style="padding:6px 9px">HİÇBİRİ</button>
+      </div>
+      <div class="not-bandi kirmizi">DİKKAT: kullanımdaki bir sürücüyü silmek o aygıtı devre dışı bırakabilir.
+        Windows gerekirse sürücüyü yeniden kurar. Emin olmadığın paketi işaretleme.</div>
+      <div class="tbl-kaydir" style="margin-top:8px">
+        <table><thead><tr><th style="width:34px"></th><th>Paket</th><th>Sınıf</th><th>Sağlayıcı</th><th>Sürüm</th><th>Tarih</th></tr></thead><tbody id="sGovde">
+        ${(kat.surucu.liste||[]).map(o=>`<tr class="sSatir" data-ara="${((o.ad||'')+' '+(o.sinif||'')+' '+(o.saglayici||'')).toLowerCase()}">
+          <td><input type="checkbox" class="onay sSec" data-ad="${o.ad||''}"></td>
+          <td class="mono">${o.ad||''}</td><td>${o.sinif||''}</td><td>${o.saglayici||''}</td>
+          <td class="mono">${o.surum||''}</td><td class="mono">${o.tarih||''}</td></tr>`).join('')}
+        </tbody></table>
+      </div>
+      <div class="grid3" style="margin-top:10px">
+        <button class="mini kirmizi" id="sSil" style="padding:11px">SEÇİLENLERİ SİL (YÖNETİCİ)</button>
+        <span class="kutucuk sari" id="sSayac" style="align-self:center;justify-self:center">0 paket seçili</span>
+        <button class="mini gri" id="sKapat" style="padding:11px">LİSTEYİ KAPAT</button>
+      </div>
+    </div>` : ''}
+  </div>
+  <div class="kutu">
+    <h2>${IK.cop} USTAD KASASI<span class="sag">${k.toplam} · ${k.sayi} parti</span></h2>
+    <div class="not-bandi mavi">Kasa içeriği disk alanını <b>henüz boşaltmaz</b>. "GERİ AL" ile dosyalar eski yerine döner; "KASAYI BOŞALT" ile kalıcı silinir.</div>
+    <div class="tbl-kaydir" style="margin-top:9px">
+      <table><thead><tr><th>Parti</th><th>İşlem</th><th>Öge</th><th>Boyut</th><th style="text-align:right">İşlem</th></tr></thead><tbody>
+      ${(k.partiler||[]).map(p=>`<tr>
+        <td class="mono">${p.id}</td><td>${p.islem}</td><td>${p.adet}</td>
+        <td class="mono">${p.boyut}</td>
+        <td style="text-align:right;white-space:nowrap">
+          <button class="mini mavi kGeri" data-id="${p.id}" style="padding:5px 9px">GERİ AL</button>
+          <button class="mini kirmizi kBos" data-id="${p.id}" style="padding:5px 9px">SİL</button></td>
+      </tr>`).join('') || '<tr><td colspan="5" class="bos">Kasa boş — silinen bir şey yok.</td></tr>'}
+      </tbody></table>
+    </div>
+    <div class="grid3" style="margin-top:10px">
+      <button class="mini gri" id="dYenile" style="padding:11px">YENİDEN TARA</button>
+      <button class="mini mavi" id="kGuncelle" style="padding:11px">KASAYI YENİLE</button>
+      <button class="mini kirmizi" id="kHepsi" style="padding:11px" ${k.sayi?'':'disabled'}>KASAYI BOŞALT (${k.toplam})</button>
+    </div>
+  </div>`;
+  $saf('#dYenile').onclick = ()=>goster('derin');
+  $saf('#kGuncelle').onclick = ()=>goster('derin');
+  $saf('#kHepsi').onclick = async ()=>{
+    if(!confirm('Kasadaki her şey KALICI olarak silinecek — geri alınamaz. Onaylıyor musun?')) return;
+    const x = await apiPost('/api/kasa/bosalt',{});
+    bildir('Kasa boşaltıldı', x.mesaj, 'basari'); goster('derin');
+  };
+  $$('.kGeri').forEach(b=>b.onclick = async ()=>{
+    const x = await apiPost('/api/kasa/geri',{id:b.dataset.id});
+    bildir(x.ok?'Geri alındı':'Hata', x.mesaj||'', x.ok?'basari':'hata'); goster('derin');
+  });
+  $$('.kBos').forEach(b=>b.onclick = async ()=>{
+    if(!confirm('Bu parti kalıcı olarak silinecek. Onaylıyor musun?')) return;
+    const x = await apiPost('/api/kasa/bosalt',{id:b.dataset.id});
+    bildir('Silindi', x.mesaj, 'basari'); goster('derin');
+  });
+  $$('.dTemizle').forEach(b=>b.onclick = async ()=>{
+    const tip = b.dataset.tip;
+    let secim = [];
+    if(tip==='bosklasor'){ secim = (kat.bosklasor.liste||[]).map(x=>x.yol); }
+    else if(tip==='kisayol'){ secim = (kat.kisayol.liste||[]).map(x=>x.yol); }
+    else if(tip==='yinelenen'){ (kat.yinelenen.liste||[]).forEach(g=>secim=secim.concat(g.fazla)); secim=secim.slice(0,500); }
+    const adet = secim.length || 0;
+    const mesaj = tip==='winsxs' ? 'Windows bileşen deposu temizlenecek (5-15 dakika, yönetici ister). Onaylıyor musun?'
+      : tip==='golge' ? 'En eski geri yükleme noktası silinecek. Onaylıyor musun?'
+      : tip==='loglar' ? (kat.loglar.boyut + ' log/hata dosyası kasaya alınacak. Onaylıyor musun?')
+      : adet + ' öge kasaya alınacak (geri alınabilir). Onaylıyor musun?';
+    if(!confirm(mesaj)) return;
+    b.disabled = true; b.textContent = '…';
+    const x = await apiPost('/api/derin/temizle',{tip:tip, secim:secim});
+    bildir(x.ok?'Temizlendi':'Hata', x.mesaj||x.hata||'', x.ok?'basari':'hata');
+    if(x.cikti) bildir('Komut çıktısı', String(x.cikti).slice(0,600));
+    goster('derin');
+  });
+  /* --- ARTIK SÜRÜCÜ PAKETLERİ: seçim + silme (madde 13 tam hâli) --- */
+  if($('#sSurucuAc')){
+    const say = ()=>{ $saf('#sSayac').textContent = $$('.sSec').filter(c=>c.checked).length + ' paket seçili'; };
+    $saf('#sSurucuAc').onclick = ()=>{ $('#sSurucuKutu').classList.remove('gizli'); say(); };
+    $saf('#sKapat').onclick = ()=>{ $('#sSurucuKutu').classList.add('gizli'); };
+    $saf('#sTumu').onclick = ()=>{ $$('.sSatir').forEach(s=>{ if(!s.classList.contains('gizli')) s.querySelector('.sSec').checked = true; }); say(); };
+    $saf('#sHic').onclick = ()=>{ $$('.sSec').forEach(c=>c.checked=false); say(); };
+    $saf('#sAra').oninput = e =>{
+      const q = e.target.value.toLowerCase();
+      $$('.sSatir').forEach(s=>s.classList.toggle('gizli', q && !s.dataset.ara.includes(q)));
+    };
+    $$('.sSec').forEach(c=>c.onchange = say);
+    $saf('#sSil').onclick = async ()=>{
+      const secim = $$('.sSec').filter(c=>c.checked).map(c=>c.dataset.ad);
+      if(!secim.length){ bildir('Paket seçilmedi','Silinecek sürücü paketini işaretle.','uyari'); return; }
+      if(!confirm(secim.length + ' sürücü paketi silinecek: ' + secim.join(', ') +
+        '\n\nBu paketler kullanımdaki aygıtlara aitse o aygıtlar devre dışı kalabilir. Onaylıyor musun?')) return;
+      bildir('Sürücü silme','Yönetici onayı isteniyor — "Evet" de.','uyari');
+      const x = await apiPost('/api/derin/temizle',{tip:'surucu', secim:secim});
+      bildir(x.ok?'Sürücü paketleri silindi':'Hata', (x.mesaj||x.hata||'') + (x.cikti?' · '+String(x.cikti).slice(0,300):''), x.ok?'basari':'hata');
+    };
+  }
+};
+
+/* ---------- KOMUT PALETİ (Ctrl+K) — madde 28 ---------- */
+const PALET = {acik:false, liste:[], sec:0};
+function paletListe(){
+  const L = [];
+  document.querySelectorAll('#menu .oge').forEach(o=>{
+    const s = o.dataset.sayfa; if(!s) return;
+    L.push({tur:'sayfa', id:s, ad:(o.textContent||'').trim().replace(/\s+/g,' '), ipucu:'Sayfa'});
+  });
+  ARAC_LISTE.forEach(a=>L.push({tur:'arac', id:a[0], ad:a[1], ipucu:'Araç · yönetici'+(a[3]?' gerekli':''), alt:a[2]}));
+  return L;
+}
+function paletCiz(q){
+  const ara = q.trim().toLowerCase();
+  const L = PALET.liste.filter(x=>!ara || x.ad.toLowerCase().includes(ara) || x.id.includes(ara) || (x.alt||'').toLowerCase().includes(ara)).slice(0,12);
+  PALET.sonuc = L;
+  if(PALET.sec >= L.length) PALET.sec = 0;
+  $saf('#pGovde').innerHTML = L.length ? L.map((x,i)=>
+    `<div class="pSatir ${i===PALET.sec?'pSec':''}" data-i="${i}">
+       <span class="kutucuk ${x.tur==='sayfa'?'mavi':'sari'}">${x.tur==='sayfa'?'SAYFA':'ARAÇ'}</span>
+       <span style="flex:1;color:#e8f2ff;font-weight:600">${x.ad}</span>
+       <span style="color:#6f95bb;font-size:11px">${x.ipucu}</span></div>`).join('')
+    : '<div class="bos">Eşleşen sayfa/araç yok.</div>';
+  $$('#pGovde .pSatir').forEach(s=>{
+    s.onmouseenter = ()=>{ PALET.sec = Number(s.dataset.i); paletCiz($('#pAra').value); };
+    s.onclick = ()=>{ PALET.sec = Number(s.dataset.i); paletSec(); };
+  });
+}
+function paletAc(){
+  if(!$('#palet')) return;
+  PALET.liste = paletListe(); PALET.sec = 0;
+  $('#palet').style.display = 'flex'; PALET.acik = true;
+  $('#pAra').value = ''; paletCiz(''); $('#pAra').focus();
+}
+function paletKapat(){ if($('#palet')) $('#palet').style.display='none'; PALET.acik = false; }
+function paletSec(){
+  const x = (PALET.sonuc||[])[PALET.sec]; if(!x) return;
+  paletKapat();
+  if(x.tur==='sayfa') goster(x.id); else aracCalistir(x.id, x.ad);
+}
+document.addEventListener('keydown', e=>{
+  if((e.ctrlKey||e.metaKey) && (e.key==='k'||e.key==='K')){ e.preventDefault(); PALET.acik ? paletKapat() : paletAc(); return; }
+  if(!PALET.acik) return;
+  if(e.key==='Escape'){ paletKapat(); }
+  else if(e.key==='ArrowDown'){ e.preventDefault(); PALET.sec = Math.min((PALET.sonuc||[]).length-1, PALET.sec+1); paletCiz($('#pAra').value); }
+  else if(e.key==='ArrowUp'){ e.preventDefault(); PALET.sec = Math.max(0, PALET.sec-1); paletCiz($('#pAra').value); }
+  else if(e.key==='Enter'){ e.preventDefault(); paletSec(); }
+});
+document.addEventListener('DOMContentLoaded', ()=>{
+  const b = $('#pBtn'); if(b) b.onclick = paletAc;
+  const a = $('#pAra');
+  if(a){ a.oninput = ()=>{ PALET.sec=0; paletCiz(a.value); }; }
+});
+
+/* ---------- PENCERE DÜĞMELERİ (küçült / büyüt / kapat) ---------- */
+async function pencereIslem(islem){
+  const r = await apiPost('/api/pencere', {islem: islem});
+  if(!r || r.ok === false){
+    bildir('Pencere işlemi', (r && (r.hata || r.mesaj)) || 'Panel penceresine ulaşılamadı.', 'uyari');
+    return null;
+  }
+  if(islem !== 'kapat') bildir('Pencere', r.mesaj || 'Tamam.', 'basari');
+  if(islem === 'buyut' && r.sonra) pencereIkon(r.sonra.buyutulmus);
+  return r;
+}
+function pencereIkon(buyuk){
+  const s = $('#pBuyutIkon'); if(!s) return;
+  s.innerHTML = buyuk
+    ? '<rect x="8" y="8" width="11" height="11" rx="1.5"/><path d="M5 15V6.5A1.5 1.5 0 0 1 6.5 5H15"/>'
+    : '<rect x="6" y="6" width="12" height="12" rx="1.5"/>';
+  const b = $('#pBuyut');
+  if(b) b.title = buyuk ? 'Paneli eski boyutuna döndür' : 'Paneli büyüt (tam ekran boyu)';
+}
+document.addEventListener('DOMContentLoaded', ()=>{
+  const k = $('#pKucult'); if(k) k.onclick = ()=>pencereIslem('kucult');
+  const b = $('#pBuyut'); if(b) b.onclick = ()=>pencereIslem('buyut');
+  const c = $('#pKapat');
+  if(c) c.onclick = ()=>{
+    if(confirm('ÜSTAD PC OPTIMIZER paneli kapatılsın mı?\n\nPanel kapanınca motor da kendini kapatır.'))
+      pencereIslem('kapat');
+  };
+  pencereIslemDurum();
+});
+async function pencereIslemDurum(){
+  const r = await apiPost('/api/pencere', {islem: 'durum'});
+  if(r && r.sonra) pencereIkon(r.sonra.buyutulmus);
+}
+
+/* ---------- AĞ & HIZ ---------- */
+SAYFALAR.ag = async function(){
+  AKTIF='ag';
+  $saf('#sag').innerHTML = `<div class="kutu"><h2>${IK.roket} HIZ TESTİ</h2>
+    <div id="hizAlan"><div class="bos">"HIZ TESTİ YAP" düğmesine bas — 25 MB indirme + 5 MB yükleme ölçülür.</div></div>
+    <button class="mini yesil" id="aHiz" style="width:100%;padding:12px;margin-top:9px">HIZ TESTİ YAP</button>
+    <div class="not-bandi mavi">Speed test, Cloudflare'in ölçüm sunucusuna bağlanır — bu <b>tek ölçüm</b> internet kullanır.</div></div>
+  <div class="kutu"><h2>${IK.kalkan} AĞ GÜVENLİĞİ NOTU</h2>
+    <div style="color:#c6dcf5;line-height:1.7;font-size:12.2px">
+    Açık portlar listesi <b>hangi programın dinlediğini</b> gösterir. Bilmediğin bir program dışarıya
+    açık dinliyorsa dikkat et. DNS değiştirmek yönetici ister; geri almak her zaman mümkündür.</div></div>`;
+  $saf('#orta').innerHTML = `<div class="kutu"><h2>${IK.roket} AĞ ÖLÇÜMÜ<span class="sag"><span class="yukleniyor"></span> ölçülüyor</span></h2>
+    <div class="bos">20 paket gecikme ölçümü + 5 DNS sunucusunun yarışı sürüyor… (30-60 saniye)</div></div>`;
+  const r = await hazirCek('/api/ag');
+  if(r.hata){ bildir('Hata', r.hata, 'hata'); return; }
+  const p = r.ping;
+  const pr = p.ortalama<30?'#22c55e':(p.ortalama<60?'#84cc16':(p.ortalama<120?'#eab308':'#dc2626'));
+  const ol = (et, de, ar) => `<div class="olcum-kutu"><div class="et">${et}</div><div class="de">${de}</div><div class="ar">${ar||''}</div></div>`;
+  const dns = r.dns||{}; const sonuc = dns.sonuc||[];
+  const enIyi = (dns.enHizli||{}).sunucu;
+  $saf('#orta').innerHTML = `
+  <div class="kutu">
+    <h2>${IK.roket} BAĞLANTI KALİTESİ<span class="sag">${p.kalite}</span></h2>
+    <div class="aki">
+      ${ol('GECİKME (ORT.)', p.ortalama+' ms', 'en az '+p.enAz+' / en çok '+p.enCok)}
+      ${ol('DALGALANMA (JITTER)', p.jitter+' ms', p.jitter<10?'çok kararlı':'dalgalı')}
+      ${ol('PAKET KAYBI', p.kayip+' / '+p.gonderilen, p.kayipYuzde+'%')}
+      ${ol('KALİTE', p.kalite, '20 paketlik gerçek ölçüm')}
+    </div>
+    <div class="ileri ${p.ortalama<60?'':'sari'}" style="margin-top:10px"><i style="width:${Math.max(4,Math.min(100,100-(p.ortalama/2)))}%"></i></div>
+  </div>
+  <div class="kutu">
+    <h2>${IK.roket} DNS YARIŞI<span class="sag">aktif adaptör: ${dns.adaptor||'-'} · şu anki DNS: ${dns.dnsMevcut||'-'}</span></h2>
+    <div class="not-bandi mavi">DNS, her site adresinin IP'ye çevrilmesidir. Yavaş DNS = sayfaların geç açılması.
+      Aşağıdakiler <b>bu bilgisayarda gerçekten ölçüldü</b> (3 ölçüm ortalaması).</div>
+    <div class="tbl-kaydir" style="margin-top:9px">
+      <table><thead><tr><th>Sunucu</th><th>Adres</th><th>Gecikme</th><th>Durum</th><th style="text-align:right">İşlem</th></tr></thead><tbody>
+      ${sonuc.map(x=>`<tr>
+        <td>${x.ad}</td><td class="mono">${x.sunucu}</td>
+        <td class="mono" style="color:${x.ms<40?'#86efac':(x.ms<100?'#fde68a':'#fca5a5')}">${x.ms} ms</td>
+        <td>${x.sunucu===enIyi?'<span class="kutucuk yesil">EN HIZLI</span>':''}
+            ${(dns.dnsMevcut||'').includes(x.sunucu)?'<span class="kutucuk">ŞU AN KULLANILIYOR</span>':''}</td>
+        <td style="text-align:right"><button class="mini mavi dUygula" data-s="${x.sunucu}" style="padding:5px 9px">UYGULA</button></td>
+      </tr>`).join('') || '<tr><td colspan="5" class="bos">DNS ölçümü alınamadı.</td></tr>'}
+      </tbody></table>
+    </div>
+    <div class="grid3" style="margin-top:10px">
+      <button class="mini yesil" id="aDnsEn" style="padding:11px">EN HIZLIYI UYGULA</button>
+      <button class="mini gri" id="aDnsDchp" style="padding:11px">OTOMATİĞE ÇEVİR (MODEM)</button>
+      <button class="mini mavi" id="aYenile" style="padding:11px">YENİDEN ÖLÇ</button>
+    </div>
+    <div class="not-bandi">DNS değiştirmek <b>yönetici izni</b> ister. Onay penceresi açılır — "Evet" de.</div>
+  </div>
+  <div class="kutu">
+    <h2>${IK.bilgisayar} AĞ KARTLARI (${(r.adaptorler||[]).length})</h2>
+    <table><thead><tr><th>Ad</th><th>Kart</th><th>Bağlantı Hızı</th><th>MAC</th></tr></thead><tbody>
+    ${(r.adaptorler||[]).map(a=>`<tr><td>${a.ad}</td><td>${a.tip}</td>
+      <td class="mono">${a.hizYazi || (a.hiz?(a.hiz/1000000).toFixed(0)+' Mbps':'-')}</td><td class="mono">${a.mac||'-'}</td></tr>`).join('')
+      || '<tr><td colspan="4" class="bos">Aktif adaptör yok.</td></tr>'}
+    </tbody></table>
+    ${(r.wifi||[]).length?`<div class="not-bandi mavi" style="margin-top:9px"><b>Kablosuz durum:</b><br>
+      ${(r.wifi||[]).map(w=>w.replace(/\s+/g,' ')).join('<br>')}</div>`:''}
+  </div>
+  <div class="kutu">
+    <h2>${IK.kalkan} DİNLEYEN PORTLAR<span class="sag">${(r.portlar||[]).length} kayıt (ilk 40)</span></h2>
+    <div class="tbl-kaydir">
+    <table><thead><tr><th>Port</th><th>Adres</th><th>Program</th><th>PID</th></tr></thead><tbody>
+    ${(r.portlar||[]).map(z=>`<tr><td class="mono">${z.port}</td><td class="mono">${z.adres}</td>
+      <td>${z.surec}</td><td class="mono">${z.pid}</td></tr>`).join('')
+      || '<tr><td colspan="4" class="bos">Okunamadı.</td></tr>'}
+    </tbody></table></div>
+    <div class="not-bandi">127.0.0.1 / ::1 adresleri yalnızca bu bilgisayardan erişilir — dışarıya açık değildir.
+      0.0.0.0 ise <b>tüm ağ arayüzlerinden</b> dinliyor demektir.</div>
+  </div>`;
+  $saf('#aYenile').onclick = ()=>goster('ag');
+  $saf('#aHiz').onclick = async ()=>{
+    $('#aHiz').disabled = true; $saf('#aHiz').textContent = 'ÖLÇÜLÜYOR…';
+    $saf('#hizAlan').innerHTML = '<div class="bos"><span class="yukleniyor"></span> 25 MB indiriliyor…</div>';
+    const h = await hazirCek('/api/ag/hiz');
+    $saf('#hizAlan').innerHTML = h.ok ? `
+      <div class="aki">
+        <div class="olcum-kutu"><div class="et">İNDİRME</div><div class="de">${h.indirilenMbps} Mbps</div>
+          <div class="ar">${h.indirilenMB} MB indirildi</div></div>
+        <div class="olcum-kutu"><div class="et">YÜKLEME</div><div class="de">${h.yuklenenMbps} Mbps</div>
+          <div class="ar">5 MB gönderildi</div></div>
+      </div>
+      <div class="not-bandi yesil">Bu ölçüm gerçek: ${h.indirilenMbps} Mbps indirme, ${h.yuklenenMbps} Mbps yükleme.</div>`
+      : '<div class="not-bandi kirmizi">'+h.mesaj+'</div>';
+    $('#aHiz').disabled = false; $saf('#aHiz').textContent = 'HIZ TESTİ YAP';
+  };
+  const uygula = async (sunucu)=>{
+    if(!confirm('DNS sunucusu ' + sunucu + ' olarak ayarlanacak. Yönetici onayı istenecek. Devam?')) return;
+    const x = await apiPost('/api/ag/dns',{sunucu:sunucu, adaptor:dns.adaptor});
+    bildir(x.ok?'DNS ayarlandı':'Hata', (x.mesaj||'') + (x.yeni?' → '+x.yeni:''), x.ok?'basari':'hata');
+    if(!x.yonetici) goster('ag');
+  };
+  $$('.dUygula').forEach(b=>b.onclick = ()=>uygula(b.dataset.s));
+  $saf('#aDnsEn').onclick = ()=>{ if(enIyi) uygula(enIyi); else bildir('Ölçüm yok','Önce yeniden ölç.','uyari'); };
+  $saf('#aDnsDchp').onclick = async ()=>{
+    if(!confirm('DNS otomatik (modem) ayarına dönecek. Onaylıyor musun?')) return;
+    const x = await apiPost('/api/ag/dns',{geri:true, adaptor:dns.adaptor});
+    bildir(x.ok?'Otomatiğe alındı':'Hata', (x.mesaj||'')+(x.yeni?' → '+x.yeni:''), x.ok?'basari':'hata');
+    if(!x.yonetici) goster('ag');
+  };
+};
+
+/* ---------- DONANIM ---------- */
+SAYFALAR.donanim = async function(){
+  AKTIF='donanim';
+  $saf('#sag').innerHTML = `<div class="kutu"><h2>${IK.bilgisayar} NEDEN BURADA?</h2>
+    <div style="color:#c6dcf5;line-height:1.75;font-size:12.3px">
+    Donanım envanteri <b>sistemin gerçek bilgilerini</b> gösterir: diskler ve sağlık durumu, RAM modülleri,
+    ekran kartı, ağ kartları, sürücü paketi sayısı.</div>
+    <div class="not-bandi kirmizi"><b>Dürüst sınır:</b> bu bilgisayarda SSD sıcaklığı ve kalan ömür (TBW)
+    <b>okunamıyor</b> — Windows bu donanımda SMART köprüsünü vermiyor. Uydurma sıcaklık göstermiyoruz.</div>
+    <div class="not-bandi">Disk sağlığı "Healthy" yazıyorsa Windows'a göre sorun yok demektir.</div></div>`;
+  $saf('#orta').innerHTML = `<div class="kutu"><h2>${IK.bilgisayar} DONANIM<span class="sag"><span class="yukleniyor"></span> okunuyor</span></h2>
+    <div class="bos">Disk, işlemci, bellek ve ekran kartı bilgileri okunuyor…</div></div>`;
+  const d = await hazirCek('/api/donanim');
+  if(d.hata){ bildir('Hata', d.hata, 'hata'); return; }
+  const cpu = d.cpu||{};
+  const ol = (et, de, ar) => `<div class="olcum-kutu"><div class="et">${et}</div><div class="de">${de}</div><div class="ar">${ar||''}</div></div>`;
+  const sag = s => /healthy|sağlıklı/i.test(s||'') ? 'yesil' : 'kirmizi';
+  $saf('#orta').innerHTML = `
+  <div class="kutu">
+    <h2>${IK.islemci} İŞLEMCİ VE ANA KART</h2>
+    <div class="aki">
+      ${ol('İŞLEMCİ', (cpu.ad||'-').replace(/\(R\)|\(TM\)|CPU|@.*/g,'').trim().slice(0,26), cpu.cekirdek+' çekirdek · '+cpu.mantiksal+' mantıksal')}
+      ${ol('HIZ', (cpu.hiz||0)+' MHz', 'en yüksek saat hızı')}
+      ${ol('SOKET', cpu.soket||'-', (d.uretici||'')+' '+(d.sistem||''))}
+      ${ol('BIOS', d.bios||'-', 'anakart yazılımı')}
+      ${ol('SÜRÜCÜ PAKETİ', String(d.surucuPaket||0)+' adet', 'kurulu sürücü yüklemesi')}
+      ${ol('SSD SICAKLIĞI', (d.ssdSicaklik||'').indexOf('DESTEK')>=0?'OKUNAMIYOR':'okunabilir', 'bu donanım desteklemiyor')}
+    </div>
+  </div>
+  <div class="kutu">
+    <h2>${IK.disk} DİSKLER (${(d.diskler||[]).length})</h2>
+    <table><thead><tr><th>Disk</th><th>Boyut</th><th>Sürücü</th><th>Bağlantı</th><th>Sağlık</th></tr></thead><tbody>
+    ${(d.diskler||[]).map(x=>`<tr>
+      <td>${x.ad}${x.durum&&x.durum!=='OK'?' <span class="kutucuk sari">'+x.durum+'</span>':''}</td>
+      <td class="mono">${x.boyutYazi}</td><td class="mono">${x.surucu}</td><td>${x.tur}</td>
+      <td><span class="kutucuk ${sag(x.saglik)}">${x.saglik}</span></td></tr>`).join('')
+      || '<tr><td colspan="5" class="bos">Disk okunamadı.</td></tr>'}
+    </tbody></table>
+  </div>
+  <div class="kutu">
+    <h2>${IK.ram} BELLEK MODÜLLERİ (${(d.ramler||[]).length})</h2>
+    <table><thead><tr><th>Yuva</th><th>Boyut</th><th>Hız</th><th>Üretici</th></tr></thead><tbody>
+    ${(d.ramler||[]).map(x=>`<tr><td class="mono">${x.slot}</td><td class="mono">${x.boyutYazi}</td>
+      <td class="mono">${x.hiz} MHz</td><td>${x.uretici||'-'}</td></tr>`).join('')
+      || '<tr><td colspan="4" class="bos">Bellek modülü okunamadı.</td></tr>'}
+    </tbody></table>
+    <div class="not-bandi mavi">İki yuva da dolu ve hızları aynıysa bellek <b>çift kanal</b> çalışıyor demektir — bu daha hızlıdır.</div>
+  </div>
+  <div class="kutu">
+    <h2>${IK.pencere} EKRAN KARTI (${(d.ekranKartlari||[]).length})</h2>
+    <table><thead><tr><th>Kart</th><th>Bellek</th><th>Sürücü Sürümü</th></tr></thead><tbody>
+    ${(d.ekranKartlari||[]).map(x=>`<tr><td>${x.ad}</td><td class="mono">${x.ramYazi}</td>
+      <td class="mono">${x.surum||'-'}</td></tr>`).join('')
+      || '<tr><td colspan="3" class="bos">Ekran kartı okunamadı.</td></tr>'}
+    </tbody></table>
+    ${(d.batarya||{}).var?`<div class="not-bandi mavi">Batarya: tasarım kapasitesi ${d.batarya.tasarim||'?'} mWh ·
+       tam dolu ${d.batarya.tam||'?'} mWh</div>`:'<div class="not-bandi">Batarya yok — bu bir masaüstü bilgisayar.</div>'}
+  </div>`;
+};
+
+/* ---------- ORTAK: HIZLI İŞLEMLER ---------- */
+function hizliIslemlerHTML(){
+  return `<div class="kutu">
+    <h2>${IK.roket} HIZLI İŞLEMLER</h2>
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <button class="hizli yesil" id="hTemizle">${IK.temizlik}
+        <div><b>AKILLI TEMİZLE</b><span>Tüm gereksiz dosyaları temizle</span></div></button>
+      <button class="hizli mavi" id="hPerformans">${IK.roket}
+        <div><b>PERFORMANSI ARTIR</b><span>Sistemi hızlandır · RAM + DNS + geçici</span></div></button>
+      <button class="hizli kirmizi" id="hZorla">${IK.cop}
+        <div><b>ZORLA KALDIR</b><span>Programı tamamen kaldır</span></div></button>
+      <button class="hizli sari" id="hBaslangic">${IK.roket}
+        <div><b>BAŞLANGIÇ YÖNETİMİ</b><span>Gereksiz başlangıçları kapat</span></div></button>
+    </div>
+  </div>
+  <div class="kutu" id="hDurumKutu">
+    <h2>${IK.bilgisayar} ANLIK DURUM</h2>
+    <div id="hDurum"><div class="bos">ölçülüyor…</div></div>
+  </div>`;
+}
+function hizliIslemlerBagla(){
+  const b = (id,f)=>{ const el=$(id); if(el) el.onclick = f; };
+  b('#hTemizle', async ()=>{
+    const r = await apiPost('/api/temizlik/temizle',{secili:['gecici','tarayici','update','geri-donusum','diger']});
+    bildir('Akıllı temizleme', r.silinenYazi+' kazanıldı ('+r.silinenDosya+' dosya).','basari');
+    goster(AKTIF);
+  });
+  b('#hPerformans', hizlandir);
+  b('#hZorla', ()=>goster('zorla'));
+  b('#hBaslangic', ()=>goster('baslangic'));
+  if($('#hDurum')) anlikDurumCiz();
+}
+async function anlikDurumCiz(){
+  const d = await hazirCek('/api/durum');
+  if(d.hata) return;
+  const el = $('#hDurum'); if(!el) return;
+  el.innerHTML = `
+    ${sayacKutu(IK.islemci,'CPU', d.cpuYuk+'%', d.cpuYuk, '#3b82f6')}
+    <div style="height:7px"></div>
+    ${sayacKutu(IK.ram,'RAM', d.ramYuzde+'%', d.ramYuzde, '#a855f7')}
+    <div style="height:7px"></div>
+    ${sayacKutu(IK.disk,'DISK', d.diskYuzde+'%', d.diskYuzde, '#22c55e')}
+    <div style="height:9px"></div>
+    <div class="satir"><span class="ad">Sağlık puanı</span><span class="boyut">${d.puan}/100</span></div>
+    <div class="satir"><span class="ad">Bellek</span><span class="boyut">${boyut(d.ramKullanilan)}</span></div>
+    <div class="satir"><span class="ad">Boş disk</span><span class="boyut">${boyut(d.diskBos)}</span></div>`;
+}
+
+/* ---------- ALT ÇUBUK ---------- */
+function altCubukGuncelle(){
+  $('#otoAnahtar').classList.toggle('acik', !!AYAR.otomatikTemizlik);
+  $saf('#otoYazi').textContent = AYAR.otomatikTemizlik?'AÇIK':'KAPALI';
+  $('#otoYazi').style.color = AYAR.otomatikTemizlik?'#86efac':'#8fb0d4';
+  $saf('#altTemizlik').textContent = AYAR.sonTemizlik ? ('Son temizlik: '+AYAR.sonTemizlik) : 'Son temizlik: henüz yapılmadı';
+}
+
+/* ---------- BAŞLAT ---------- */
+/* Motor henüz ayakta değilse kısa aralıklarla bekler (20 x 1,5 sn). */
+async function dayanikliCek(yol, varsayilan, deneme){
+  deneme = deneme || 20;
+  for(let i=0;i<deneme;i++){
+    try{
+      const v = await apiGet(yol);
+      if(v && !v.hata) return v;
+    }catch(e){}
+    const s1 = document.getElementById('altSol');
+    if(s1) s1.innerHTML = '<span class="yukleniyor"></span> Motor bekleniyor\u2026 (' + (i+1) + '/' + deneme + ')';
+    await new Promise(r=>setTimeout(r, 1500));
+  }
+  throw new Error('Motor 30 saniyedir yanıt vermiyor');
+}
+(async function basla(){
+  try{
+  const a = await dayanikliCek('/api/ayar', {});
+  AYAR = Object.assign(AYAR, a);
+  altCubukGuncelle();
+  $saf('#otoAnahtar').onclick = async ()=>{
+    AYAR.otomatikTemizlik = !AYAR.otomatikTemizlik;
+    altCubukGuncelle();
+    await apiPost('/api/ayar/kaydet', AYAR);
+    bildir('Otomatik temizlik', AYAR.otomatikTemizlik?'AÇILDI':'KAPATILDI', 'basari');
+  };
+  const n = await dayanikliCek('/api/nabiz', {});
+  $saf('#altAdmin').textContent = 'Yetki: ' + (n.yonetici?'YÖNETİCİ (tam)':'normal kullanıcı');
+  $saf('#altSol').innerHTML = '● Sistem korunuyor — tüm ölçümler yerel, veri gönderilmiyor';
+  temaUygula(AYAR.tema||'lacivert');
+  if(AYAR.otomatikTemizlik){
+    const r = await apiPost('/api/temizlik/temizle',{secili:['gecici','tarayici','diger']});
+    if(r.silinenBayt>0) bildir('Otomatik temizlik', r.silinenYazi+' kazanıldı.','basari');
+  }
+/* ============================================================
+   v1.2.0 — YENİ SAYFALAR (canlı izleme · hız · kurtarma · yönetim · güncelleme · alarm)
+   Panel açılışta ÖNBELLEKTEN anında dolar (hızlı cevap), arkada tazelenir.
+   ============================================================ */
+function onbTazele(){ ONB.clear(); }
+function egri(dizi, renk, en, boy){
+  en = en||262; boy = boy||58;
+  const d = dizi.length ? dizi.slice(-60) : [0,0];
+  const n = Math.max(2, d.length), adim = en/(n-1);
+  const nk = d.map((y,i)=>{
+    const x = i*adim, yv = boy - (Math.min(100, Math.max(0, Number(y)||0))/100)*(boy-4) - 2;
+    return x.toFixed(1)+','+yv.toFixed(1);
+  });
+  const son = d[d.length-1]||0;
+  const renkSon = son>=90?'#dc2626':(son>=70?'#eab308':renk);
+  return `<svg width="${en}" height="${boy}" style="display:block">
+    <defs><linearGradient id="g${renk.replace('#','')}" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="${renkSon}" stop-opacity=".45"/>
+      <stop offset="100%" stop-color="${renkSon}" stop-opacity="0"/></linearGradient></defs>
+    <polygon points="0,${boy} ${nk.join(' ')} ${en},${boy}" fill="url(#g${renk.replace('#','')})"/>
+    <polyline points="${nk.join(' ')}" fill="none" stroke="${renkSon}" stroke-width="2"
+      stroke-linejoin="round" stroke-linecap="round"/></svg>`;
+}
+function konus(metin){
+  try{
+    if(!('speechSynthesis' in window)) return false;
+    const u = new SpeechSynthesisUtterance(metin);
+    u.lang = 'tr-TR'; u.rate = 1.02; u.pitch = 1.0;
+    const sesler = speechSynthesis.getVoices().filter(s=>/^tr/i.test(s.lang));
+    if(sesler.length) u.voice = sesler[0];
+    speechSynthesis.cancel(); speechSynthesis.speak(u);
+    return true;
+  }catch(e){ return false; }
+}
+function sesVarMi(){ return 'speechSynthesis' in window; }
+
+/* ---------- CANLI İZLEME ---------- */
+let CANLI_ZAMAN = null, CANLI_GEC = {cpu:[], ram:[], disk:[]};
+async function canliCiz(){
+  const c = await hazirCek('/api/canli', 3000);
+  if(!c || c.hata){ return; }
+  CANLI_GEC.cpu.push(c.cpu||0); CANLI_GEC.ram.push(c.ramYuzde||0); CANLI_GEC.disk.push(c.disk||0);
+  Object.keys(CANLI_GEC).forEach(k=>{ if(CANLI_GEC[k].length>120) CANLI_GEC[k].shift(); });
+  const yaz = (id, v)=>{ const e = document.getElementById(id); if(e) e.textContent = v; };
+  yaz('cCpu', (c.cpu||0)+'%'); yaz('cRam', (c.ramYuzde||0)+'%'); yaz('cDisk', (c.disk||0)+'%');
+  yaz('cSure', sure(c.sureSn||0)); yaz('cMhz', (c.cpuMhz||0)+' MHz');
+  yaz('cRamBos', boyut((c.ramBosMB||0)*1048576));
+  const g1 = document.getElementById('gCpu'), g2 = document.getElementById('gRam'), g3 = document.getElementById('gDisk');
+  if(g1) g1.innerHTML = egri(CANLI_GEC.cpu, '#22d3ee');
+  if(g2) g2.innerHTML = egri(CANLI_GEC.ram, '#a855f7');
+  if(g3) g3.innerHTML = egri(CANLI_GEC.disk, '#22c55e');
+  const s = document.getElementById('cSicak'), f = document.getElementById('cFan');
+  if(s) s.textContent = c.sicakC ? (c.sicakC+' °C') : 'desteklemiyor';
+  if(f) f.textContent = c.fanRpm ? (c.fanRpm+' dev/dk') : 'desteklemiyor';
+  const not = document.getElementById('cNot');
+  if(not) not.textContent = c.sicakC ? 'Sıcaklık gerçek sensörden okundu.' :
+    'Bu anakart sıcaklık/fan sensörü yayınlamıyor (ACPI termal bölge yok) — uydurma değer gösterilmez.';
+}
+async function baglantiCiz(){
+  const b = await hazirCek('/api/baglantilar', 8000);
+  const kap = document.getElementById('bagKutu'); if(!kap || !b || b.hata) return;
+  const surecler = (b.surecler||[]).map(s=>`<span class="kutucuk">${s.ad} · ${s.adet}</span>`).join(' ');
+  const satir = (b.baglantilar||[]).slice(0,40).map(x=>`<div class="satir">
+      <span class="ad">${x.surec||'?'} <span style="color:var(--soluk)">(PID ${x.pid})</span></span>
+      <span class="boyut">${x.uzak}:${x.port}</span>
+      <span class="durum"><span class="kutucuk mavi">${x.yerelPort}</span></span></div>`).join('');
+  kap.innerHTML = `<div class="kutu"><h2>${IK.kalkan} DIŞARIYA AÇIK BAĞLANTILAR
+      <span class="sag">${b.toplam||0} bağlantı · canlı</span></h2>
+    <div style="display:flex;flex-wrap:wrap;gap:5px;margin:6px 0 10px">${surecler||'—'}</div>
+    <div style="max-height:330px;overflow:auto">${satir||'<div class="bos">Dışarıya açık bağlantı yok.</div>'}</div></div>`;
+}
+SAYFALAR.canli = async function(){
+  $saf('#orta').innerHTML = `
+  <div class="kutu"><h2>${IK.islemci} CANLI İZLEME<span class="sag" id="canliDurum">4 saniyede bir yenileniyor</span></h2>
+    <div class="sayaclar" id="canliSayac" style="margin-bottom:10px">
+      ${sayacKutu(IK.islemci,'İŞLEMCİ','<span id="cCpu">—</span>',0,'#3b82f6')}
+      ${sayacKutu(IK.ram,'BELLEK','<span id="cRam">—</span>',0,'#a855f7')}
+      ${sayacKutu(IK.disk,'DİSK ETKİNLİĞİ','<span id="cDisk">—</span>',0,'#22c55e')}
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
+      <div class="sayac"><div class="basi"><span>İŞLEMCİ</span><b id="cw1"></b></div><div id="gCpu"></div></div>
+      <div class="sayac"><div class="basi"><span>BELLEK</span><b id="cw2"></b></div><div id="gRam"></div></div>
+      <div class="sayac"><div class="basi"><span>DİSK</span><b id="cw3"></b></div><div id="gDisk"></div></div>
+    </div>
+    <div class="bilgi-satir">
+      <div class="b"><div class="et">SICAKLIK</div><div class="de" id="cSicak">—</div></div>
+      <div class="b"><div class="et">FAN DEVRİ</div><div class="de" id="cFan">—</div></div>
+      <div class="b"><div class="et">BOŞ BELLEK</div><div class="de" id="cRamBos">—</div></div>
+      <div class="b"><div class="et">İŞLEMCİ HIZI</div><div class="de" id="cMhz">—</div></div>
+      <div class="b"><div class="et">AÇIK KALMA</div><div class="de" id="cSure">—</div></div>
+    </div>
+    <div class="alt-not" id="cNot" style="margin-top:9px;font-size:11.5px;color:var(--soluk)"></div>
+  </div>
+  <div id="bagKutu"><div class="kutu"><h2>${IK.kalkan} DIŞARIYA AÇIK BAĞLANTILAR</h2><div class="bos">okunuyor…</div></div></div>`;
+  $saf('#sag').innerHTML = `<div class="kutu"><h2>${IK.saat} KONTROL</h2>
+    <div class="hizli mavi" id="canliDurdur">${IK.saat}<div><b>İzlemeyi durdur / başlat</b><span>Ölçüm yükünü azaltır</span></div></div>
+    <div class="hizli mor" id="kuralTazele">${IK.roket}<div><b>Önbelleği temizle</b><span>Tüm ölçümler yeniden yapılır</span></div></div>
+    <div class="hizli sari" id="sesTest">${IK.pencere}<div><b>Sesli bildirimi dene</b><span>"Nöbetteyiz Üstad Kenan"</span></div></div>
+  </div>`;
+  const durum = $saf('#canliDurum');
+  const dongu = async ()=>{
+    await canliCiz();
+    const span = document.getElementById('cw1'); if(span) span.textContent = (CANLI_GEC.cpu[CANLI_GEC.cpu.length-1]||0)+'%';
+    const s2 = document.getElementById('cw2'); if(s2) s2.textContent = (CANLI_GEC.ram[CANLI_GEC.ram.length-1]||0)+'%';
+    const s3 = document.getElementById('cw3'); if(s3) s3.textContent = (CANLI_GEC.disk[CANLI_GEC.disk.length-1]||0)+'%';
+    const cubuk = $$('#canliSayac .cizgi i');
+    const son = {0:CANLI_GEC.cpu.slice(-1)[0]||0, 1:CANLI_GEC.ram.slice(-1)[0]||0, 2:CANLI_GEC.disk.slice(-1)[0]||0};
+    Object.keys(son).forEach(i=>{ if(cubuk[i]) cubuk[i].style.width = Math.min(100, son[i])+'%'; });
+    if(AKTIF !== 'canli' && CANLI_ZAMAN){ clearInterval(CANLI_ZAMAN); CANLI_ZAMAN = null; return; }
+  };
+  await dongu(); await baglantiCiz();
+  if(CANLI_ZAMAN) clearInterval(CANLI_ZAMAN);
+  CANLI_ZAMAN = setInterval(async ()=>{ if(AKTIF!=='canli'){ clearInterval(CANLI_ZAMAN); CANLI_ZAMAN=null; return; }
+    await dongu(); await baglantiCiz(); if(durum) durum.textContent = 'Son güncelleme: '+new Date().toLocaleTimeString('tr-TR'); }, 4000);
+  $saf('#canliDurdur').onclick = ()=>{ if(CANLI_ZAMAN){ clearInterval(CANLI_ZAMAN); CANLI_ZAMAN=null; if(durum) durum.textContent='izleme durduruldu'; }
+    else { goster('canli'); } };
+  $saf('#kuralTazele').onclick = async ()=>{ onbTazele(); await apiPost('/api/onbellek/bosalt', {}); bildir('Önbellek','Ölçümler yeniden yapılacak','bilgi'); };
+  $saf('#sesTest').onclick = ()=> bildir('Sesli bildirim', konus('Nöbetteyiz Üstad Kenan, sistem izleniyor.') ?
+    'Sesli bildirim çalıştı.' : 'Bu panelde sesli okuma yok.', 'bilgi');
+};
+
+/* ---------- HIZ TESTİ & BENCHMARK ---------- */
+function gecmisCubuk(liste, anahtar, renk){
+  const d = (liste||[]).slice(-10);
+  if(!d.length) return '<div class="bos">Henüz ölçüm yok.</div>';
+  const en = Math.max(...d.map(x=>Number(x[anahtar])||1)) || 1;
+  return d.map(x=>`<div class="satir"><span class="ad">${x.tarih||''}</span>
+    <span class="boyut">${x[anahtar]}</span>
+    <span class="durum" style="flex:1;margin-left:8px"><span class="ileri mavi" style="width:100%">
+      <i style="width:${Math.round((Number(x[anahtar])||0)/en*100)}%;background:${renk}"></i></span></span></div>`).join('');
+}
+SAYFALAR.hiz = async function(){
+  $saf('#orta').innerHTML = `
+  <div class="kutu"><h2>${IK.disk} GERÇEK DİSK HIZ TESTİ<span class="sag">128 MB yazma + önbelleksiz okuma + 4K</span></h2>
+    <div class="serit"><div class="sol"><div class="baslik">Disk hızını ölç</div>
+      <div class="alt">128 MB dosya yazılır, gerçek (önbelleksiz) okuma ve 4K rastgele yazma ölçülür. Test dosyası silinir.</div></div>
+      <button class="dev-buton" id="diskTest">${IK.roket} Testi Başlat</button></div>
+    <div id="diskSonuc" class="bos">Ölçüm bekleniyor…</div></div>
+  <div class="kutu"><h2>${IK.islemci} İŞLEMCİ + BELLEK BENCHMARK<span class="sag">önceki ölçümle kıyaslanır</span></h2>
+    <div class="serit"><div class="sol"><div class="baslik">Kısa performans testi</div>
+      <div class="alt">İşlemci tek çekirdek döngüsü + bellek kopyalama hızı ölçülür, geçmişle karşılaştırılır.</div></div>
+      <button class="dev-buton" id="benchTest">${IK.roket} Testi Başlat</button></div>
+    <div id="benchSonuc" class="bos">Ölçüm bekleniyor…</div></div>
+  <div class="kutu"><h2>${IK.rapor} ÖLÇÜM GEÇMİŞİ</h2><div id="hizGecmis" class="bos">okunuyor…</div></div>`;
+  $saf('#sag').innerHTML = `<div class="kutu"><h2>${IK.saat} BİLGİ</h2>
+    <div class="serit"><div class="sol"><div class="baslik">Neden yavaş çıkabilir?</div>
+      <div class="alt">Test sırasında başka program disk/kamera kullanıyorsa değerler düşük görünür. İkinci ölçüm daha doğru olur.</div></div></div>
+    <div class="hizli mavi" id="hizYenile">${IK.roket}<div><b>Sonuçları yenile</b><span>Önbelleği atlar</span></div></div></div>`;
+  const goster_ = async ()=>{
+    const d = await hazirCek('/api/onbellek').catch(()=>null);
+    const kap = $saf('#hizGecmis');
+    if(kap && d) kap.innerHTML = `<div class="satir"><span class="ad">Önbellek isabet oranı</span>
+      <span class="boyut">%${d.isabetOrani||0}</span><span class="durum kutucuk ${(d.isabetOrani||0)>50?'yesil':'sari'}">${d.uretim||0} ölçüm üretildi</span></div>
+      <div class="satir"><span class="ad">Ortalama ölçüm süresi</span><span class="boyut">${d.ortUretimSn||0} sn</span>
+      <span class="durum kutucuk">${d.kayitSayisi||0} hazır kayıt</span></div>`;
+  };
+  await goster_();
+  $saf('#diskTest').onclick = async ()=>{
+    const b = $saf('#diskTest'); b.disabled = true; b.innerHTML = IK.saat+' Ölçülüyor…';
+    $saf('#diskSonuc').innerHTML = '<div class="bos">128 MB yazılıyor, okunuyor… (yaklaşık 5-15 sn)</div>';
+    const v = await hazirCek('/api/disk-hiz');
+    b.disabled = false; b.innerHTML = IK.roket+' Testi Başlat';
+    if(v.hata || !v.ok){ $saf('#diskSonuc').innerHTML = '<div class="bos">Hata: '+(v.hata||'ölçülemedi')+'</div>'; return; }
+    $saf('#diskSonuc').innerHTML = `
+      <div class="bilgi-satir">
+        <div class="b"><div class="et">YAZMA HIZI</div><div class="de">${v.yazmaMBs} MB/sn</div></div>
+        <div class="b"><div class="et">OKUMA (önbellekli)</div><div class="de">${v.okumaMBs} MB/sn</div></div>
+        <div class="b"><div class="et">OKUMA (gerçek disk)</div><div class="de">${v.okumaSogukMBs? v.okumaSogukMBs+' MB/sn' : 'ölçülemedi'}</div></div>
+        <div class="b"><div class="et">4K RASTGELE</div><div class="de">${v.rastgeleIOPS||'—'} IOPS</div></div>
+      </div>
+      <div style="margin-top:8px">${gecmisCubuk((v.gecmis||[]).map(x=>({tarih:x.tarih, deger:x.yazma})), 'deger', '#38bdf8')}</div>`;
+    bildir('Disk testi tamam', 'Yazma '+v.yazmaMBs+' MB/sn · Okuma '+(v.okumaSogukMBs||v.okumaMBs)+' MB/sn', 'bilgi');
+    if(sesAyar.sesliUyari) konus('Disk hız testi tamamlandı Üstad Kenan.');
+  };
+  $saf('#benchTest').onclick = async ()=>{
+    const b = $saf('#benchTest'); b.disabled = true; b.innerHTML = IK.saat+' Ölçülüyor…';
+    const v = await hazirCek('/api/benchmark');
+    b.disabled = false; b.innerHTML = IK.roket+' Testi Başlat';
+    if(!v.ok){ $saf('#benchSonuc').innerHTML = '<div class="bos">Hata: '+(v.hata||'?')+'</div>'; return; }
+    const fark = v.fark===null ? '<span class="kutucuk">ilk ölçüm</span>' :
+      (v.fark>=0? `<span class="kutucuk yesil">önceki ölçümden ${v.fark} puan hızlı</span>`
+                : `<span class="kutucuk kirmizi">önceki ölçümden ${Math.abs(v.fark)} puan yavaş</span>`);
+    $saf('#benchSonuc').innerHTML = `
+      <div class="bilgi-satir">
+        <div class="b"><div class="et">İŞLEMCİ PUANI</div><div class="de">${v.cpuPuani}</div></div>
+        <div class="b"><div class="et">BELLEK PUANI</div><div class="de">${v.ramPuani}</div></div>
+        <div class="b"><div class="et">KIYAS</div><div class="de">${fark}</div></div>
+      </div>
+      <div style="margin-top:10px"><div style="font-size:11.5px;color:var(--soluk);margin-bottom:4px">İŞLEMCİ PUANI GEÇMİŞİ</div>
+        ${gecmisCubuk(v.cpuGecmis, 'cpu', '#22d3ee')}</div>`;
+    if(sesAyar.sesliUyari) konus('Performans testi bitti Üstad Kenan. İşlemci puanı ' + Math.round(v.cpuPuani) + '.');
+  };
+  $saf('#hizYenile').onclick = async ()=>{ onbTazele(); await apiPost('/api/onbellek/bosalt', {}); await goster_(); bildir('Tazelendi','Ölçümler yenilenecek','bilgi'); };
+};
+
+/* ---------- KURTARMA & BAKIM ---------- */
+function admDug(etiket, ikon){ return `<span class="kutucuk sari">yönetici gerekir</span>`; }
+SAYFALAR.kurtarma = async function(){
+  $saf('#orta').innerHTML = `
+  <div class="kutu"><h2>${IK.kalkan} SİSTEM GERİ YÜKLEME NOKTASI<span class="sag" id="gnSag">okunuyor</span></h2>
+    <div class="serit"><div class="sol"><div class="baslik">Geri yükleme noktası oluştur</div>
+      <div class="alt">Bir şey ters giderse bilgisayarı bu ana döndürebilirsin. Yönetici yetkisi ister.</div></div>
+      <button class="dev-buton" id="gnOlustur">${IK.kalkan} Oluştur</button></div>
+    <div id="gnListe" class="bos">okunuyor…</div></div>
+  <div class="kutu"><h2>${IK.disk} YEDEKLEME<span class="sag">klasör yedeği + sürücü yedeği</span></h2>
+    <div class="serit"><div class="sol"><div class="baslik">Klasör yedeği (zip)</div>
+      <div class="alt">Seçtiğin klasörler tek zip dosyasına alınır. Varsayılan hedef: Masaüstü.</div></div>
+      <button class="dev-buton" id="ydBaslat">${IK.dosya||IK.disk} Yedekle</button></div>
+    <div id="ydKlasorler" style="margin:8px 0">okunuyor…</div>
+    <div class="serit"><div class="sol"><div class="baslik">Günlük otomatik yedek</div>
+      <div class="alt">Her gün belirtilen saatte yedek alınır (zamanlanmış görev).</div></div>
+      <input id="ydSaat" value="21:00" style="width:80px" class="inp">
+      <button class="dev-buton" id="ydKur">${IK.saat} Kur</button>
+      <button class="dev-buton" id="ydKaldir">Kaldır</button></div>
+    <div class="serit"><div class="sol"><div class="baslik">Sürücüleri yedekle (pnputil)</div>
+      <div class="alt">Kurulu tüm sürücü paketleri Masaüstü'ndeki klasöre aktarılır — format sonrası kurtarıcıdır. Yönetici ister.</div></div>
+      <button class="dev-buton" id="surucuYedek">${IK.disk} Sürücüleri Yedekle</button></div>
+    <div id="ydGecmis" class="bos"></div></div>
+  <div class="kutu"><h2>${IK.rapor} OLAY GÜNLÜĞÜ (son 7 gün)<span class="sag" id="olSag"></span></h2>
+    <div id="olayListe" class="bos">okunuyor…</div></div>
+  <div class="kutu"><h2>${IK.tarama} SÜRÜCÜSÜ EKSİK AYGITLAR<span class="sag" id="aySag"></span></h2>
+    <div id="aygitListe" class="bos">okunuyor…</div></div>
+  <div class="kutu"><h2>${IK.saat} GERİ ALINABİLİR İŞLEMLER<span class="sag">yaptığım değişiklikler</span></h2>
+    <div id="geriAlListe" class="bos">okunuyor…</div></div>`;
+  $saf('#sag').innerHTML = `<div class="kutu"><h2>${IK.saat} KURTARMA ÖZETİ</h2><div id="kurOzet" class="bos">…</div></div>`;
+  const gn = await hazirCek('/api/geri-noktalari', 20000);
+  $saf('#gnSag').textContent = (gn.yonetici? 'yönetici: var' : 'yönetici: yok') + ' · ' + (gn.adet||0) + ' nokta';
+  $saf('#gnListe').innerHTML = (gn.noktalar||[]).length ? (gn.noktalar||[]).map(x=>`<div class="satir">
+      <span class="no">${x.sira}</span><span class="ad">${x.aciklama}</span>
+      <span class="boyut">${x.tarih}</span></div>`).join('')
+    : '<div class="bos">Hiç geri yükleme noktası yok. Soldaki "Oluştur" ile ilk noktayı açabilirsin (yönetici ister).</div>';
+  $saf('#gnOlustur').onclick = async ()=>{
+    let v = await apiPost('/api/geri-noktasi', {});
+    if(v.yoneticiGerekli){
+      if(!confirm('Geri yükleme noktası yönetici ister.\nYönetici penceresi açılsın mı?')) return;
+      v = await apiPost('/api/geri-noktasi', {zorla:true});
+    }
+    bildir('Geri yükleme noktası', v.mesaj||'işlem gönderildi', v.ok?'bilgi':'hata');
+    onbTazele();
+  };
+  const yd = await hazirCek('/api/yedek', 30000);
+  const kl = yd.klasorler||[];
+  $saf('#ydKlasorler').innerHTML = kl.map((k,i)=>`<label class="satir" style="cursor:pointer">
+      <input type="checkbox" data-yd="${k.ad}" ${['Belgeler','Masaüstü','Resimler'].includes(k.ad)?'checked':''}>
+      <span class="ad">${k.ad} <span style="color:var(--soluk)">${k.yol}</span></span>
+      <span class="boyut">${k.boyut}</span></label>`).join('')
+    + `<div style="font-size:11.5px;color:var(--soluk);margin-top:6px">Toplam: ${yd.toplam} · Hedef: ${yd.varsayilanHedef}</div>`;
+  $saf('#ydGecmis').innerHTML = (yd.gecmis||[]).length ? '<div style="font-size:11.5px;color:var(--soluk);margin-top:8px">SON YEDEKLER</div>' +
+    (yd.gecmis||[]).slice(-5).reverse().map(x=>`<div class="satir"><span class="ad">${x.klasor}</span>
+      <span class="boyut">${x.boyut}</span><span class="durum kutucuk">${x.tarih}</span></div>`).join('') : '';
+  $saf('#ydBaslat').onclick = async ()=>{
+    const sec = $$('#ydKlasorler input:checked').map(x=>x.dataset.yd);
+    if(!sec.length) return bildir('Yedek','Klasör seçilmedi','hata');
+    if(!confirm(sec.join(', ')+' klasörleri zip olarak yedeklenecek. Devam?')) return;
+    const b = $saf('#ydBaslat'); b.disabled = true; b.innerHTML = IK.saat+' yedekleniyor…';
+    const v = await apiPost('/api/yedek/klasor', {secili: sec});
+    b.disabled = false; b.innerHTML = IK.disk+' Yedekle';
+    bildir('Yedek', v.mesaj||v.hata||'?', v.ok?'bilgi':'hata');
+    if(v.ok && sesAyar.sesliUyari) konus('Yedekleme tamamlandı Üstad Kenan.');
+    const y2 = await hazirCek('/api/yedek'); onbTazele();
+    $saf('#ydGecmis').innerHTML = (y2.gecmis||[]).slice(-6).reverse().map(x=>`<div class="satir"><span class="ad">${x.klasor}</span>
+      <span class="boyut">${x.boyut}</span><span class="durum kutucuk">${x.tarih}</span></div>`).join('');
+  };
+  $saf('#ydKur').onclick = async ()=>{
+    const v = await apiPost('/api/yedek/gorevi', {kur:true, saat: ($saf('#ydSaat').value||'21:00').trim()});
+    bildir('Günlük yedek', v.mesaj||'', v.ok?'bilgi':'hata');
+  };
+  $saf('#ydKaldir').onclick = async ()=>{ const v = await apiPost('/api/yedek/gorevi', {kur:false});
+    bildir('Günlük yedek', v.mesaj||'', 'bilgi'); };
+  $saf('#surucuYedek').onclick = async ()=>{
+    let v = await apiPost('/api/surucu-yedek', {});
+    if(v.yoneticiGerekli){
+      if(!confirm('Sürücü yedeği yönetici ister.\nYönetici penceresi açılsın mı?')) return;
+      v = await apiPost('/api/surucu-yedek', {zorla:true});
+    }
+    bildir('Sürücü yedeği', v.mesaj||'?', v.ok?'bilgi':'hata');
+  };
+  const ol = await hazirCek('/api/olay', 60000);
+  $saf('#olSag').textContent = (ol.adet||0)+' farklı olay · '+(ol.toplamOlay||0)+' kayıt';
+  const sev = s=> s==='KRİTİK' ? 'kirmizi' : (s==='HATA' ? 'kirmizi' : 'sari');
+  $saf('#olayListe').innerHTML = (ol.olaylar||[]).length ? (ol.olaylar||[]).map(x=>`<div class="satir">
+      <span class="durum"><span class="kutucuk ${sev(x.seviye)}">${x.seviye}</span></span>
+      <span class="ad">${x.kaynak} (${x.id}) — ${x.mesaj||''}</span>
+      <span class="boyut">${x.adet} kez</span><span class="durum">${x.son}</span></div>`).join('')
+    : '<div class="bos">Son 7 günde kritik/hata/uyarı kaydı yok.</div>';
+  const ay = await hazirCek('/api/aygitlar', 60000);
+  $saf('#aySag').textContent = (ay.toplamCihaz||0)+' aygıt tarandı';
+  const kodlu = ay.kodlular||[];
+  $saf('#aygitListe').innerHTML = (ay.adet||0)||(kodlu.length) ? [
+      ...(ay.aygitlar||[]).map(x=>`<div class="satir"><span class="durum"><span class="kutucuk kirmizi">${x.durum}</span></span>
+        <span class="ad">${x.ad} <span style="color:var(--soluk)">${x.sinif||''}</span></span>
+        <span class="durum">${x.id||''}</span></div>`),
+      ...kodlu.map(x=>`<div class="satir"><span class="durum"><span class="kutucuk kirmizi">kod ${x.kod}</span></span>
+        <span class="ad">${x.ad}</span><span class="durum">${x.sade||''}</span></div>`)
+    ].join('') : '<div class="bos">Harika — sürücüsü eksik/bozuk aygıt yok, tüm aygıtlar çalışıyor.</div>';
+  const ga = await hazirCek('/api/geri-al', 20000);
+  $saf('#geriAlListe').innerHTML = (ga.kayitlar||[]).length ? (ga.kayitlar||[]).map(x=>`<div class="satir">
+      <span class="ad">${x.aciklama||x.tur}</span><span class="boyut">${x.ad||''}</span>
+      <span class="durum kutucuk">${x.tarih||''}</span></div>`).join('')
+    : '<div class="bos">Henüz geri alınabilir bir değişiklik yapılmadı.</div>';
+  const gz = $saf('#kurOzet');
+  if(gz) gz.innerHTML = `<div class="satir"><span class="ad">Geri yükleme noktası</span><span class="boyut">${gn.adet||0}</span></div>
+    <div class="satir"><span class="ad">Kritik olay (7 gün)</span><span class="boyut">${ol.toplamOlay||0}</span></div>
+    <div class="satir"><span class="ad">Sorunlu aygıt</span><span class="boyut">${ay.kodluAdet||ay.adet||0}</span></div>
+    <div class="satir"><span class="ad">Son yedek</span><span class="boyut">${(yd.gecmis||[]).length? (yd.gecmis[yd.gecmis.length-1].tarih) : 'yok'}</span></div>`;
+};
+
+/* ---------- GÖREV & HİZMET YÖNETİMİ ---------- */
+SAYFALAR.yonetim = async function(){
+  $saf('#orta').innerHTML = `
+  <div class="kutu"><h2>${IK.saat} ZAMANLANMIŞ GÖREVLER<span class="sag" id="gvSag">okunuyor</span></h2>
+    <input id="gvAra" class="inp" placeholder="Görev ara (örn. Update)" style="width:100%;margin:6px 0 8px">
+    <div id="gvListe" class="bos" style="max-height:420px;overflow:auto">okunuyor…</div></div>
+  <div class="kutu"><h2>${IK.pencere} HİZMETLER<span class="sag" id="hzSag">okunuyor</span></h2>
+    <input id="hzAra" class="inp" placeholder="Hizmet ara (örn. SysMain)" style="width:100%;margin:6px 0 8px">
+    <div id="hzListe" class="bos" style="max-height:420px;overflow:auto">okunuyor…</div></div>`;
+  $saf('#sag').innerHTML = `<div class="kutu"><h2>${IK.kalkan} NASIL ÇALIŞIR</h2>
+    <div class="serit"><div class="sol"><div class="baslik">Kapat → geri aç</div>
+      <div class="alt">Kapattığın her görev/hizmet "Geri alınabilir işlemler"e yazılır; Kurtarma sayfasından eski hâline dönebilirsin.</div></div></div>
+    <div class="serit"><div class="sol"><div class="baslik">Windows hizmetleri</div>
+      <div class="alt">"Güvenli liste" yok: SysMain, DiagTrack, Windows Update gibi hizmetleri kapatmak sistemi etkiler. Emin değilsen kapatma.</div></div></div></div>`;
+  const gorevCiz = async (ara)=>{
+    const g = await hazirCek('/api/gorevler'+(ara? '?ara='+encodeURIComponent(ara):''), ara?1000:30000);
+    $saf('#gvSag').textContent = (g.toplam||0)+' görev · '+(g.kapali||0)+' kapalı';
+    $saf('#gvListe').innerHTML = (g.gorevler||[]).slice(0,120).map(x=>`<div class="satir">
+        <span class="durum"><span class="kutucuk ${x.acik?'yesil':'sari'}">${x.durum||'?'}</span></span>
+        <span class="ad">${x.ad}<div style="font-size:11px;color:var(--soluk)">${x.yol||'\\'} · ${x.kodMetni||''} ${x.son? '· son: '+x.son : ''}</div></span>
+        <button class="dev-buton kucuk" data-gorev="${encodeURIComponent(x.ad)}" data-yol="${encodeURIComponent(x.yol||'\\')}" data-kapat="${x.acik?1:0}">
+          ${x.acik? 'Kapat' : 'Aç'}</button></div>`).join('') || '<div class="bos">Sonuç yok.</div>';
+    $$('#gvListe button[data-gorev]').forEach(b=> b.onclick = async ()=>{
+      const ad = decodeURIComponent(b.dataset.gorev), yol = decodeURIComponent(b.dataset.yol), kapat = b.dataset.kapat==='1';
+      b.disabled = true;
+      let v = await apiPost('/api/gorev', {ad, yol, kapat});
+      if(v.yoneticiGerekli){
+        if(confirm('"'+ad+'" için yönetici gerekiyor.\nYönetici penceresi açılsın mı?'))
+          v = await apiPost('/api/gorev', {ad, yol, kapat, zorla:true});
+        else v = {mesaj:'vazgeçildi'};
+      }
+      bildir('Görev', v.mesaj||v.hata||'', v.ok?'bilgi':'hata');
+      b.disabled = false; onbTazele(); gorevCiz($saf('#gvAra').value.trim());
+    });
+  };
+  const hizmetCiz = async (ara)=>{
+    const h = await hazirCek('/api/hizmet'+(ara? '?ara='+encodeURIComponent(ara):''), ara?1000:30000);
+    $saf('#hzSag').textContent = (h.toplam||0)+' hizmet · '+(h.calisan||0)+' çalışıyor';
+    $saf('#hzListe').innerHTML = (h.hizmetler||[]).slice(0,120).map(x=>`<div class="satir">
+        <span class="durum"><span class="kutucuk ${x.durum==='Running'?'yesil':'sari'}">${x.durum==='Running'?'çalışıyor':'durdu'}</span></span>
+        <span class="ad">${x.etiket||x.ad}<div style="font-size:11px;color:var(--soluk)">${x.ad} · başlangıç: ${x.baslangic}</div></span>
+        <button class="dev-buton kucuk" data-h="durdur" data-had="${encodeURIComponent(x.ad)}">Durdur</button>
+        <button class="dev-buton kucuk" data-h="baslat" data-had="${encodeURIComponent(x.ad)}">Başlat</button>
+        <button class="dev-buton kucuk" data-h="baslangic" data-had="${encodeURIComponent(x.ad)}" data-bs="${x.baslangic==='Auto'?'Manual':'Auto'}">${x.baslangic==='Auto'?'Elle':'Otomatik'}</button></div>`).join('') || '<div class="bos">Sonuç yok.</div>';
+    $$('#hzListe button[data-h]').forEach(b=> b.onclick = async ()=>{
+      const ad = decodeURIComponent(b.dataset.had);
+      let govde = {ad, islem: b.dataset.h};
+      if(b.dataset.bs) govde.baslangic = b.dataset.bs === 'Auto' ? 'Automatic' : 'Manual';
+      b.disabled = true;
+      let v = await apiPost('/api/hizmet', govde);
+      if(v.yoneticiGerekli){
+        if(confirm('"'+ad+'" hizmeti için yönetici gerekiyor.\nYönetici penceresi açılsın mı?')){
+          govde.zorla = true; v = await apiPost('/api/hizmet', govde);
+        } else v = {mesaj:'vazgeçildi'};
+      }
+      bildir('Hizmet', v.mesaj||v.hata||'', v.ok?'bilgi':'hata');
+      b.disabled = false; onbTazele(); hizmetCiz($saf('#hzAra').value.trim());
+    });
+  };
+  await gorevCiz(''); await hizmetCiz('');
+  let z1=null, z2=null;
+  $saf('#gvAra').oninput = ()=>{ clearTimeout(z1); z1 = setTimeout(()=>gorevCiz($saf('#gvAra').value.trim()), 600); };
+  $saf('#hzAra').oninput = ()=>{ clearTimeout(z2); z2 = setTimeout(()=>hizmetCiz($saf('#hzAra').value.trim()), 600); };
+};
+
+/* ---------- AĞ · GÜNCELLEME · GİZLİLİK ---------- */
+SAYFALAR.guncelleme = async function(){
+  $saf('#orta').innerHTML = `
+  <div class="kutu"><h2>${IK.tarama} WINDOWS UPDATE<span class="sag" id="guSag">okunuyor</span></h2>
+    <div id="guSon" class="bos">okunuyor…</div>
+    <div id="guListe" class="bos">okunuyor…</div></div>
+  <div class="kutu"><h2>${IK.pencere} WINGET — PROGRAM GÜNCELLEMELERİ<span class="sag" id="wgSag">okunuyor</span></h2>
+    <div id="wgListe" class="bos">okunuyor…</div>
+    <div class="serit" style="margin-top:6px"><div class="sol"><div class="baslik">Tümünü güncelle</div>
+      <div class="alt">winget ile güncellenebilir tüm programlar arka planda güncellenir.</div></div>
+      <button class="dev-buton" id="wgHepsi">${IK.roket} Tümünü Güncelle</button></div></div>
+  <div class="kutu"><h2>${IK.kalkan} GİZLİLİK — TELEMETRİ<span class="sag" id="tlSag">okunuyor</span></h2>
+    <div id="tlDurum" class="bos">okunuyor…</div>
+    <div class="serit"><div class="sol"><div class="baslik">Telemetriyi 0'a çek + reklam kimliğini kapat</div>
+      <div class="alt">Reklam kimliği hemen kapanır; telemetri ve DiagTrack için yönetici gerekir.</div></div>
+      <button class="dev-buton" id="tlKapat">${IK.kalkan} Kapat</button></div></div>
+  <div class="kutu"><h2>${IK.pencere} YAZICI KUYRUĞU<span class="sag" id="yzSag">okunuyor</span></h2>
+    <div id="yzListe" class="bos">okunuyor…</div>
+    <div class="serit"><div class="sol"><div class="baslik">Kuyruğu temizle</div>
+      <div class="alt">Takılan yazdırma işleri silinir, yazdırma servisi yeniden başlatılır (yönetici ister).</div></div>
+      <button class="dev-buton" id="yzTemizle">${IK.cop} Temizle</button></div></div>
+  <div class="kutu"><h2>${IK.ag||IK.kalkan} WIFI KANAL TARAYICI<span class="sag" id="wfSag">okunuyor</span></h2>
+    <div id="wfListe" class="bos">okunuyor…</div></div>`;
+  $saf('#sag').innerHTML = `<div class="kutu"><h2>${IK.saat} ÖZET</h2><div id="guOzet" class="bos">…</div></div>`;
+  const son = await hazirCek('/api/son-guncelleme', 60000);
+  $saf('#guSag').textContent = (son.adet||0)+' son güncelleme';
+  $saf('#guSon').innerHTML = `<div class="satir"><span class="ad">Son başarılı kurulum</span>
+    <span class="boyut">${son.sonBasari||'kayıt yok'}</span></div>`;
+  $saf('#guListe').innerHTML = (son.liste||[]).map(x=>`<div class="satir"><span class="ad">${x.kb} — ${x.aciklama||''}</span>
+    <span class="boyut">${x.tarih||''}</span></div>`).join('') || '<div class="bos">güncelleme kaydı yok</div>';
+  const gunc = await hazirCek('/api/guncelleme?tur=windows', 900000);
+  const bekleyen = document.createElement('div');
+  bekleyen.innerHTML = (gunc.guncellemeler||[]).length ? '<div style="font-size:11.5px;color:var(--soluk);margin:8px 0 4px">BEKLEYEN GÜNCELLEMELER</div>' +
+    (gunc.guncellemeler||[]).map(x=>`<div class="satir"><span class="ad">${x.baslik}</span>
+      <span class="boyut">${x.boyutMB? x.boyutMB+' MB':''}</span></div>`).join('')
+    : '<div class="bos">Bekleyen Windows güncellemesi görünmüyor'+(gunc.hata? ' ('+gunc.hata+')':'')+'.</div>';
+  $saf('#guListe').after(bekleyen);
+  const wg = await hazirCek('/api/winget', 300000);
+  if(!wg.kurulu){
+    $saf('#wgSag').textContent = 'kurulu değil';
+    $saf('#wgListe').innerHTML = `<div class="bos">${wg.hata||'winget yok'}<br>Microsoft Store → "App Installer" kurulunca burası otomatik çalışır.</div>`;
+  } else {
+    $saf('#wgSag').textContent = (wg.adet||0)+' güncellenebilir program';
+    $saf('#wgListe').innerHTML = (wg.paketler||[]).map(x=>`<div class="satir"><span class="ad">${x.ad}
+      <div style="font-size:11px;color:var(--soluk)">${x.id}</div></span>
+      <span class="boyut">${x.mevcut} → ${x.yeni}</span></div>`).join('') || '<div class="bos">Güncellenecek program yok — hepsi güncel.</div>';
+  }
+  $saf('#wgHepsi').onclick = async ()=>{ if(!confirm('Tüm programlar güncellenecek. Devam?')) return;
+    const v = await apiPost('/api/winget/guncelle', {hepsi:true}); bildir('winget', v.mesaj||v.hata, v.ok?'bilgi':'hata'); };
+  const tl = await hazirCek('/api/telemetri', 30000);
+  const t = tl.durum||{};
+  $saf('#tlSag').textContent = 'telemetri: '+t.telemetri;
+  $saf('#tlDurum').innerHTML = `<div class="satir"><span class="ad">Telemetri düzeyi (0 = kapalı)</span>
+      <span class="boyut"><span class="kutucuk ${t.telemetri===0?'yesil':'kirmizi'}">${t.telemetri}</span></span></div>
+    <div class="satir"><span class="ad">Reklam kimliği kullanımı</span>
+      <span class="boyut"><span class="kutucuk ${t.reklamKimlik===0?'yesil':'kirmizi'}">${t.reklamKimlik===0?'kapalı':'açık'}</span></span></div>
+    <div class="satir"><span class="ad">DiagTrack hizmeti</span>
+      <span class="boyut"><span class="kutucuk ${t.diagTrack==='Stopped'?'yesil':'kirmizi'}">${t.diagTrack}</span></span></div>`;
+  $saf('#tlKapat').onclick = async ()=>{
+    let v = await apiPost('/api/telemetri/kapat', {});
+    if(v.yoneticiGerekli){
+      if(!confirm('Telemetri + DiagTrack için yönetici gerekir.\nYönetici penceresi açılsın mı?')) return;
+      v = await apiPost('/api/telemetri/kapat', {zorla:true});
+    }
+    bildir('Gizlilik', v.mesaj||'', v.ok?'bilgi':'uyari'); onbTazele();
+  };
+  const yz = await hazirCek('/api/yazici', 30000);
+  $saf('#yzSag').textContent = (yz.adet||0)+' yazıcı · spooler: '+yz.spooler;
+  $saf('#yzListe').innerHTML = (yz.yazicilar||[]).map(x=>`<div class="satir"><span class="ad">${x.ad}</span>
+    <span class="boyut">${x.durum||''}</span>
+    <span class="durum"><span class="kutucuk ${x.kuyruk>0?'sari':'yesil'}">${x.kuyruk} iş</span></span></div>`).join('')
+    || '<div class="bos">Yazıcı bulunamadı.</div>';
+  $saf('#yzTemizle').onclick = async ()=>{
+    let v = await apiPost('/api/yazici/temizle', {});
+    if(v.yoneticiGerekli){
+      if(!confirm('Kuyruk temizliği yönetici ister.\nYönetici penceresi açılsın mı?')) return;
+      v = await apiPost('/api/yazici/temizle', {zorla:true});
+    }
+    bildir('Yazıcı', v.mesaj||'', v.ok?'bilgi':'uyari'); onbTazele();
+  };
+  const wf = await hazirCek('/api/wifi', 60000);
+  $saf('#wfSag').textContent = (wf.adet||0)+' ağ · önerilen kanal: '+(wf.onerilenKanal||'—');
+  $saf('#wfListe').innerHTML = (wf.aglar||[]).map(a=>`<div class="satir"><span class="ad">${a.ssid||'(gizli)'}
+    <div style="font-size:11px;color:var(--soluk)">${a.bssid||''} ${a.bant||''}</div></span>
+    <span class="boyut">kanal ${a.kanal||'—'}</span>
+    <span class="durum"><span class="kutucuk ${a.sinyal>=70?'yesil':(a.sinyal>=40?'sari':'kirmizi')}">%${a.sinyal!==null? a.sinyal : '—'}</span></span></div>`).join('')
+    || '<div class="bos">Wi-Fi ağı bulunamadı (kablolu bağlantı olabilir).</div>';
+  const gz = $saf('#guOzet');
+  if(gz) gz.innerHTML = `<div class="satir"><span class="ad">Bekleyen Windows güncellemesi</span><span class="boyut">${gunc.toplam||0}</span></div>
+    <div class="satir"><span class="ad">Güncellenebilir program</span><span class="boyut">${wg.kurulu? (wg.adet||0) : 'winget yok'}</span></div>
+    <div class="satir"><span class="ad">Yazıcı kuyruğu</span><span class="boyut">${yz.kuyrukToplam||0} iş</span></div>
+    <div class="satir"><span class="ad">Wi-Fi ağı</span><span class="boyut">${wf.adet||0}</span></div>`;
+};
+
+/* ---------- ALARM & SESLİ BİLDİRİM ---------- */
+let sesAyar = {sesliUyari:true};
+let ALARM_ZAMAN = null;
+function alarmKontrol(){
+  return apiHizli('/api/alarm', 15000).then(v=>{
+    sesAyar = v.ayar || sesAyar;
+    const k = document.getElementById('alarmSerit');
+    if(v.alarmVar){
+      const metin = (v.ihlal||[]).join(' · ');
+      if(k){ k.innerHTML = `<div class="kutu" style="border-color:#dc2626;background:linear-gradient(90deg,#3a0d0d,#1a0808)">
+        <h2 style="color:#ffd7d7">⚠ DİKKAT — EŞİK AŞILDI<span class="sag">${new Date().toLocaleTimeString('tr-TR')}</span></h2>
+        <div style="font-size:13px">${metin}</div></div>`; }
+      if(sesAyar.sesliUyari && !window.__alarmSes){ window.__alarmSes = true;
+        konus('Dikkat Üstad Kenan, ' + metin);
+        setTimeout(()=>{ window.__alarmSes = false; }, 300000); }
+      apiPost('/api/bildirim', {}).catch(()=>{});
+    } else if(k){ k.innerHTML = ''; }
+    return v;
+  }).catch(()=>null);
+}
+SAYFALAR.alarm = async function(){
+  const v = await hazirCek('/api/alarm', 5000);
+  const a = v.ayar||{};
+  $saf('#orta').innerHTML = `
+  <div class="kutu" id="alarmKutu"><h2>${IK.kalkan} EŞİK ALARMI<span class="sag">${v.alarmVar? 'EŞİK AŞILDI' : 'her şey normal'}</span></h2>
+    <div class="serit"><div class="sol"><div class="baslik">Alarm durumu</div>
+      <div class="alt">${v.alarmVar? (v.ihlal||[]).join(' · ') : 'Tüm değerler eşiklerin altında.'}</div></div>
+      <button class="dev-buton" id="alTest">${IK.saat} Şimdi kontrol et</button></div>
+    <div class="sayaclar" style="grid-template-columns:1fr 1fr">
+      <label class="sayac"><div class="basi"><span>İŞLEMCİ EŞİĞİ</span><b><input id="alCpu" class="inp" style="width:56px" value="${a.cpu||90}"></b></div></label>
+      <label class="sayac"><div class="basi"><span>BELLEK EŞİĞİ</span><b><input id="alRam" class="inp" style="width:56px" value="${a.ram||90}"></b></div></label>
+      <label class="sayac"><div class="basi"><span>DİSK EŞİĞİ</span><b><input id="alDisk" class="inp" style="width:56px" value="${a.disk||90}"></b></div></label>
+      <label class="sayac"><div class="basi"><span>SICAKLIK EŞİĞİ (°C)</span><b><input id="alSicak" class="inp" style="width:56px" value="${a.sicaklik||85}"></b></div></label>
+    </div>
+    <div class="serit" style="margin-top:8px">
+      <div class="sol"><div class="baslik">Sesli bildirim</div><div class="alt">Eşik aşılınca ve işler bitince Türkçe sesli uyarı verir.</div></div>
+      <label><input type="checkbox" id="alSes" ${a.sesliUyari?'checked':''}> Açık</label></div>
+    <div class="serit">
+      <div class="sol"><div class="baslik">Telegram bildirimi (isteğe bağlı)</div>
+        <div class="alt">Bot token ve sohbet kimliği girersen eşik aşılınca telefonuna mesaj gelir. Boş bırakırsan yalnız panel uyarır.</div></div>
+      <button class="dev-buton" id="alKaydet">${IK.kalkan} Kaydet</button></div>
+    <div class="bilgi-satir">
+      <div class="b"><div class="et">BOT TOKEN</div><div class="de"><input id="alTok" class="inp" style="width:100%" value="${a.telegramToken||''}" placeholder="123456:ABC..."></div></div>
+      <div class="b"><div class="et">SOHBET KİMLİĞİ</div><div class="de"><input id="alSoh" class="inp" style="width:100%" value="${a.telegramChat||''}" placeholder="123456789"></div></div>
+    </div>
+    <div id="alDeger" class="bos" style="margin-top:8px"></div></div>
+  <div class="kutu"><h2>${IK.islemci} ŞU ANKİ DEĞERLER</h2><div id="alSimdi" class="bos">okunuyor…</div></div>`;
+  $saf('#sag').innerHTML = `<div class="kutu"><h2>${IK.saat} SESLİ DENEME</h2>
+    <div class="hizli yesil" id="alSesDene">${IK.pencere}<div><b>"Nöbetteyiz Üstad Kenan"</b><span>sesli bildirimi dene</span></div></div>
+    <div class="hizli mavi" id="alTgDene">${IK.kalkan}<div><b>Telegram test mesajı</b><span>token girildiyse gönderir</span></div></div></div>`;
+  const degerCiz = ()=>{
+    apiHizli('/api/alarm', 4000).then(x=>{
+      const k = x.kontrol||{};
+      $saf('#alSimdi').innerHTML = `<div class="satir"><span class="ad">İşlemci</span><span class="boyut">${k.cpuYuk||0}%</span></div>
+        <div class="satir"><span class="ad">Bellek</span><span class="boyut">${k.ramYuzde||0}%</span></div>
+        <div class="satir"><span class="ad">Disk</span><span class="boyut">${k.diskYuzde||0}%</span></div>
+        <div class="satir"><span class="ad">Sağlık puanı</span><span class="boyut">${k.puan||'—'}/100</span></div>`;
+      $saf('#alDeger').innerHTML = x.alarmVar? `<span class="kutucuk kirmizi">EŞİK AŞILDI: ${(x.ihlal||[]).join(' · ')}</span>`
+        : '<span class="kutucuk yesil">Her şey normal</span>';
+    });
+  };
+  degerCiz();
+  $saf('#alTest').onclick = async ()=>{ onbTazele(); const x = await alarmKontrol(); degerCiz();
+    bildir('Alarm kontrolü', x && x.alarmVar? 'Eşik aşıldı: '+(x.ihlal||[]).join(' · ') : 'Tüm değerler normal', x&&x.alarmVar?'uyari':'bilgi'); };
+  $saf('#alKaydet').onclick = async ()=>{
+    const v2 = await apiPost('/api/alarm/kaydet', {cpu: $saf('#alCpu').value, ram: $saf('#alRam').value,
+      disk: $saf('#alDisk').value, sicaklik: $saf('#alSicak').value, sesliUyari: $saf('#alSes').checked,
+      telegramToken: $saf('#alTok').value.trim(), telegramChat: $saf('#alSoh').value.trim()});
+    sesAyar = v2.ayar||sesAyar; onbTazele();
+    bildir('Alarm', v2.mesaj||'Kaydedildi', 'bilgi');
+  };
+  $saf('#alSesDene').onclick = ()=> bildir('Sesli bildirim', konus('Nöbetteyiz Üstad Kenan. Sistem nöbette.')? 'Çalıştı.' : 'Bu panelde sesli okuma yok.', 'bilgi');
+  $saf('#alTgDene').onclick = async ()=>{ const r = await apiPost('/api/bildirim', {});
+    bildir('Telegram', r.mesaj||r.hata||'gönderilmedi', r.gonderildi? 'bilgi':'uyari'); };
+};
+async function alarmBaslat(){
+  await alarmKontrol();
+  if(ALARM_ZAMAN) clearInterval(ALARM_ZAMAN);
+  ALARM_ZAMAN = setInterval(alarmKontrol, 45000);
+}
+
+
+  $$('#menu .oge').forEach(o=>o.onclick = ()=>goster(o.dataset.sayfa));
+  $$('#ustSekmeler button').forEach(b=>b.onclick = ()=>goster(b.dataset.git));
+  const h = (location.hash||'').match(/sayfa=([a-z]+)/);
+  goster(h && SAYFALAR[h[1]] ? h[1] : 'panel');
+  /* derin baglanti: #...palet -> komut paleti acik gelir */
+  if((location.hash||'').includes('palet')) setTimeout(paletAc, 1500);
+  alarmBaslat();
+  setInterval(async ()=>{
+    if(AKTIF==='panel'){ const d = await hazirCek('/api/durum'); if(!d.hata){ DURUM=d; } }
+  }, 5000);
+  } catch(hucre){
+    try{ goster(AKTIF || 'panel'); }catch(e2){}
+    sayfaHata(AKTIF || 'panel', hucre);
+  }
+})();
+</script>
+</body>
+</html>

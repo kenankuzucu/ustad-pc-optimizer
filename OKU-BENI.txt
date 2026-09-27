@@ -1,0 +1,216 @@
+ÜSTAD PC OPTIMIZER  v1.2.1
+Kenan Kuzucu için özel sürüm
+==============================================================
+
+NE İŞE YARAR?
+Bilgisayarını temizler, hızlandırır, korur, izler ve yönetir.
+Masaüstündeki 28706762 tasarım görselinin arayüzü birebir
+kuruldu ve arkasına GERÇEK bir Windows motoru bağlandı.
+Yani bu bir resim değil, gerçekten çalışan bir program.
+
+KURULUM (2 adım)
+1) Bu klasördeki KURULUM.bat dosyasına çift tıkla.
+2) Biten kadar bekle. Masaüstüne iki kısayol düşer:
+   - "ÜSTAD PC OPTIMIZER"            -> normal sürüm
+   - "ÜSTAD PC OPTIMIZER (Yönetici)" -> tam yetkili sürüm
+Kurulum yeri: %LOCALAPPDATA%\USTAD-PC-OPTIMIZER
+(Kurmadan denemek istersen bu klasördeki
+ USTAD-PC-OPTIMIZER.bat dosyasına da çift tıklayabilirsin.)
+
+ÇALIŞTIRMA
+Masaüstündeki "ÜSTAD PC OPTIMIZER" kısayoluna çift tıkla.
+Siyah pencere göze batmaz (küçültülmüş açılır),
+1-3 saniye içinde panel açılır ve adres çubuğu olmayan
+gerçek bir program penceresi gibi görünür.
+Panel penceresini kapatınca motor kendini otomatik kapatır.
+Sağ üstteki üç düğme GERÇEKTİR: küçült / büyüt-geri al / kapat.
+
+22 SAYFA / ARAÇLAR
+ 1 Ana Panel            genel sağlık puanı, CPU/RAM/Disk, tek tık temizlik
+ 2 Akıllı Temizlik      geçici dosya, tarayıcı önbelleği, Update artıkları,
+                        geri dönüşüm kutusu - kategori kategori temizler
+ 3 Performans           canlı ölçüm, RAM temizle, DNS boşalt, hızlandır
+ 4 Program Yönetimi     202 kurulu programı listeler, kaldırma sihirbazını açar
+ 5 Zorla Kaldırma       kalan klasör + kayıt defteri kalıntılarını bulup siler
+ 6 Başlangıç Yönetimi   açılışta açılan programları kapatır/açar
+ 7 Sistem Tarama        disk sağlığı, DISM, olay günlüğü, bekleyen güncelleme
+ 8 TURBO MOD            9 gerçek hız ayarı, turbo puanı, tek tuş uygula
+                        ve TEK TUŞ GERİ AL (her ayarın eski hâli yedeklenir)
+ 9 Derin Temizleme      WinSxS deposu, artık sürücü paketleri, log/dump,
+                        yinelenen dosya (SHA-256), boş klasör, ölü kısayol
+                        + USTAD KASASI: silinenler geri alınabilir
+10 Ağ & Hız             gecikme/jitter/paket kaybı, 5 DNS sunucusu yarışı,
+                        tek tuş DNS değiştirme, GERÇEK hız testi (Mbps),
+                        dinleyen portlar ve hangi programın açtığı
+11 Donanım              diskler + sağlık durumu, RAM modülleri, ekran kartı,
+                        soket/BIOS, sürücü paketi sayısı
+12 Disk Analizi         en büyük klasörler ve 80 MB üzeri dosyalar
+13 Windows Araçları     25 gerçek araç: DISM, SFC, CHKDSK, defrag, ağ sıfırlama...
+14 Güvenlik & Gizlilik  antivirüs/durum, güvenlik duvarı, iz temizliği
+15 Raporlar             masaüstüne .txt rapor kaydeder
+16 Ayarlar              otomatik temizlik, tema, yönetici olarak başlat,
+                        GÜNLÜK BAKIM ZAMANLAYICI ve RENKLİ WORD RAPORU
+--- v1.2.0'da eklenen 6 sayfa ---
+17 Canlı İzleme         CPU/RAM/Disk GERÇEK akan grafik, sıcaklık/fan,
+                        dışarıya açık bağlantılar + süreç eşlemesi
+18 Hız Testi            gerçek disk hız testi (yazma/okuma/4K IOPS) ve
+                        işlemci+bellek benchmark'ı, geçmişle kıyas
+19 Kurtarma & Yedek     geri yükleme noktası, klasör yedeği (zip),
+                        günlük otomatik yedek, sürücü yedeği, olay günlüğü,
+                        sürücüsü eksik aygıtlar, geri alınabilir işlemler
+20 Görev & Hizmet       zamanlanmış görevler (206) ve hizmetler (306):
+                        ara, kapat/aç, durdur/başlat, başlangıç türü
+21 Güncelleme & Gizlilik son Windows güncellemeleri + bekleyenler, winget
+                        program güncellemeleri, telemetri+reklam kimliği,
+                        yazıcı kuyruğu temizliği, Wi-Fi kanal tarayıcı
+22 Alarm & Bildirim     eşik alarmı (%95 CPU, %90 RAM/Disk, 85 °C),
+                        sesli bildirim, isteğe bağlı Telegram mesajı
+
+==============================================================
+v1.2.0'IN EN ÖNEMLİ İŞİ: HIZ
+==============================================================
+Panel açılırken ağır ölçümler arka planda hazırlanır (ısınma döngüsü) ve
+önbelleğe alınır. GERÇEK ÖLÇÜM (motor yeni açıldı / 25 sn sonra):
+
+  UÇ                  ilk ölçüm      ısınma sonrası
+  /api/ag             29.30 sn   ->  0.00–0.01 sn
+  /api/tarama          4.69 sn   ->  0.00–0.02 sn
+  /api/donanim         3.82 sn   ->  0.00–0.02 sn
+  /api/gorevler        2.75 sn   ->  0.00–0.02 sn
+  /api/canli           2.06 sn   ->  0.00–0.02 sn
+  /api/durum           1.60 sn   ->  0.00–0.00 sn
+  (diğer uçlar da aynı şekilde 0,02 saniyenin altında)
+
+Sonuç: 17 hazır kayıt, %77 önbellek isabeti, ortalama ölçüm 3,56 sn.
+Yani panel sayfaları arasında gezerken beklemezsin. "Canlı İzleme" ve
+"Önbelleği temizle" düğmesiyle ölçümleri istediğin an tazeleyebilirsin.
+
+==============================================================
+TURBO MOD
+==============================================================
+9 madde: Nihai Performans güç planı, görsel efektler, menü gecikmesi,
+oyun çubuğu kaydı, arka plan uygulama izinleri, telemetri hizmetleri,
+gereksiz zamanlanmış görevler, SysMain, en hızlı DNS sunucusu.
+- Her madde "uygulanabilir mi" diye GERÇEKTEN ölçülür.
+- Uygulamadan önce/sonra ölçüm gösterilir.
+- "TURBO'YU GERİ AL" düğmesi tüm ayarları eski hâline döndürür.
+- SysMain maddesi SSD'de tartışmalıdır: istemezsen işaretleme.
+
+USTAD KASASI (yanlış silmeye karşı sigorta)
+Derin temizlikte silinen her dosya/klasör önce kasaya TAŞINIR,
+kasadan silinmez. "GERİ AL" ile eski yerine döner.
+Disk alanı ancak "KASAYI BOŞALT" dersen boşalır (onay ister,
+o işlem geri alınamaz).
+
+GÜNLÜK BAKIM ZAMANLAYICI
+Ayarlar sayfasından bir saat seçip "GÜNLÜK BAKIMI KUR" dediğinde
+Windows Zamanlanmış Görevler'e "USTAD-PC-OPTIMIZER-BAKIM" görevi
+yazılır. Her gün o saatte: geçici dosya temizliği + gizlilik
+temizliği + masaüstüne rapor. Yönetici yetkisi GEREKMEZ.
+Aynı yerden kaldırabilirsin. Yedek tarafında da "GÜNLÜK OTOMATİK
+YEDEK" görevi (Kurtarma & Yedek sayfası) aynı mantıkla kurulur.
+
+RENKLİ WORD RAPORU
+Ayarlar -> "WORD RAPORU OLUŞTUR": 7 bölümlü, renkli başlık şeritli
+.doc belgesi masaüstüne kaydedilir (Word ile açılır).
+İçinde: sistem durumu, temizlenebilir alanlar, turbo durumu,
+ağ ölçümleri, başlangıç ögeleri, güvenlik ve dürüst sınırlar.
+
+KLAVYE KISAYOLU
+Panel penceresinde adres satırı yoktur. Bir sayfayı doğrudan
+açmak istersen: http://127.0.0.1:<PORT>/#sayfa=kurtarma
+(sayfa adları: panel, temizlik, performans, programlar, zorla,
+baslangic, tarama, turbo, derin, ag, donanim, disk, araclar,
+guvenlik, raporlar, ayarlar, canli, hiz, kurtarma, yonetim,
+guncelleme, alarm)
+Ctrl+K ile komut paleti açılır: yaz, Enter'a bas, sayfa açılır.
+
+GÜVENLİK / DÜRÜST SINIRLAR
+- Hiçbir veri internet'e gönderilmez. Tüm ölçümler bilgisayarında
+  yapılır, hiçbir şey toplanmaz.
+- İki istisna: (1) "Ağ & Hız" sayfasındaki HIZ TESTİ (sen basınca
+  Cloudflare'in ölçüm sunucusuna bağlanır), (2) Alarm sayfasına
+  Telegram bot token'ı girersen eşik aşıldığında Telegram'a mesaj
+  gider. İkisi de senin isteğinle çalışır; boş bırakırsan hiçbir
+  yere bağlanılmaz.
+- "Disk Hatası Taraması (CHKDSK)" ve "SFC Doğrulaması" sadece OKUR;
+  sisteme zarar vermez. Önce onları deneyin.
+- "Zorla Kaldırma" ve "İzleri Temizle" geri alınamaz (onay penceresi çıkar).
+- Yönetici isteyen işler: Windows Update artıkları, Geri Dönüşüm Kutusu,
+  WinSxS temizliği, gölge kopya, sürücü paketi silme, DNS değiştirme,
+  telemetri kapatma, geri yükleme noktası, sürücü yedeği, yazıcı kuyruğu
+  temizliği ve bazı görev/hizmet değişiklikleri. Panel bunu SÖYLER ve
+  sorar; gizlice yetki yükseltmez. Onay verirsen yönetici penceresi açılır
+  ve iş orada tamamlanır.
+- Kullanımdaki (kilitli) dosyalar silinmez, kaç dosyanın atlandığı
+  size bildirilir.
+- Sıcaklık/fan: bu anakart sensör yayınlamıyor (ACPI termal bölge yok).
+  Değer yoksa panel "desteklemiyor" yazar — uydurma sayı göstermez.
+- SSD sıcaklığı ve kalan ömür (TBW) de bu bilgisayarda OKUNAMIYOR.
+- winget kurulu değilse program güncelleme listesi boş görünür
+  (Microsoft Store -> App Installer ile kurulur; kurulunca burası
+  kendiliğinden çalışır).
+- Kurulum neden .exe değil? Kaspersky imzasız .exe dosyalarını engelliyor;
+  bu yüzden kurulum .bat tabanlı ve şeffaf.
+
+KALDIRMA
+Bu klasördeki KALDIR.bat dosyasına çift tıkla.
+Kurulu sürümü ve masaüstü kısayollarını siler.
+
+MERAK EDENLER İÇİN
+- sunucu.py  : gerçek motor (Python, harici paket yok) — 22 sayfanın
+  tüm ölçümlerini yapan arka uç; ısınma döngüsü ve önbellek burada
+- index.html : panel arayüzü (tek dosya)
+- assets\    : maketten kesilen arma, kurt ve amblem görselleri
+- USTAD-PC-OPTIMIZER.bat : başlatıcı (motoru açar, pencereyi açar,
+  pencere kapanınca motoru kapatır)
+- port.txt  : çalışırken oluşur; içinde port ve motor PID yazar
+- ayar.json : otomatik temizlik ve tema tercihleri
+- alarm.json : eşik alarmı ayarların (CPU/RAM/Disk/sıcaklık, Telegram)
+- bench.json : disk ve işlemci/bellek ölçüm geçmişin
+- geri-al.json : geri alınabilir işlem kayıtların (görev/hizmet değişiklikleri)
+- gecmis.json : sağlık puanı geçmişi
+- kasa\     : USTAD KASASI (geri alınabilir silinen dosyalar)
+- bakim-gunlugu.txt : günlük bakımın yaptığı işlerin kaydı
+- yedek-gunlugu.txt : günlük otomatik yedeklerin kaydı
+
+Sürüm: 1.2.0  ·  27.09.2026
+
+==============================================================
+v1.2.1 — "PANEL BOŞ KALIYORDU" DÜZELTMESİ (27.09.2026)
+==============================================================
+BELİRTİ : Panel açılıyor, ortası BOŞ; altta "Sistem ölçülüyor…" yazısı
+          takılı kalıyordu. Yeni sayfalar (Canlı İzleme, Hız Testi,
+          Kurtarma, Görev & Hizmet, Güncelleme, Alarm) hiç açılmıyordu.
+
+SEBEP 1 : Panelin iç yardımcı fonksiyonları ($saf, apiHizli, hazirCek)
+          yanlış kapsamda tanımlıydı. Sayfa kodları bunları çağırınca
+          "is not defined" hatası alıyor ve orta alan boş kalıyordu.
+ÇÖZÜM 1 : Yardımcılar modül kapsamına taşındı; her sayfa artık
+          hata korumalı çiziliyor (bir sayfa patlarsa bile panel
+          "SAYFA YÜKLENEMEDİ + Tekrar dene" kartı gösterir).
+
+SEBEP 2 : Sunucunun "nöbet" döngüsü pencere başlığına bakıp motoru
+          kapatıyordu; başlık okunamayınca ÇALIŞAN motor ölüyordu.
+          Ayrıca 6 saniyede bir PowerShell çalıştırıp makineyi yoruyordu.
+ÇÖZÜM 2 : Nöbet tamamen kaldırıldı. Yerine KALP ATIŞI geldi:
+          panel her 20 saniyede motora vurur. Pencere kapanıp vuruşlar
+          kesilirse motor 5 dakika sonra kendini kapatır ve port.txt
+          dosyasını siler. Doğrulandı: kalp atışı olmayan motor kendini
+          kapattı, acık panel varsa çalışmaya devam etti.
+
+SEBEP 3 : Ağır ölçümler (ağ taraması 29 sn, sistem tarama 5 sn) isteği
+          bekletiyordu; panel "düşünüyor" halinde kalıyordu.
+ÇÖZÜM 3 : "Bayat veriyi hemen ver, arkada tazele" mantığı eklendi.
+          Kayıt yoksa "hazırlanıyor" der ve panel kendiliğinden
+          yeniden sorar. Ölçüm: ağ taraması 29,3 sn → 0,01 sn.
+
+DOĞRULAMA (bu makinede, gerçek tarayıcı):
+  * 22/22 sayfa açıldı, 0 JavaScript hatası
+  * Panel 5 saniyede dolu geldi (CPU/RAM/Disk/sağlık puanı gerçek)
+  * Kalp atışı testi: vuruş yok → motor kendini kapattı (port.txt silindi)
+  * Kaynak klasör = kurulu sürüm (birebir aynı)
+
+NOT: Panel bir kez eski önbellekten açılmışsa kapatıp masaüstündeki
+"ÜSTAD PC OPTIMIZER" kısayolundan yeniden açın; kısayol pencereyi
+sürüm etiketiyle (?v=131) açar, böylece eski sayfa kullanılmaz.

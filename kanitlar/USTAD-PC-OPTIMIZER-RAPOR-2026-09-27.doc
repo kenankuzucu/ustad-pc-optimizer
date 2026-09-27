@@ -1,0 +1,77 @@
+﻿<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word'>
+<head><meta charset="utf-8"><title>ÜSTAD PC OPTIMIZER Raporu</title>
+<style>
+body{font-family:'Segoe UI',Calibri,sans-serif;font-size:11pt;color:#0f172a}
+h1{background:#0b2545;color:#fff;padding:14px 18px;font-size:19pt;margin:0 0 6px 0;letter-spacing:1px}
+h2{background:#12416b;color:#ffffff;padding:8px 14px;font-size:13pt;margin:18px 0 6px 0;letter-spacing:.5px}
+p.alt{color:#475569;font-size:10pt;margin:0 0 10px 0}
+table{width:100%;border-collapse:collapse;margin-bottom:8px}
+td{padding:6px 10px;border-bottom:1px solid #cbd5e1;font-size:10.5pt}
+td.a{width:34%;color:#0b2545;font-weight:600;background:#eef4fb}
+tr:nth-child(even) td{background:#f8fafc}
+</style></head><body><h1>ÜSTAD PC OPTIMIZER — SİSTEM VE BAKIM RAPORU</h1>
+<p class="alt">Tarih: 27.09.2026 01:14 &nbsp;·&nbsp; Bilgisayar: Microsoft Windows 11 Pro &nbsp;·&nbsp; Bu rapor kendi bilgisayarınızda üretildi, hiçbir veri internet'e gönderilmedi.</p>
+<h2>1. GENEL DURUM</h2><table>
+<tr><td class="a">İşletim sistemi</td><td class="b">Microsoft Windows 11 Pro (Yapı 26200)</td></tr>
+<tr><td class="a">İşlemci</td><td class="b">Intel(R) Core(TM) i3-10100F CPU @ 3.60GHz — 4 çekirdek</td></tr>
+<tr><td class="a">Bellek</td><td class="b">7.2 GB / 15.9 GB (45%)</td></tr>
+<tr><td class="a">Disk (C:)</td><td class="b">168.9 GB boş / 446.3 GB (62% dolu)</td></tr>
+<tr><td class="a">Sağlık puanı</td><td class="b">100 / 100 — MÜKEMMEL DURUMDA</td></tr>
+<tr><td class="a">TURBO puanı</td><td class="b">42 / 100 — uygulanabilir madde: 8</td></tr>
+<tr><td class="a">Çalışma süresi</td><td class="b">2 saat 36 dakika</td></tr>
+</table>
+<h2>2. TEMİZLENEBİLİR ALANLAR — toplam 22.6 MB</h2><table>
+<tr><td class="a">Geçici Dosyalar</td><td class="b">18.4 MB (1132 dosya)</td></tr>
+<tr><td class="a">Diğer Önbellekler</td><td class="b">4.3 MB (29 dosya)</td></tr>
+<tr><td class="a">Geri Dönüşüm Kutusu</td><td class="b">129 B (1 dosya)</td></tr>
+<tr><td class="a">Tarayıcı Önbelleği</td><td class="b">4 B (1 dosya)</td></tr>
+<tr><td class="a">Windows Update Artıkları</td><td class="b">0 B (0 dosya)</td></tr>
+</table>
+<h2>3. TURBO MOD DURUMU</h2><table>
+<tr><td class="a">Aktif güç planı</td><td class="b">Driver Booster Power Plan</td></tr>
+<tr><td class="a">Nihai Performans planı</td><td class="b">kurulu ama aktif değil</td></tr>
+<tr><td class="a">Görsel efekt ayarı</td><td class="b">ayar yok (varsayılan)</td></tr>
+<tr><td class="a">Oyun çubuğu kaydı</td><td class="b">açık/varsayılan</td></tr>
+<tr><td class="a">Arka plan izinli uygulama</td><td class="b">74</td></tr>
+<tr><td class="a">Telemetri hizmeti (çalışan)</td><td class="b">0</td></tr>
+<tr><td class="a">SysMain durumu</td><td class="b">Running</td></tr>
+<tr><td class="a">Menü gecikme ayarı</td><td class="b">ayar yok</td></tr>
+<tr><td class="a">Gecikme (ping 8.8.8.8)</td><td class="b">32 ms</td></tr>
+</table>
+<h2>4. AĞ ÖLÇÜMLERİ</h2><table>
+<tr><td class="a">Gecikme ortalaması</td><td class="b">31 ms (en az 30 / en çok 32)</td></tr>
+<tr><td class="a">Dalgalanma (jitter)</td><td class="b">0.3 ms</td></tr>
+<tr><td class="a">Paket kaybı</td><td class="b">0 / 20 (0%)</td></tr>
+<tr><td class="a">DNS — Router (modem)</td><td class="b">104 ms (192.168.1.1)</td></tr>
+<tr><td class="a">DNS — Cloudflare</td><td class="b">117 ms (1.1.1.1)</td></tr>
+<tr><td class="a">DNS — Google DNS</td><td class="b">121 ms (8.8.8.8)</td></tr>
+<tr><td class="a">DNS — OpenDNS</td><td class="b">150 ms (208.67.222.222)</td></tr>
+<tr><td class="a">DNS — Quad9</td><td class="b">154 ms (9.9.9.9)</td></tr>
+</table>
+<h2>5. BAŞLANGIÇTA AÇILAN ÖGELER (12)</h2><table>
+<tr><td class="a">SecurityHealth</td><td class="b">KAPALI</td></tr>
+<tr><td class="a">Everything</td><td class="b">KAPALI</td></tr>
+<tr><td class="a">Logi Download Assistant</td><td class="b">AÇIK</td></tr>
+<tr><td class="a">Logitech Download Assistant</td><td class="b">AÇIK</td></tr>
+<tr><td class="a">SunJavaUpdateSched</td><td class="b">AÇIK</td></tr>
+<tr><td class="a">Steam</td><td class="b">KAPALI</td></tr>
+<tr><td class="a">Discord</td><td class="b">KAPALI</td></tr>
+<tr><td class="a">Adobe Acrobat Synchronizer</td><td class="b">KAPALI</td></tr>
+<tr><td class="a">BraveSoftware Update</td><td class="b">KAPALI</td></tr>
+<tr><td class="a">MicrosoftCopilotAutoLaunch_A436C66AC97B99F02804796035C99412</td><td class="b">AÇIK</td></tr>
+<tr><td class="a">MicrosoftEdgeAutoLaunch_3DE424E4876CA36374D582F3279B0B69</td><td class="b">KAPALI</td></tr>
+<tr><td class="a">Hermes_Gateway_telegram.vbs</td><td class="b">AÇIK</td></tr>
+</table>
+<h2>6. GÜVENLİK</h2><table>
+<tr><td class="a">Kurulu antivirüs</td><td class="b">Kaspersky, Kaspersky, Windows Defender</td></tr>
+<tr><td class="a">Defender gerçek zamanlı</td><td class="b">kapalı</td></tr>
+<tr><td class="a">Güvenlik duvarı</td><td class="b">Domain: AÇIK · Private: AÇIK · Public: AÇIK</td></tr>
+<tr><td class="a">Kurulu program sayısı</td><td class="b">202</td></tr>
+</table>
+<h2>7. DÜRÜST SINIRLAR</h2><table>
+<tr><td class="a">SSD sıcaklığı / kalan ömür</td><td class="b">Bu donanımda okunamıyor (SMART köprüsü desteklenmiyor) — uydurma değer gösterilmez.</td></tr>
+<tr><td class="a">Yönetici gerektiren işlemler</td><td class="b">WinSxS temizliği, gölge kopya, sürücü silme, DNS değiştirme, telemetri kapatma.</td></tr>
+<tr><td class="a">Ölçülmeyen</td><td class="b">Gerçek oyun FPS'i, donanım sıcaklıkları, kullanıcı bazlı ağ limitleri ölçülmedi.</td></tr>
+</table>
+<p class="alt">Bu belge ÜSTAD PC OPTIMIZER v1.1.0 tarafından Kenan Kuzucu için üretildi.</p>
+</body></html>

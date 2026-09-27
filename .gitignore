@@ -1,0 +1,8 @@
+# ÜSTAD PC OPTIMIZER — yedek deposu
+__pycache__/
+*.pyc
+*.tmp
+port.txt
+tarayici-profil/
+motor-log.txt
+*.log

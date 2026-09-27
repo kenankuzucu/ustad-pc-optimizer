@@ -1,0 +1,30 @@
+﻿ÜSTAD PC OPTIMIZER — SİSTEM RAPORU
+Tarih: 26.09.2026 23:59
+==============================================================
+Bilgisayar   : Microsoft Windows 11 Pro 10.0.26200 (Yapı 26200)
+İşlemci      : Intel(R) Core(TM) i3-10100F CPU @ 3.60GHz (4 çekirdek)
+Bellek       : 6.0 GB / 15.9 GB (38%)
+Disk (C:)    : 162.3 GB boş / 446.3 GB (64% dolu)
+Sağlık Puanı : 100/100  (MÜKEMMEL DURUMDA)
+Çalışma Süresi: 1 saat 21 dakika
+
+TEMİZLENEBİLİR DOSYALAR — toplam 12.2 GB
+  - Geçici Dosyalar                  9.2 GB  (103162 dosya)
+  - Diğer Önbellekler                2.8 GB  (313 dosya)
+  - Tarayıcı Önbelleği             129.2 MB  (1203 dosya)
+  - Geri Dönüşüm Kutusu              7.7 MB  (17 dosya)
+  - Windows Update Artıkları         5.6 MB  (1 dosya)
+
+BAŞLANGIÇTA AÇILAN ÖGELER (1)
+  [AÇIK] Hermes_Gateway_telegram.vbs
+
+KURULU PROGRAM SAYISI: 202
+
+GÜVENLİK
+  Antivirüs koruması : KAPALI
+  Gerçek zamanlı     : KAPALI
+  İmza sürümü        : None ({})
+  Tespit edilen tehdit: 0
+
+Bu rapor ÜSTAD PC OPTIMIZER v1.0.0 tarafından bilgisayarınızda üretildi.
+Hiçbir veri internet'e gönderilmedi — tüm ölçümler yerel.
