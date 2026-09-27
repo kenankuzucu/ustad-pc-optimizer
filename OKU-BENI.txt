@@ -214,3 +214,33 @@ DOĞRULAMA (bu makinede, gerçek tarayıcı):
 NOT: Panel bir kez eski önbellekten açılmışsa kapatıp masaüstündeki
 "ÜSTAD PC OPTIMIZER" kısayolundan yeniden açın; kısayol pencereyi
 sürüm etiketiyle (?v=131) açar, böylece eski sayfa kullanılmaz.
+
+
+==============================================================
+KURULUM PROGRAMI (SETUP) — v1.2.1 x64
+==============================================================
+Masaüstündeki "ÜSTAD PC OPTIMIZER KURULUM (64 bit).exe" dosyasına çift tıkla.
+Klasik kurulum sihirbazı açılır: hoş geldiniz -> klasör seçimi -> kısayollar
+-> kur -> bitir.
+
+  1) Hoş geldiniz sayfası : "Sonraki" ile devam et
+  2) Hedef klasör sayfası : klasörü İSTEDİĞİN YERE değiştirebilirsin
+                            (varsayılan: %%LOCALAPPDATA%%\USTAD-PC-OPTIMIZER)
+  3) Kısayollar sayfası   : masaüstüne altın madalyon simgesi + Başlat menüsü
+  4) "Kur" düğmesi        : dosyaları kurar (yaklaşık 3 MB, 10 saniye)
+  5) Bitiş sayfası        : "Paneli şimdi aç" işaretli gelir
+
+Kurulum sonrası:
+  * Masaüstünde ÜSTAD PC OPTIMIZER simgesi (altın madalyon logosu ile)
+  * Başlat menüsünde kılavuz, yönetici kısayolu ve "Kaldır"
+  * Ayarlar -> Uygulamalar listesinde "ÜSTAD PC OPTIMIZER 1.2.1" (oradan kaldırılır)
+
+NOTLAR
+  * 64 bit Windows içindir (dosya adında -x64 yazar).
+  * Yönetici izni istemez: kullanıcı klasörüne kurar.
+  * Kurulum dosyası dijital imzalı olmadığı için Kaspersky/Windows ilk açılışta
+    "emin misiniz?" diye sorabilir -> "İzin ver / Yine de çalıştır" de.
+  * Paketi yeniden üretmek için: proje klasöründeki ustad-kurulum.iss dosyasını
+    Inno Setup 6 ile derle (ISCC.exe ustad-kurulum.iss).
+  * Test edildi: sessiz kurulum, klasör seçimi, kısayol oluşturma, kaldırma ve
+    kurulan dosyaların kaynakla birebir aynı olduğu doğrulandı.
